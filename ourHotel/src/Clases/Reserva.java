@@ -1,19 +1,35 @@
 package Clases;
+import Enum.Estado_Reserva;
+
+import java.util.Date;
 
 public class Reserva {
 
-    protected Habitacion habitacion;
-    protected Pasajero pasajero;
-    protected Empleado empleado;       //quien hace la reserva o no (ver)
+    protected final int idReserva = ++Reserva.contador;
+    private static int contador = 0;
+    protected Habitacion habitacion; //traer num habitacion
+    protected Pasajero pasajero; //traer dni
+    protected Empleado empleado;       //traer id
+    protected Date fechaInicio;
+    protected Date fechaFin;
+    protected Estado_Reserva estadoReserva;
 
     //Constructor
     public Reserva (){
 
     }
-    public Reserva(Habitacion habitacion, Pasajero pasajero, Empleado empleado) {
+
+    public Reserva(Habitacion habitacion, Pasajero pasajero, Empleado empleado, Estado_Reserva estadoReserva) {
         this.habitacion = habitacion;
         this.pasajero = pasajero;
         this.empleado = empleado;
+        this.fechaInicio = new Date();
+        this.fechaFin = new Date();
+        this.estadoReserva = estadoReserva;
+    }
+
+    public int getIdReserva() {
+        return idReserva;
     }
 
     public Habitacion getHabitacion() {

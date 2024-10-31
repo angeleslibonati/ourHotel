@@ -1,6 +1,13 @@
+import Clases.Menu;
+
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        System.out.println("Estoy en angie");
+
+        Scanner entrada = new Scanner(System.in);
+
+
+        Menu.menuPrincipal(entrada);
     }
 }

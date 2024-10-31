@@ -2,17 +2,19 @@ package Clases;
 
 public abstract class Persona {
 
-    private final int id = ++Persona.contador;
-    private static int contador = 0;
+
     protected String dni;
     protected String nombre;
     protected String apellido;
     protected String telefono;
     protected String email;
     protected Direccion direccion;
+    protected String usuario;
+    protected String contrasenia;
 
-    public int getId() {
-        return id;
+
+    public String getUsuario() {
+        return usuario;
     }
 
     public String getDni() {
@@ -61,5 +63,13 @@ public abstract class Persona {
 
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 }

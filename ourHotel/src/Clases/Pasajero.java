@@ -3,22 +3,22 @@ import Enum.Tipo_Usuario;
 
 public class Pasajero extends Persona{
 
-    protected Tipo_Usuario roll;
+    protected Tipo_Usuario rol;
 
     //Constructores
     public Pasajero (){
 
     }
     public Pasajero(Tipo_Usuario roll) {
-        this.roll = roll;
+        this.rol = roll;
     }
 
-    public Tipo_Usuario getRoll() {
-        return roll;
+    public Tipo_Usuario getRol() {
+        return rol;
     }
 
-    public void setRoll(Tipo_Usuario roll) {
-        this.roll = roll;
+    public void setRol(Tipo_Usuario rol) {
+        this.rol = rol;
     }
 
 

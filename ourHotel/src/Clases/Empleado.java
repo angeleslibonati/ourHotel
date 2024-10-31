@@ -1,30 +1,40 @@
 package Clases;
 import Enum.Tipo_Usuario;
+import Enum.Estado_Empleado;
 
 public class Empleado extends Persona{
 
-    protected Tipo_Usuario roll;
+    private final int id = ++Empleado.contador;
+    private static int contador = 0;
+    protected Tipo_Usuario rol;
     protected double horasTrabajadas;
+    protected Estado_Empleado estadoEmpleado;
 
     //Constructores
     public Empleado(){
 
     }
-    public Empleado(Tipo_Usuario roll, double horasTrabajadas) {
-        this.roll = roll;
+    public Empleado(Tipo_Usuario roll, double horasTrabajadas, Estado_Empleado estadoEmpleado) {
+        this.rol = roll;
         this.horasTrabajadas = horasTrabajadas;
+        this.estadoEmpleado = estadoEmpleado;
     }
 
-    public Tipo_Usuario getRoll() {
-        return roll;
+
+    public int getId() {
+        return id;
+    }
+
+    public Tipo_Usuario getRol() {
+        return rol;
     }
 
     public double getHorasTrabajadas() {
         return horasTrabajadas;
     }
 
-    public void setRoll(Tipo_Usuario roll) {
-        this.roll = roll;
+    public void setRol(Tipo_Usuario rol) {
+        this.rol = rol;
     }
 
     public void setHorasTrabajadas(double horasTrabajadas) {
