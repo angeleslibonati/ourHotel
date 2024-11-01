@@ -7,7 +7,7 @@ public enum Servicio_Habitacion {
     sauna,
     hidromasaje,
     desayuno,
-    cena,
+    almuerzo_cena,
     servicioBrindis, //champagnea,
     bebidaSinAlcohol;
 

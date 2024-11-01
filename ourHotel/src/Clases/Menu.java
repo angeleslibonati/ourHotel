@@ -1,5 +1,6 @@
 package Clases;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
@@ -41,7 +42,7 @@ public class Menu {
                 usuario = ingresoUsuarioYClave(scan, "Usuario");
                 clave = ingresoUsuarioYClave(scan, "Clave");
                 //if (usuario ok && clave ok)
-
+                    menuPasajero(scan);
 
                 break;
 
@@ -205,7 +206,7 @@ public class Menu {
         }
     }
     public static void menuAbmHabitacion (Scanner scan){
-        imprimirMenuHabitacion();
+        imprimirAbmHabitacion();
         int opc = elegirOpcion(scan);
 
         switch (opc){
@@ -230,6 +231,146 @@ public class Menu {
     // --
 
     //Sub Menu para pasajero
+    public static void menuPasajero (Scanner scan){
+        imprimirMenuPasajero();
+        int opc = elegirOpcion(scan);
+
+
+        switch (opc){
+
+            case 1:
+                encabezadoMenu("Datos Personales");
+                //muestra datos del pasajero.
+                break;
+            case 2:
+                //reservas
+                //MENU RESERVA
+
+                menuReserva(scan);
+                break;
+            case 3:
+                //Servicios extra
+                //MENU SERV_EXTRA
+                menuServiciosExtras(scan);
+                break;
+            case 0:
+                //Volver atras
+                menuPrincipal(scan);
+                break;
+            default:
+                centradoOpciones("Opcion invalida");
+        }
+    }
+    public static void menuReserva (Scanner scan){
+        imprimirMenuReserva();
+        int opc = elegirOpcion(scan);
+
+        switch (opc){
+
+            case 1:
+                //hacer reserva
+
+                break;
+            case 2:
+                //cancelar reserva
+                break;
+            case 3:
+                //ver reservas activas
+                break;
+            case 4:
+                //ver historico
+                break;
+            case 0:
+                menuPasajero(scan);
+                break;
+            default:
+                centradoOpciones("Opcion invalida");
+        }
+    }
+    public static void menuServiciosExtras (Scanner scan){
+        imprimirMenuServExtras();
+        int opc = elegirOpcion(scan);
+
+        switch (opc){
+
+            case 1:
+                //Actividades disponibles.
+                //MENU ACTIVIDADES
+                menuActividades(scan);
+                break;
+            case 2:
+                //Servicio a la habitacion
+                //MENU
+                menuServHabitacion(scan);
+                break;
+            case 0:
+                menuPasajero(scan);
+                break;
+            default:
+                centradoOpciones("Opcion invalida");
+        }
+    }
+    public static void menuActividades(Scanner scan){
+
+        imprimirMenuActividades();
+        int opc = elegirOpcion(scan);
+
+        switch (opc){
+            case 1:
+                //masajes
+                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                break;
+            case 2:
+                //spa
+                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                break;
+            case 3:
+                //sauna
+                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                break;
+            case 4:
+                //hidromasaje
+                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                break;
+            case 0:
+                menuServiciosExtras(scan);
+                break;
+            default:
+                centradoOpciones("Opcion invalida");
+        }
+    }
+    public static void menuServHabitacion (Scanner scan){
+
+        imprimirMenuServHabitacion();
+        int opc = elegirOpcion(scan);
+
+        switch (opc){
+
+            case 1:
+                //Solicitar desayuno en la habitacion
+                //Adicional el costo.
+                break;
+            case 2:
+                //Solicitar almuerzo o cena en la habitacion.
+                //Adicional el costo del servicio mas el valor de la comida/menu
+                break;
+            case 3:
+                //Servicio de brindis
+                //Adicional el costo mas la bebida que se lleve
+                break;
+            case 4:
+                //bebida sin alcohol
+                //adicional el costo de las bebidas y cantidades.
+                break;
+            case 0:
+                menuServiciosExtras(scan);
+                break;
+            default:
+                centradoOpciones("opcion invalida");
+
+        }
+    }
+    // --
 
 
     //Impresiones de los menu
@@ -245,23 +386,22 @@ public class Menu {
     public static void imprimirAbmPasajero (){
 
         dibujarTerminacion();
-        encabezadoMenu("A-B-M Pasajero");
+        encabezadoMenu("Administracion de Pasajeros");
         centradoOpciones("1. Alta");
         centradoOpciones("2. Baja");
         centradoOpciones("3. Modificacion");
         centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }
-
     public static void imprimirMenuRecepcion(){
 
         dibujarTerminacion();
         encabezadoMenu("Menu Recepcion");
-        centradoOpciones("1. a-b-m Pasajero");
+        centradoOpciones("1. Administracion de Pasajeros");
         centradoOpciones("2. Reserva");
         centradoOpciones("3. Check In");
         centradoOpciones("4. Check Out");
-        centradoOpciones("5. Habitacion");
+        centradoOpciones("5. Habitaciones");
         centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }
@@ -269,8 +409,8 @@ public class Menu {
 
         dibujarTerminacion();
         encabezadoMenu("Menu Administracion");
-        centradoOpciones("1. a-b-m Empleado");
-        centradoOpciones("2. a-b-m Habitacion");
+        centradoOpciones("1. Administracion de Empleados");
+        centradoOpciones("2. Administracion de Habitaciones");
         centradoOpciones("3. Menu Recepcion");
         centradoOpciones("4. Backup");
         centradoOpciones("0. Volver Atras");
@@ -279,38 +419,90 @@ public class Menu {
     public static void imprimirMenuHabitacion (){
 
         dibujarTerminacion();
-        encabezadoMenu("Habitacion");
+        encabezadoMenu("Habitaciones");
         centradoOpciones("1. Ver una Habitacion");
         centradoOpciones("2. Ver Libres");
         centradoOpciones("3. Ver Ocupadas");
         centradoOpciones("4. Modificar una Habitacion");
-        centradoOpciones("0. Volver atras");
+        centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }
     public static void imprimirAbmEmpleado (){
 
         dibujarTerminacion();
-        encabezadoMenu("A-B-M Empleado");
-        centradoOpciones("1. Alta empleado");
-        centradoOpciones("2. Baja empleado");
-        centradoOpciones("3. Modificacion empleado");
-        centradoIngreso("0. Volver atras");
+        encabezadoMenu("Administracion de Empleados");
+        centradoOpciones("1. Alta Empleado");
+        centradoOpciones("2. Baja Empleado");
+        centradoOpciones("3. Modificacion Empleado");
+        centradoIngreso("0. Volver Atras");
         dibujarTerminacion();
     }
     public static void imprimirAbmHabitacion (){
 
         dibujarTerminacion();
-        encabezadoMenu("A-B-M Hbitacion");
-        centradoOpciones("1. Alta"); //habitacion nueva
-        centradoOpciones("2. Baja");  // momentaneamente o no dada de baja, por reformas por ejemplo
-        centradoOpciones("3. Modificacion"); //cambio de camas o categoria por ejemplo
-        centradoOpciones("0. Volver atras");
+        encabezadoMenu("Administracion de Habitaciones");
+        centradoOpciones("1. Alta Habitacion"); //habitacion nueva
+        centradoOpciones("2. Baja Habitacion");  // momentaneamente o no dada de baja, por reformas por ejemplo
+        centradoOpciones("3. Modificacion Habitacion"); //cambio de camas o categoria por ejemplo
+        centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }
+    public static void imprimirMenuPasajero(){
+
+        dibujarTerminacion();
+        encabezadoMenu("Menu Pasajeros");
+        centradoOpciones("1. Datos Personales");
+        centradoOpciones("2. Reservas");
+        centradoOpciones("3. Servicios Extras");
+        centradoOpciones("0. Volver Atras");
+        dibujarTerminacion();
+    }
+    public static void imprimirMenuReserva (){
+
+        dibujarTerminacion();
+        encabezadoMenu("Sistema Reservas");
+        centradoOpciones("1. Realizar Reserva");
+        centradoOpciones("2. Cancelar Reserva");
+        centradoOpciones("3. Ver Reserva Activas");
+        centradoOpciones("4. Historico de Reservas");
+        centradoOpciones("0. Volver Atras");
+        dibujarTerminacion();
+    }
+    public static void imprimirMenuServExtras (){
+
+        dibujarTerminacion();
+        encabezadoMenu("Servivios Extras");
+        centradoOpciones("1. Actividades");
+        centradoOpciones("2. Servicio a la Habitacion");
+        centradoOpciones("0. Volver Atras");
+        dibujarTerminacion();
+    }
+    public static void imprimirMenuActividades (){
+
+        dibujarTerminacion();
+        encabezadoMenu("Actividades Disponibles");
+        centradoOpciones("1. Masajes");
+        centradoOpciones("2. Spa");
+        centradoOpciones("3. Sauna");
+        centradoOpciones("4. Hidromasaje");
+        centradoOpciones("0. Volver Atras");
+        dibujarTerminacion();
+    }
+    public static void imprimirMenuServHabitacion(){
+
+        dibujarTerminacion();
+        encabezadoMenu("Servicio a la Habitacion");
+        centradoOpciones("1. Desayuno");
+        centradoOpciones("2. Almuerzo - Cena");
+        centradoOpciones("3. Servicio de Brindis");
+        centradoOpciones("4. Bebidas Sin Alcohol");
+        centradoOpciones("0. Volver Atras");
+        dibujarTerminacion();
+    }
+    // --
 
 
     //Visual y Centrado para la consola.
-
     public static int elegirOpcion(Scanner scan){
         int opc = 0;
         centradoIngreso("Ingrese una opcion - ");
@@ -320,29 +512,45 @@ public class Menu {
     }
     public static void dibujarTerminacion (){
         // Dibuja la línea superior o inferior
-
-        System.out.print("\t\t\t\t\t\t\t\t\t\t+");
+        for (int i = 0; i<10; i++){
+            System.out.print("\t");
+        }
+        System.out.print("+");
         for (int i = 0; i < 100; i++) {
             System.out.print("-");
         }
         System.out.println("+");
     }
     public static void encabezadoMenu (String mensaje){
+        for (int i = 0; i<20; i++){
+            System.out.print("\t ");
+        }
+        System.out.println("--- " + mensaje + " ---");
 
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t --- " + mensaje + " ---");
     }
     public static void centradoOpciones (String opcionIngreso){
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t " + opcionIngreso);
+        for(int i = 0; i<21; i++){
+            System.out.print("\t");
+        }
+        System.out.println(" " + opcionIngreso);
+
     }
     public static void centradoIngreso (String opcionIngreso){
-        System.out.print("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t " + opcionIngreso);
+        for (int i = 0; i<21; i++){
+            System.out.print("\t");
+        }
+        System.out.print(" " + opcionIngreso );
+
     }
+    // --
+
 
     public static String ingresoUsuarioYClave (Scanner scan, String mensaje){
 
         centradoIngreso(mensaje + " : ");
         return scan.nextLine();
     }
+
 
 
 
