@@ -66,25 +66,20 @@ public class Menu {
         switch (opc){
 
             case 1:
-                //abm pasajero
                 menuAbmPasajero (scan);
-
-            break;
-
+                break;
             case  2:
-                encabezadoMenu("Reserva");
-
+                MenuAbmReserva(scan);
                 break;
 
             case 3:
                 //Hacer check in
-
+                encabezadoMenu("Check in");
                 break;
             case 4:
                 //hacer check out
-
+                encabezadoMenu("Check out");
             case 5:
-                //menu habitacion
                 menuHabitacion(scan);
 
                 break;
@@ -146,6 +141,40 @@ public class Menu {
             default:
         }       centradoOpciones("Opcion invalida");
 
+    }
+    public static void MenuAbmReserva (Scanner scan){
+
+        imprimirAbmReserva();
+        int opc = elegirOpcion(scan);
+
+        switch (opc){
+
+            case 1:
+                //nueva reserva (alta)
+                encabezadoMenu("Nueva Reserva");
+                break;
+            case 2:
+                //cancelar reserva (baja)
+                encabezadoMenu("Cancelar Reserva");
+                break;
+            case 3:
+                //modificar una reserva
+                encabezadoMenu("Modificar Reserva");
+                break;
+            case 4:
+                //ver una reserva
+                encabezadoMenu("Ver Reserva");
+                break;
+            case 5:
+                //ver todas las reservas disponibles
+                encabezadoMenu("Todas las Reservas");
+                break;
+            case 0:
+                menuRecepcionista(scan);
+                break;
+            default:
+                centradoOpciones("Opcion invalida");
+        }
     }
     // --
 
@@ -244,13 +273,10 @@ public class Menu {
                 break;
             case 2:
                 //reservas
-                //MENU RESERVA
-
                 menuReserva(scan);
                 break;
             case 3:
                 //Servicios extra
-                //MENU SERV_EXTRA
                 menuServiciosExtras(scan);
                 break;
             case 0:
@@ -295,12 +321,10 @@ public class Menu {
 
             case 1:
                 //Actividades disponibles.
-                //MENU ACTIVIDADES
                 menuActividades(scan);
                 break;
             case 2:
                 //Servicio a la habitacion
-                //MENU
                 menuServHabitacion(scan);
                 break;
             case 0:
@@ -414,6 +438,17 @@ public class Menu {
         centradoOpciones("3. Menu Recepcion");
         centradoOpciones("4. Backup");
         centradoOpciones("0. Volver Atras");
+        dibujarTerminacion();
+    }
+    public static void imprimirAbmReserva (){
+
+        dibujarTerminacion();
+        encabezadoMenu("Reserva");
+        centradoOpciones("1. Realizar Reserva");
+        centradoOpciones("2. Cancelar Reserva");
+        centradoOpciones("3. Modificar Reserva");
+        centradoOpciones("4. Ver una Reserva");
+        centradoOpciones("5. Ver todas Reservas");
         dibujarTerminacion();
     }
     public static void imprimirMenuHabitacion (){
