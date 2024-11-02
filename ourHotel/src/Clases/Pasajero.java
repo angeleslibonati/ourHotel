@@ -1,13 +1,16 @@
 package Clases;
 import Enum.Tipo_Usuario;
 
+import java.util.ArrayList;
+
 public class Pasajero extends Persona{
 
     protected Tipo_Usuario rol;
+    protected ArrayList<Integer> reservas;
 
     //Constructores
     public Pasajero (){
-
+        this.reservas = new ArrayList<>();
     }
     public Pasajero(Tipo_Usuario roll) {
         this.rol = roll;
