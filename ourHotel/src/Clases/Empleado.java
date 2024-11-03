@@ -41,6 +41,12 @@ public class Empleado extends Persona{
         this.horasTrabajadas = horasTrabajadas;
     }
 
+    public Estado_Empleado getEstadoEmpleado() {
+        return estadoEmpleado;
+    }
+
+    public void setEstadoEmpleado(Estado_Empleado estadoEmpleado) {this.estadoEmpleado = estadoEmpleado;
+    }
 
     //Funciones:
 
