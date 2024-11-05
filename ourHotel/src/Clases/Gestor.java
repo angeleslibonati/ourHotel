@@ -2,6 +2,7 @@ package Clases;
 
 import Excepciones.NumeroInvalidoException;
 import Enum.Estado_Habitacion;
+import Enum.Estado_Reserva;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +11,14 @@ public class Gestor {
     ArrayList<Pasajero> pasajeros ;
     ArrayList <Empleado> empleados;
     ArrayList <Habitacion> habitaciones;
+    ArrayList<Reserva> reservas;
 
 
     public Gestor() {
         this.pasajeros = new ArrayList<>();
         this.empleados = new ArrayList<>();
         this.habitaciones = new ArrayList<>();
+        this.reservas = new ArrayList<>();
     }
 
 
@@ -56,6 +59,24 @@ public class Gestor {
     }
 
 
+    public Empleado buscarEmpleado(){
+
+        return null;
+    }
+
+    public Reserva buscarUnaReserva(int numeroReserva){
+
+
+        return null;
+    }
+
+    public Reserva buscarReservasActiva()
+    {
+        for(Reserva reserva : reservas)
+        {
+            if()
+        }
+    }
 
 
 
