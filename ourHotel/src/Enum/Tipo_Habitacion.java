@@ -1,10 +1,10 @@
 package Enum;
 
-public enum Tipo_Habitacion {
+public enum Tipo_Habitacion{
 
-    standar,
-    individual,
-    deluxe,
-    junior,
-    presidencial;
+    STANDAR,
+    INDIVIDUAL,
+    DELUXE,
+    JUNIOR,
+    PRESIDENCIAL;
 }

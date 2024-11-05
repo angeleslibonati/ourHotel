@@ -2,9 +2,9 @@ package Enum;
 
 public enum Tipo_Cama {
 
-    unaPlaza,
-    dosPlazas,
-    queen,
-    king,
-    californiaKing;
+    UNA_PLAZA,
+    DOS_PLAZAS,
+    QUEEN,
+    KING,
+    CALIFORNIA_KING
 }
