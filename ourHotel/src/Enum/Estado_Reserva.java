@@ -2,14 +2,14 @@ package Enum;
 
 public enum Estado_Reserva {
 
-    reservado,
-    confirmado,
-    finalizado,
-    cancelado;
+    RESERVADO,
+    CONFIRMADO,
+    FINALIZADO,
+    CANCELADO;
 
     public static Estado_Reserva fromString(String value) {
         try {
-            return Estado_Reserva.valueOf(value.trim().toLowerCase());
+            return Estado_Reserva.valueOf(value.trim().toUpperCase());
         } catch (IllegalArgumentException e) {
             // Manejar el caso donde no se encuentra el valor,
             // por ejemplo, lanzando una excepción personalizada o retornando
