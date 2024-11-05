@@ -82,4 +82,15 @@ public class Habitacion {
     }
 
 
+
+    @Override
+    public String toString() {
+        return "Habitacion:" +
+                "\nnumHabitacion=" + numHabitacion +
+                "\nvalorPorNoche=" + valorPorNoche +
+                "\ncantPersonas=" + cantPersonas +
+                "\ntipoHabitacion=" + tipoHabitacion +
+                "\ntipoCama=" + tipoCama +
+                "\nestadoHabitacion=" + estadoHabitacion;
+    }
 }

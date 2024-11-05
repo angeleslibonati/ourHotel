@@ -2,13 +2,13 @@ package Enum;
 
 public enum Servicio_Habitacion {
 
-    masaje,
-    spa,
-    sauna,
-    hidromasaje,
-    desayuno,
-    almuerzo_cena,
-    servicioBrindis, //champagnea,
-    bebidaSinAlcohol;
+    MASAJE,
+    SPA,
+    SAUNA,
+    HIDROMASAJE,
+    DESAYUNO,
+    ALMUERZO_CENA,
+    SERVICIO_BRINDIS, //champagnea,
+    BEBIDA_SIN_ALCOHOL;
 
 }

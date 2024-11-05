@@ -1,5 +1,10 @@
 import Clases.Menu;
+import Clases.Reserva;
+import Gestores.GestorReserva;
+import manejoJSON.GestorJson;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -7,7 +12,18 @@ public class Main {
 
         Scanner entrada = new Scanner(System.in);
 
+        //Mapeo de Json Reserva
+        ArrayList<Reserva> misReservas = new ArrayList<>();
+        try {
+            misReservas = GestorJson.mapeoReserva();
 
-        Menu.menuPrincipal(entrada);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        //Inicio de menu
+
+       Menu.menuPrincipal(entrada);
+
     }
 }

@@ -6,11 +6,10 @@ import java.util.ArrayList;
 public class Pasajero extends Persona{
 
     protected Tipo_Usuario rol;
-    protected ArrayList<Integer> reservas;
 
     //Constructores
     public Pasajero (){
-        this.reservas = new ArrayList<>();
+
     }
     public Pasajero(Tipo_Usuario roll) {
         this.rol = roll;
@@ -24,6 +23,13 @@ public class Pasajero extends Persona{
         this.rol = rol;
     }
 
+    @Override
+    public String toString() {
+        return "Pasajero:"
+                + super.toString() +
+                "\nrol=" + rol ;
+
+    }
 
     //Funciones:
 

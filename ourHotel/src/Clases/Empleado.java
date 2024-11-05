@@ -4,7 +4,7 @@ import Enum.Estado_Empleado;
 
 public class Empleado extends Persona{
 
-    private final int id = ++Empleado.contador;
+    private int id = ++Empleado.contador;
     private static int contador = 0;
     protected Tipo_Usuario rol;
     protected double horasTrabajadas;
@@ -41,6 +41,19 @@ public class Empleado extends Persona{
         this.horasTrabajadas = horasTrabajadas;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Empleado: " +
+                super.toString() +
+                "\nid=" + id +
+                "\nrol=" + rol +
+                "\nhorasTrabajadas=" + horasTrabajadas +
+                "\nestadoEmpleado=" + estadoEmpleado;
+    }
 
     //Funciones:
 

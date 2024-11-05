@@ -1,0 +1,102 @@
+{
+  "reserva": [
+    {
+      "habitacion": {
+        "numHabitacion":101
+        },
+     
+      "pasajero": {
+       "dni": "12345678"
+      },
+      "idReserva":1,
+      "fechaInicio": "2023-11-01",
+      "fechaFin": "2023-11-05",
+      "estadoReserva": "reservado",
+      "empleado": {
+      "id": 1
+      }
+      
+    },
+    {
+      "habitacion": {
+      "numHabitacion": 102
+      },
+      "pasajero": {
+        "dni": "87654321"
+      },
+      "idReserva":2,
+      "fechaInicio": "2023-11-03",
+      "fechaFin": "2023-11-10",
+      "estadoReserva": "cancelado",
+      "empleado": {
+        "id":2
+      }
+    
+    },
+    {
+      "habitacion": {
+      "numHabitacion": 201
+      },
+      "pasajero": {
+        "dni": "34567890"
+      },
+      "idReserva":3,
+      "fechaInicio": "2023-12-01",
+      "fechaFin": "2023-12-10",
+      "estadoReserva": "confirmado",
+      "empleado": {
+        "id":3
+      }
+      
+    },
+
+    {
+         "habitacion":{
+        "numHabitacion": 101
+         },
+         "pasajero":{
+        "dni": "12345678"
+         },
+        "idReserva": 4,
+        "fechaInicio": "2023-10-01",
+        "fechaFin": "2023-10-05",
+        "estadoReserva": "cancelado",
+        "empleado":{
+        "id": 1
+        }
+    },
+    {
+        "habitacion":{
+        "numHabitacion": 301
+        },
+        "pasajero":{
+        "dni": "12345678"
+        },
+        "idReserva": 5,
+        "fechaInicio": "2023-09-10",
+        "fechaFin": "2023-09-15",
+        "estadoReserva": "finalizado",
+        "empleado":{
+        "id": 2
+      }
+    },
+    
+    {
+        "habitacion":{
+        "numHabitacion": 102
+        },
+        "pasajero":{
+        "dni": "87654321"
+        },
+        "idReserva": 6,
+        "fechaInicio": "2023-08-20",
+        "fechaFin": "2023-08-25",
+        "estadoReserva": "finalizado",
+        "empleado":{
+        "id": 3
+        }
+    }
+    
+    
+  ]
+}

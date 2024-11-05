@@ -1,6 +1,11 @@
 package Clases;
 
+import Gestores.GestorReserva;
+import manejoJSON.GestorJson;
+
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -24,11 +29,13 @@ public class Menu {
                 //if ( usuario ok && clave ok ){
                 //  if (tipo = recepcionista{
 
-                menuRecepcionista(scan);
+
+
+               // menuRecepcionista(scan);
                 //    }
                 //else {
 
-                menuAdmin(scan);
+                //menuAdmin(scan);
                 //}
                 // else {
                 //   usuario y/o contrasenia incorrecta
@@ -168,6 +175,7 @@ public class Menu {
             case 5:
                 //ver todas las reservas disponibles
                 encabezadoMenu("Todas las Reservas");
+
                 break;
             case 0:
                 menuRecepcionista(scan);
@@ -422,10 +430,10 @@ public class Menu {
         dibujarTerminacion();
         encabezadoMenu("Menu Recepcion");
         centradoOpciones("1. Administracion de Pasajeros");
-        centradoOpciones("2. Reserva");
+        centradoOpciones("2. Gestion de Reserva");
         centradoOpciones("3. Check In");
         centradoOpciones("4. Check Out");
-        centradoOpciones("5. Habitaciones");
+        centradoOpciones("5. Gestion de Habitaciones");
         centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }
@@ -568,7 +576,6 @@ public class Menu {
             System.out.print("\t");
         }
         System.out.println(" " + opcionIngreso);
-
     }
     public static void centradoIngreso (String opcionIngreso){
         for (int i = 0; i<21; i++){
