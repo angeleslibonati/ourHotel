@@ -1,11 +1,11 @@
 package Clases;
 import Enum.Estado_Reserva;
-
+import org.json.JSONObject;
 import java.util.Date;
 
 public class Reserva {
 
-    protected final int idReserva = ++Reserva.contador;
+    protected  int idReserva = ++Reserva.contador;
     private static int contador = 0;
     protected Habitacion habitacion; //traer num habitacion
     protected Pasajero pasajero; //traer dni
@@ -44,6 +44,22 @@ public class Reserva {
         return empleado;
     }
 
+    public void setIdReserva(int idReserva) {
+        this.idReserva = idReserva;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public void setEstadoReserva(Estado_Reserva estadoReserva) {
+        this.estadoReserva = estadoReserva;
+    }
+
     public void setHabitacion(Habitacion habitacion) {
         this.habitacion = habitacion;
     }
@@ -56,7 +72,15 @@ public class Reserva {
         this.empleado = empleado;
     }
 
-
-    //Funciones
-    //Reservar (abm)
+    @Override
+    public String toString() {
+        return "Reserva:" +
+                "\nidReserva=" + idReserva +
+                "\nhabitacion=" + habitacion +
+                "\npasajero=" + pasajero +
+                "\nempleado=" + empleado +
+                "\nfechaInicio=" + fechaInicio +
+                "\nfechaFin=" + fechaFin +
+                "\nestadoReserva=" + estadoReserva;
+    }
 }

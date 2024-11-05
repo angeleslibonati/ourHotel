@@ -72,4 +72,17 @@ public abstract class Persona {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
+
+    @Override
+    public String toString() {
+        return "Persona:" +
+                "\ndni=" + dni +
+                "\nnombre='" + nombre +
+                "\napellido='" + apellido +
+                "\ntelefono='" + telefono +
+                "\nemail='" + email  +
+                "\ndireccion=" + direccion +
+                "\nusuario='" + usuario +
+                "\ncontrasenia='" + contrasenia;
+    }
 }

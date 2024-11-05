@@ -2,7 +2,7 @@
   "reserva": [
     {
       "habitacion": {
-        "numHabitacion": 101
+        "numHabitacion":101
         },
      
       "pasajero": {
@@ -11,7 +11,7 @@
       "idReserva":1,
       "fechaInicio": "2023-11-01",
       "fechaFin": "2023-11-05",
-      "estadoReserva": "Reservado",
+      "estadoReserva": "reservado",
       "empleado": {
       "id": 1
       }
@@ -43,7 +43,7 @@
       "idReserva":3,
       "fechaInicio": "2023-12-01",
       "fechaFin": "2023-12-10",
-      "estadoReserva": "activo",
+      "estadoReserva": "confirmado",
       "empleado": {
         "id":3
       }
@@ -52,7 +52,7 @@
 
     {
          "habitacion":{
-        "numeronumHabitacion": 101
+        "numHabitacion": 101
          },
          "pasajero":{
         "dni": "12345678"
@@ -66,9 +66,8 @@
         }
     },
     {
-
         "habitacion":{
-        "habitacionNumero": 301
+        "numHabitacion": 301
         },
         "pasajero":{
         "dni": "12345678"
@@ -84,7 +83,7 @@
     
     {
         "habitacion":{
-        "habitacionNumero": 102
+        "numHabitacion": 102
         },
         "pasajero":{
         "dni": "87654321"

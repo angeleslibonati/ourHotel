@@ -23,6 +23,13 @@ public class Pasajero extends Persona{
         this.rol = rol;
     }
 
+    @Override
+    public String toString() {
+        return "Pasajero:"
+                + super.toString() +
+                "\nrol=" + rol ;
+
+    }
 
     //Funciones:
 
