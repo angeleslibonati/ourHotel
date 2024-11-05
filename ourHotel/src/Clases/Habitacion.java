@@ -72,4 +72,14 @@ public class Habitacion {
     public void setEstadoHabitacion(Estado_Habitacion estadoHabitacion) {
         this.estadoHabitacion = estadoHabitacion;
     }
+
+    public void marcarHabitacionLibre(){
+        if(getEstadoHabitacion().equals(Estado_Habitacion.OCUPADA))
+        {
+            this.estadoHabitacion = Estado_Habitacion.LIBRE;
+        }
+
+    }
+
+
 }
