@@ -11,6 +11,16 @@ public class Main {
 
         Scanner entrada = new Scanner(System.in);
 
+        //Mapeo de Json Reserva
+        ArrayList<Reserva> misReservas = new ArrayList<>();
+        try {
+            misReservas = GestorJson.mapeoReserva();
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        //Inicio de menu
 
        Menu.menuPrincipal(entrada);
 

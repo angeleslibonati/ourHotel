@@ -1,5 +1,6 @@
 package Clases;
 
+import Gestores.GestorReserva;
 import manejoJSON.GestorJson;
 
 import java.io.IOException;
@@ -27,14 +28,8 @@ public class Menu {
 
                 //if ( usuario ok && clave ok ){
                 //  if (tipo = recepcionista{
-                ArrayList<Reserva> misReservas = new ArrayList<>();
-                try {
-                    misReservas = GestorJson.mapeoReserva();
 
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-                centradoOpciones(misReservas.toString());
+
 
                // menuRecepcionista(scan);
                 //    }
@@ -581,7 +576,6 @@ public class Menu {
             System.out.print("\t");
         }
         System.out.println(" " + opcionIngreso);
-
     }
     public static void centradoIngreso (String opcionIngreso){
         for (int i = 0; i<21; i++){

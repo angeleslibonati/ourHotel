@@ -50,7 +50,6 @@ public class GestorJson {
                 miReserva.setFechaFin(fechaFin);
 
                 // Convertir los valores de cadena a los enums correspondientes
-                //Estado_Reserva estadoReserva = Estado_Reserva.valueOf(OReserva.getString("estadoReserva").trim().toUpperCase());
 
                 miReserva.setEstadoReserva(Estado_Reserva.fromString(OReserva.getString("estadoReserva")));
 

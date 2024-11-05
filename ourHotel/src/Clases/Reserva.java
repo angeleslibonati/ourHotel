@@ -1,6 +1,8 @@
 package Clases;
 import Enum.Estado_Reserva;
-import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Reserva {
@@ -44,6 +46,18 @@ public class Reserva {
         return empleado;
     }
 
+    public Estado_Reserva getEstadoReserva() {
+        return estadoReserva;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
     }
@@ -72,15 +86,24 @@ public class Reserva {
         this.empleado = empleado;
     }
 
-    @Override
-    public String toString() {
-        return "Reserva:" +
-                "\nidReserva=" + idReserva +
-                "\nhabitacion=" + habitacion +
-                "\npasajero=" + pasajero +
-                "\nempleado=" + empleado +
-                "\nfechaInicio=" + fechaInicio +
-                "\nfechaFin=" + fechaFin +
-                "\nestadoReserva=" + estadoReserva;
+    private String getFormattedDate(Date date, String format){
+        return new SimpleDateFormat(format).format(date);
     }
+
+
+    public void mostrarUnaReserva (){
+
+        Menu.dibujarTerminacion();
+        Menu.encabezadoMenu("Reserva");
+        Menu.centradoOpciones("Id Reserva: " + this.getIdReserva());
+        Menu.centradoOpciones("Num. Habitacion: " + this.habitacion.getNumHabitacion());
+        Menu.centradoOpciones("DNI Pasajero: " + this.pasajero.getDni());
+        Menu.centradoOpciones("Id Empleado: " + this.empleado.getId());
+        Menu.centradoOpciones("Fecha Inicio: " + this.getFormattedDate(getFechaInicio(), "yyyy-MM-dd"));
+        Menu.centradoOpciones("Fecha Fin: " + this.getFormattedDate(getFechaFin(), "yyyy-MM-dd"));
+        Menu.centradoOpciones("Estado Reserva: " + this.getEstadoReserva());
+        Menu.dibujarTerminacion();
+    }
+
+
 }
