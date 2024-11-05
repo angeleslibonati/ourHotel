@@ -74,8 +74,10 @@ public class Gestor {
     {
         for(Reserva reserva : reservas)
         {
-            if()
+
         }
+
+        return null;
     }
 
 
