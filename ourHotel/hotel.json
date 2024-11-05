@@ -1,0 +1,186 @@
+{
+  "hotel": {
+    "habitacion": [
+      {
+        "numeronumHabitacion": 101,
+        "valorPorNoche": 30000,
+        "cantPersonas": 1,
+        "tipoHabitacion ": "individual",
+        "tipoCama ": "Una Plaza",
+        "estadoHabitacion": "Disponible"
+      },
+      {
+        "numeronumHabitacion": 102,
+        "valorPorNoche": 40000,
+        "cantPersonas": 2,
+        "tipoHabitacion": "standar",
+        "tipoCama": "dosPlazas",
+        "estadoHabitacion": "ocupada"
+      },
+      {
+        "numeronumHabitacion": 103,
+        "valorPorNoche": 60000,
+        "cantPersonas": 2,
+        "tipoHabitacion": "deluxe",
+        "tipoCama": "queen",
+        "estadoHabitacion": "limpieza"
+      },
+      {
+        "numeronumHabitacion": 201,
+        "valorPorNoche": 80000,
+        "cantPersonas": 3,
+        "tipoHabitacion": "junior",
+        "tipoCama": "king",
+        "estadoHabitacion": "Reparacion"
+      },
+      {
+        "numeronumHabitacion": 301,
+        "valorPorNoche": 100000,
+        "cantPersonas": 4,
+        "tipoHabitacion": "presidencial",
+        "tipoCama": "californiaKing",
+        "estadoHabitacion": "libre"
+      }
+    ],
+    "persona": {
+      "pasajero": [
+        {
+          "dni": "12345678",
+          "nombre": "Juan", 
+          "apellido": "Perez",
+          "telefono":223567452,
+          "email": "juanperez@gmail.com",
+          "usuario": "juan_perez",
+          "contrasenia": "123",
+          "rol": "Pasajero",
+          "direccion": {
+            "calle": "Av. Corrientes",
+            "altura": 1234,
+            "ciudad": "Buenos Aires"
+          }
+      
+        },
+        {
+          "dni": "87654321",
+          "nombre": "Ana",
+          "apellido": "Gomez",
+          "telefono": 223567453,
+          "email": "anagomez@gmail.com",
+          "usuario": "ana_gomez",
+          "contrasenia": "123",
+          "rol": "Pasajero",
+          "direccion": {
+            "calle": "Calle San Juan",
+            "altura": 4321,
+            "ciudad": "Rosario"
+          }
+          
+        }
+      ],
+      "empleado": [
+        {
+          "id": 1,
+          "nombre": "Carlos",
+          "apellido": "Martinez",
+          "telefono": 223567890,
+          "email": "carlosMartinez@gmail.com",
+          "rol": "Recepcionista",
+          "estadoEmpleado": "activo",
+          "usuario":"carlos_martinez",
+          "contrasenia": "123",
+          "domicilio": {
+            "calle": "Salta",
+            "altura": 890,
+            "ciudad": "Mar del Plata"
+          },
+          "horasTrabajadas": 21
+        },
+        {
+          "id": 2,
+          "nombre": "Maria",
+          "apellido": "Lopez",
+          "telefono": 223456345,
+          "email": "mariaLopez@gmail.com",
+          "rol": "Recepcionista",
+          "estadoEmpleado": "activo",
+          "usuario": "maria_lopez",
+          "contrasenia":"123",
+          "domicilio": {
+            "calle": "Dorrego",
+            "altura": 672,
+            "ciudad": "Mar Chiquita"
+          },
+          "horasTrabajadas": 32
+        },
+        {
+          "id": 3,
+          "nombre": "Ana",
+          "apellido": "Torres",
+          "telefono": 223678976,
+          "email": "anaTorres@hotmail.com",
+          "usuario": "ana_torres",
+          "contrasenia":"123",
+          "rol": "Recepcionista",
+          "estadoEmpleado": "licencia",
+          "domicilio": {
+            "calle": "Salta",
+            "altura": 567,
+            "ciudad": "Batan"
+          },
+          "horasTrabajadas": 24
+        },
+        {
+          "id": 4,
+          "nombre": "Pedro",
+          "apellido": "Fernandez",
+          "telefono": 22345123,
+          "email": "pedroFernandez@hotmail.com",
+          "usuario": "pedro_fernandez",
+          "contrasenia":"123",
+          "rol": "Administrador",
+          "estadoEmpleado": "activo",
+          "domicilio": {
+            "calle": "Castex",
+            "altura": 5674,
+            "ciudad": "Mar del Plata"
+          },
+          "horasTrabajadas": 43
+        },
+        {
+          "id": 5,
+          "nombre": "Maria Laura",
+          "apellido": "Gomez",
+          "telefono": 223456789,
+          "email": "mariaLauraGomez@gmail.com",
+          "usuario": "maria_laura_gomez",
+          "contrasenia":"123",
+          "rol": "Administrador",
+          "estadoEmpleado": "inactivo",
+          "domicilio": {
+            "calle": "Mitre",
+            "altura": 3456,
+            "ciudad": "Mar del Plata"
+          },
+          "horasTrabajadas": 47
+        },
+        {
+          "id": 6,
+          "nombre": "Jazmin",
+          "apellido": "Perez",
+          "telefono": 223567892,
+          "email": "jazminPerez@gmail.com",
+          "contrasenia":"123",
+          "usuarioSistema": "jazmin_perez",
+          "rol": "Recepcionista",
+          "estadoEmpleado": "inactivo",
+          "domicilio": {
+            "calle": "Jujuy",
+            "altura": 345,
+            "ciudad": "Mar del Plata"
+          },
+          "horasTrabajadas": 34
+        }
+      ]
+    }
+  }
+}

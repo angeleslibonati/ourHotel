@@ -72,4 +72,15 @@ public class Habitacion {
     public void setEstadoHabitacion(Estado_Habitacion estadoHabitacion) {
         this.estadoHabitacion = estadoHabitacion;
     }
+
+    @Override
+    public String toString() {
+        return "Habitacion:" +
+                "\nnumHabitacion=" + numHabitacion +
+                "\nvalorPorNoche=" + valorPorNoche +
+                "\ncantPersonas=" + cantPersonas +
+                "\ntipoHabitacion=" + tipoHabitacion +
+                "\ntipoCama=" + tipoCama +
+                "\nestadoHabitacion=" + estadoHabitacion;
+    }
 }

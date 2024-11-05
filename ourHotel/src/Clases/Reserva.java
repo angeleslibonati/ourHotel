@@ -1,11 +1,13 @@
 package Clases;
 import Enum.Estado_Reserva;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Reserva {
 
-    protected final int idReserva = ++Reserva.contador;
+    protected  int idReserva = ++Reserva.contador;
     private static int contador = 0;
     protected Habitacion habitacion; //traer num habitacion
     protected Pasajero pasajero; //traer dni
@@ -44,6 +46,34 @@ public class Reserva {
         return empleado;
     }
 
+    public Estado_Reserva getEstadoReserva() {
+        return estadoReserva;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setIdReserva(int idReserva) {
+        this.idReserva = idReserva;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public void setEstadoReserva(Estado_Reserva estadoReserva) {
+        this.estadoReserva = estadoReserva;
+    }
+
     public void setHabitacion(Habitacion habitacion) {
         this.habitacion = habitacion;
     }
@@ -56,7 +86,24 @@ public class Reserva {
         this.empleado = empleado;
     }
 
+    private String getFormattedDate(Date date, String format){
+        return new SimpleDateFormat(format).format(date);
+    }
 
-    //Funciones
-    //Reservar (abm)
+
+    public void mostrarUnaReserva (){
+
+        Menu.dibujarTerminacion();
+        Menu.encabezadoMenu("Reserva");
+        Menu.centradoOpciones("Id Reserva: " + this.getIdReserva());
+        Menu.centradoOpciones("Num. Habitacion: " + this.habitacion.getNumHabitacion());
+        Menu.centradoOpciones("DNI Pasajero: " + this.pasajero.getDni());
+        Menu.centradoOpciones("Id Empleado: " + this.empleado.getId());
+        Menu.centradoOpciones("Fecha Inicio: " + this.getFormattedDate(getFechaInicio(), "yyyy-MM-dd"));
+        Menu.centradoOpciones("Fecha Fin: " + this.getFormattedDate(getFechaFin(), "yyyy-MM-dd"));
+        Menu.centradoOpciones("Estado Reserva: " + this.getEstadoReserva());
+        Menu.dibujarTerminacion();
+    }
+
+
 }
