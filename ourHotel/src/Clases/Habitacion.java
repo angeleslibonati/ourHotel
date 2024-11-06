@@ -3,6 +3,8 @@ import Enum.Estado_Habitacion;
 import Enum.Tipo_Cama;
 import Enum.Tipo_Habitacion;
 
+import java.util.ArrayList;
+
 public class Habitacion {
     protected int numHabitacion;
     protected double valorPorNoche;
@@ -10,7 +12,7 @@ public class Habitacion {
     protected Tipo_Habitacion tipoHabitacion;
     protected Tipo_Cama tipoCama;
     protected Estado_Habitacion estadoHabitacion;
-
+    protected ArrayList<Servicio> servicios;
     //Constructores
     public Habitacion (){
 
@@ -23,6 +25,7 @@ public class Habitacion {
         this.tipoHabitacion = tipoHabitacion;
         this.tipoCama = tipoCama;
         this.estadoHabitacion = estadoHabitacion;
+        this.servicios = new ArrayList<>();
     }
 
     public int getNumHabitacion() {

@@ -1,5 +1,6 @@
 package Clases;
 
+import Gestores.GestorHotel;
 import Gestores.GestorReserva;
 import manejoJSON.GestorJson;
 
@@ -23,12 +24,11 @@ public class Menu {
             case 1:
                 //Empleado
                 //validar usuario y clave
-                String usuario = ingresoUsuarioYClave(scan, "Usuario");
-                String clave = ingresoUsuarioYClave(scan, "Clave");
+                String usuario = GestorHotel.ingresoUsuarioYClave(scan, "Usuario");
+                String clave = GestorHotel.ingresoUsuarioYClave(scan, "Clave");
 
                 //if ( usuario ok && clave ok ){
                 //  if (tipo = recepcionista{
-
 
 
                // menuRecepcionista(scan);
@@ -46,11 +46,12 @@ public class Menu {
 
             case 2:
                 //Pasajero
-                usuario = ingresoUsuarioYClave(scan, "Usuario");
-                clave = ingresoUsuarioYClave(scan, "Clave");
+                usuario = GestorHotel.ingresoUsuarioYClave(scan, "Usuario");
+                clave = GestorHotel.ingresoUsuarioYClave(scan, "Clave");
+
                 //if (usuario ok && clave ok)
                     menuPasajero(scan);
-
+                 //
                 break;
 
             case 0:
@@ -587,11 +588,7 @@ public class Menu {
     // --
 
 
-    public static String ingresoUsuarioYClave (Scanner scan, String mensaje){
 
-        centradoIngreso(mensaje + " : ");
-        return scan.nextLine();
-    }
 
 
 
