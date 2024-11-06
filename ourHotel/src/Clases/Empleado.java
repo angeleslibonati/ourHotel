@@ -1,12 +1,10 @@
 package Clases;
-import Enum.Tipo_Usuario;
 import Enum.Estado_Empleado;
 
 public class Empleado extends Persona{
 
     private int id = ++Empleado.contador;
     private static int contador = 0;
-    protected Tipo_Usuario rol;
     protected double horasTrabajadas;
     protected Estado_Empleado estadoEmpleado;
 
@@ -14,8 +12,8 @@ public class Empleado extends Persona{
     public Empleado(){
 
     }
-    public Empleado(Tipo_Usuario roll, double horasTrabajadas, Estado_Empleado estadoEmpleado) {
-        this.rol = roll;
+    public Empleado(double horasTrabajadas, Estado_Empleado estadoEmpleado) {
+
         this.horasTrabajadas = horasTrabajadas;
         this.estadoEmpleado = estadoEmpleado;
     }
@@ -25,17 +23,13 @@ public class Empleado extends Persona{
         return id;
     }
 
-    public Tipo_Usuario getRol() {
-        return rol;
-    }
+
 
     public double getHorasTrabajadas() {
         return horasTrabajadas;
     }
 
-    public void setRol(Tipo_Usuario rol) {
-        this.rol = rol;
-    }
+
 
     public void setHorasTrabajadas(double horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
@@ -45,14 +39,14 @@ public class Empleado extends Persona{
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Empleado: " +
-                super.toString() +
-                "\nid=" + id +
-                "\nrol=" + rol +
-                "\nhorasTrabajadas=" + horasTrabajadas +
-                "\nestadoEmpleado=" + estadoEmpleado;
+
+    public void mostrarEmpleado (){
+
+        super.mostarPersona();
+        Menu.centradoOpciones("Id: " + this.id);
+        Menu.centradoOpciones("Horas Trabajadas: " + this.horasTrabajadas);
+        Menu.centradoOpciones("Estado del Empleado: " + this.estadoEmpleado);
+        Menu.dibujarTerminacion();
     }
 
     //Funciones:

@@ -1,5 +1,5 @@
 package Clases;
-
+import Enum.Tipo_Usuario;
 public abstract class Persona {
 
 
@@ -9,12 +9,17 @@ public abstract class Persona {
     protected String telefono;
     protected String email;
     protected Direccion direccion;
+    protected Tipo_Usuario rol;
     protected String usuario;
     protected String contrasenia;
 
 
     public String getUsuario() {
         return usuario;
+    }
+
+    public Tipo_Usuario getRol() {
+        return rol;
     }
 
     public String getDni() {
@@ -39,6 +44,10 @@ public abstract class Persona {
 
     public Direccion getDireccion() {
         return direccion;
+    }
+
+    public void setRol(Tipo_Usuario rol) {
+        this.rol = rol;
     }
 
     public void setDni(String dni) {
@@ -73,16 +82,19 @@ public abstract class Persona {
         this.contrasenia = contrasenia;
     }
 
-    @Override
-    public String toString() {
-        return "Persona:" +
-                "\ndni=" + dni +
-                "\nnombre='" + nombre +
-                "\napellido='" + apellido +
-                "\ntelefono='" + telefono +
-                "\nemail='" + email  +
-                "\ndireccion=" + direccion +
-                "\nusuario='" + usuario +
-                "\ncontrasenia='" + contrasenia;
+
+    public void mostarPersona (){
+
+        Menu.dibujarTerminacion();
+        Menu.encabezadoMenu("Datos Personales");
+        Menu.centradoOpciones("Nombre: " + this.nombre);
+        Menu.centradoOpciones("Apellido: " + this.apellido);
+        Menu.centradoOpciones("Dni: " + this.dni);
+        this.direccion.mostrarDireccion();
+        Menu.centradoOpciones("Telefono: " + this.telefono);
+        Menu.centradoOpciones("Email: " + this.email);
+        Menu.centradoOpciones("Rol: " + this.rol);
+        Menu.centradoOpciones("Usuario: " + this.usuario);
+        Menu.dibujarTerminacion();
     }
 }

@@ -20,10 +20,10 @@ public class Main {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
+        GestorReserva.mostrarReservas(misReservas);
         //Inicio de menu
 
-       Menu.menuPrincipal(entrada);
+       //Menu.menuPrincipal(entrada);
 
     }
 }

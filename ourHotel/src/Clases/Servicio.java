@@ -30,10 +30,12 @@ public class Servicio {
         this.costo = costo;
     }
 
-    @Override
-    public String toString() {
-        return "Servicio:" +
-                "\nnombreServicio=" + nombreServicio +
-                "\ncosto=" + costo;
+
+    public void mostrarServicio (){
+
+        Menu.dibujarTerminacion();
+        Menu.encabezadoMenu("Servicio Extra");
+        Menu.centradoOpciones("Servicio: " + this.nombreServicio);
+        Menu.centradoOpciones("Costo: $ " + this.costo);
     }
 }

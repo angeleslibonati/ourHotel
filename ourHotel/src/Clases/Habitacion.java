@@ -73,14 +73,17 @@ public class Habitacion {
         this.estadoHabitacion = estadoHabitacion;
     }
 
-    @Override
-    public String toString() {
-        return "Habitacion:" +
-                "\nnumHabitacion=" + numHabitacion +
-                "\nvalorPorNoche=" + valorPorNoche +
-                "\ncantPersonas=" + cantPersonas +
-                "\ntipoHabitacion=" + tipoHabitacion +
-                "\ntipoCama=" + tipoCama +
-                "\nestadoHabitacion=" + estadoHabitacion;
+
+    public void mostrarHabitacion (){
+
+        Menu.dibujarTerminacion();
+        Menu.encabezadoMenu("Habitacion");
+        Menu.centradoOpciones("Numero Habitacion: " + this.numHabitacion);
+        Menu.centradoOpciones("Valor por Noche: $ " + this.valorPorNoche);
+        Menu.centradoOpciones("Cantidad de personas: " + this.cantPersonas);
+        Menu.centradoOpciones("Tipo de Habitacion: " + this.tipoHabitacion);
+        Menu.centradoOpciones("Tipo de Cama: " + this.tipoCama);
+        Menu.centradoOpciones("Estado de la Habitacion: " + this.estadoHabitacion);
+        Menu.dibujarTerminacion();
     }
 }
