@@ -1,4 +1,5 @@
 import Clases.Menu;
+import Clases.Persona;
 import Clases.Reserva;
 import Gestores.GestorReserva;
 import manejoJSON.GestorJson;
@@ -12,6 +13,10 @@ public class Main {
 
         Scanner entrada = new Scanner(System.in);
 
+        //Mapeo de Json Hotel
+
+
+
         //Mapeo de Json Reserva
         ArrayList<Reserva> misReservas = new ArrayList<>();
         try {
@@ -23,7 +28,7 @@ public class Main {
 
         //Inicio de menu
 
-       Menu.menuPrincipal(entrada);
+       //Menu.menuPrincipal(entrada, );
 
     }
 }

@@ -13,7 +13,7 @@ public class Menu {
 
     //menu
 
-    public static void menuPrincipal (Scanner scan){
+    public static void menuPrincipal (Scanner scan, ArrayList<Persona>personas){
 
         int opc = 0;
         imprimirMenu();
@@ -24,34 +24,13 @@ public class Menu {
             case 1:
                 //Empleado
                 //validar usuario y clave
-                String usuario = GestorHotel.ingresoUsuarioYClave(scan, "Usuario");
-                String clave = GestorHotel.ingresoUsuarioYClave(scan, "Clave");
-
-                //if ( usuario ok && clave ok ){
-                //  if (tipo = recepcionista{
-
-
-               // menuRecepcionista(scan);
-                //    }
-                //else {
-
-                //menuAdmin(scan);
-                //}
-                // else {
-                //   usuario y/o contrasenia incorrecta
-                //}
-                // }*/
+                GestorHotel.ingresoYValidacion(scan, personas);
 
                 break;
 
             case 2:
                 //Pasajero
-                usuario = GestorHotel.ingresoUsuarioYClave(scan, "Usuario");
-                clave = GestorHotel.ingresoUsuarioYClave(scan, "Clave");
-
-                //if (usuario ok && clave ok)
-                    menuPasajero(scan);
-                 //
+               GestorHotel.ingresoYValidacion(scan, personas);
                 break;
 
             case 0:
@@ -66,7 +45,7 @@ public class Menu {
     }
 
     //Sub Menu para recepcionista
-    public static void menuRecepcionista (Scanner scan){
+    public static void menuRecepcionista (Scanner scan, ArrayList<Persona>personas){
 
         imprimirMenuRecepcion();
          int opc = elegirOpcion(scan);
@@ -74,10 +53,10 @@ public class Menu {
         switch (opc){
 
             case 1:
-                menuAbmPasajero (scan);
+                menuAbmPasajero (scan, personas);
                 break;
             case  2:
-                MenuAbmReserva(scan);
+                MenuAbmReserva(scan,personas);
                 break;
 
             case 3:
@@ -88,17 +67,17 @@ public class Menu {
                 //hacer check out
                 encabezadoMenu("Check out");
             case 5:
-                menuHabitacion(scan);
+                menuHabitacion(scan,personas);
 
                 break;
             case 0:
-                menuPrincipal(scan);
+                menuPrincipal(scan, personas);
 
                 break;
             default:
         }       centradoOpciones("Opcion invalida");
     }
-    public static void menuAbmPasajero (Scanner scan){
+    public static void menuAbmPasajero (Scanner scan, ArrayList<Persona>personas){
         imprimirAbmPasajero();
         int opc = elegirOpcion(scan);
 
@@ -113,18 +92,21 @@ public class Menu {
                 break;
             case 3:
                 //modificar datos pasajero
+                centradoOpciones("Ingrese opcion a modificar");
+                // case para datos
+
 
                 break;
             case 0:
                 //volver atras
-                menuRecepcionista(scan);
+                menuRecepcionista(scan, personas);
                 break;
 
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuHabitacion (Scanner scan){
+    public static void menuHabitacion (Scanner scan,ArrayList<Persona>personas){
         imprimirMenuHabitacion();
         int opc = elegirOpcion(scan);
 
@@ -144,13 +126,13 @@ public class Menu {
                 break;
             case 0:
                 //volver atras
-                menuRecepcionista(scan);
+                menuRecepcionista(scan,personas);
                 break;
             default:
         }       centradoOpciones("Opcion invalida");
 
     }
-    public static void MenuAbmReserva (Scanner scan){
+    public static void MenuAbmReserva (Scanner scan,ArrayList<Persona>personas){
 
         imprimirAbmReserva();
         int opc = elegirOpcion(scan);
@@ -179,7 +161,7 @@ public class Menu {
 
                 break;
             case 0:
-                menuRecepcionista(scan);
+                menuRecepcionista(scan,personas);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
@@ -188,7 +170,7 @@ public class Menu {
     // --
 
     //Sub Menu para administrador
-    public static void menuAdmin (Scanner scan){
+    public static void menuAdmin (Scanner scan,ArrayList<Persona>personas){
         imprimirMenuAdmin ();
         int opc = elegirOpcion(scan);
 
@@ -196,29 +178,29 @@ public class Menu {
 
             case 1:
                 //abm empleado
-                menuAbmEmpleado (scan);
+                menuAbmEmpleado (scan,personas);
 
                 break;
             case 2:
                 //abm habitacion
-                menuAbmHabitacion (scan);
+                menuAbmHabitacion (scan,personas);
                 break;
             case 3:
-                menuRecepcionista(scan);
+                menuRecepcionista(scan,personas);
                 break;
             case 4:
                 //back up
                 break;
             case 0:
                 //volver atras
-                menuPrincipal(scan);
+                menuPrincipal(scan,personas);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
 
         }
     }
-    public static void menuAbmEmpleado (Scanner scan){
+    public static void menuAbmEmpleado (Scanner scan,ArrayList<Persona>personas){
         imprimirAbmEmpleado();
         int opc = elegirOpcion(scan);
 
@@ -235,7 +217,7 @@ public class Menu {
                 break;
             case 0:
                 //volver atras
-                menuAdmin(scan);
+                menuAdmin(scan,personas);
                 break;
 
             default:
@@ -243,7 +225,7 @@ public class Menu {
 
         }
     }
-    public static void menuAbmHabitacion (Scanner scan){
+    public static void menuAbmHabitacion (Scanner scan,ArrayList<Persona>personas){
         imprimirAbmHabitacion();
         int opc = elegirOpcion(scan);
 
@@ -259,7 +241,7 @@ public class Menu {
                 //modificar una habitacion.
                 break;
             case 0:
-                menuAdmin(scan);
+                menuAdmin(scan,personas);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
@@ -269,7 +251,7 @@ public class Menu {
     // --
 
     //Sub Menu para pasajero
-    public static void menuPasajero (Scanner scan){
+    public static void menuPasajero (Scanner scan,ArrayList<Persona>personas){
         imprimirMenuPasajero();
         int opc = elegirOpcion(scan);
 
@@ -282,21 +264,21 @@ public class Menu {
                 break;
             case 2:
                 //reservas
-                menuReserva(scan);
+                menuReserva(scan,personas);
                 break;
             case 3:
                 //Servicios extra
-                menuServiciosExtras(scan);
+                menuServiciosExtras(scan,personas);
                 break;
             case 0:
                 //Volver atras
-                menuPrincipal(scan);
+                menuPrincipal(scan,personas);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuReserva (Scanner scan){
+    public static void menuReserva (Scanner scan,ArrayList<Persona>personas){
         imprimirMenuReserva();
         int opc = elegirOpcion(scan);
 
@@ -316,13 +298,13 @@ public class Menu {
                 //ver historico
                 break;
             case 0:
-                menuPasajero(scan);
+                menuPasajero(scan,personas);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServiciosExtras (Scanner scan){
+    public static void menuServiciosExtras (Scanner scan,ArrayList<Persona>personas){
         imprimirMenuServExtras();
         int opc = elegirOpcion(scan);
 
@@ -330,20 +312,20 @@ public class Menu {
 
             case 1:
                 //Actividades disponibles.
-                menuActividades(scan);
+                menuActividades(scan,personas);
                 break;
             case 2:
                 //Servicio a la habitacion
-                menuServHabitacion(scan);
+                menuServHabitacion(scan,personas);
                 break;
             case 0:
-                menuPasajero(scan);
+                menuPasajero(scan,personas);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuActividades(Scanner scan){
+    public static void menuActividades(Scanner scan,ArrayList<Persona>personas){
 
         imprimirMenuActividades();
         int opc = elegirOpcion(scan);
@@ -366,13 +348,13 @@ public class Menu {
                 //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
                 break;
             case 0:
-                menuServiciosExtras(scan);
+                menuServiciosExtras(scan, personas);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServHabitacion (Scanner scan){
+    public static void menuServHabitacion (Scanner scan,ArrayList<Persona>personas){
 
         imprimirMenuServHabitacion();
         int opc = elegirOpcion(scan);
@@ -396,7 +378,7 @@ public class Menu {
                 //adicional el costo de las bebidas y cantidades.
                 break;
             case 0:
-                menuServiciosExtras(scan);
+                menuServiciosExtras(scan,personas);
                 break;
             default:
                 centradoOpciones("opcion invalida");

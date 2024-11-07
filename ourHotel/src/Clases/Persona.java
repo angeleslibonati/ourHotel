@@ -46,6 +46,10 @@ public abstract class Persona {
         return direccion;
     }
 
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
     public void setRol(Tipo_Usuario rol) {
         this.rol = rol;
     }
