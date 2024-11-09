@@ -16,6 +16,13 @@ public class GestorHabitacion {
         this.habitaciones = new ArrayList<>();
     }
 
+    public void mostrarTodasLasHabitaciones() {
+        for (Habitacion habitacion : habitaciones) {
+            System.out.println(habitacion);
+        }
+    }
+
+
     public Habitacion buscarHabitacionPorNumero(int numeroHabitacion) throws NumeroInvalidoException {
         if (numeroHabitacion >= 0) {
             throw new NumeroInvalidoException("Debe ingresar un numero mayor a 0");
