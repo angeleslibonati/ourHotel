@@ -32,42 +32,9 @@ public class GestorHotel {
 
     }
 
-    public static String ingresoUsuarioYClave (Scanner scan, String mensaje){
 
-        Menu.centradoIngreso(mensaje + " : ");
-        return scan.nextLine();
-    }
 
-    public static void ingresoYValidacion (Scanner scan,  ArrayList<Persona> personas) throws UsuarioYClaveIncorrectoException {
 
-        try {
-            String usuario = ingresoUsuarioYClave(scan, "Usuario");
-            String contra = ingresoUsuarioYClave(scan, "Contrasenia");
-
-            for (Persona persona : personas) {
-
-                if (usuario.equals(persona.getUsuario()) && contra.equals(persona.getContrasenia())) {
-
-                    if (persona.getRol().equals("RECEPCIONISTA")) {
-
-                        Menu.menuRecepcionista(scan, personas);
-
-                    } else if (persona.getRol().equals("ADMINISTRADOR")) {
-
-                        Menu.menuAdmin(scan, personas);
-
-                    } else {
-
-                        Menu.menuPasajero(scan, personas);
-                        
-                    }
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia incorrecta");
-        }
-    }
 
 
 

@@ -52,6 +52,10 @@ public class Habitacion {
         return estadoHabitacion;
     }
 
+    public ArrayList<Servicio> getServicios() {
+        return servicios;
+    }
+
     public void setNumHabitacion(int numHabitacion) {
         this.numHabitacion = numHabitacion;
     }
@@ -76,6 +80,9 @@ public class Habitacion {
         this.estadoHabitacion = estadoHabitacion;
     }
 
+    public void setServicios(ArrayList<Servicio> servicios) {
+        this.servicios = servicios;
+    }
 
     public void mostrarHabitacion (){
 

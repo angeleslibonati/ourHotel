@@ -1,5 +1,6 @@
 package Clases;
 
+import Excepciones.UsuarioYClaveIncorrectoException;
 import Gestores.GestorHotel;
 import Gestores.GestorReserva;
 import manejoJSON.GestorJson;
@@ -23,14 +24,61 @@ public class Menu {
 
             case 1:
                 //Empleado
-                //validar usuario y clave
-                GestorHotel.ingresoYValidacion(scan, personas);
+                String usuario = ingresoUsuarioYClave(scan, "Usuario");
+                String contra = ingresoUsuarioYClave(scan, "Contrasenia");
 
+                for (int i = 0; i< personas.size(); i++){
+                    Persona e = new Empleado();
+                    e = personas.get(i);
+
+                    try {
+
+                        if (e.getUsuario().equals(usuario) && e.getContrasenia().equals(contra)){
+
+                            if (e.getRol().equals("RECEPCIONISTA")) {
+
+                                menuRecepcionista(scan, personas);
+                            } else {
+                                menuAdmin(scan, personas);
+                            }
+                        }
+                    } catch (Exception ex) {
+                        throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
+                    }
+                }
                 break;
 
             case 2:
                 //Pasajero
-               GestorHotel.ingresoYValidacion(scan, personas);
+                // Tiene 3 reintentos al momento de ingresar
+                int flag = 0;
+
+                do {
+                    usuario = ingresoUsuarioYClave(scan, "Usuario");
+                    contra = ingresoUsuarioYClave(scan, "Contrasenia");
+
+                    for (int i = 0; i<personas.size(); i++){
+
+                        Persona p = new Pasajero ();
+                        p = personas.get(i);
+                        try {
+
+                            if(p.getUsuario().equals(usuario) && p.getContrasenia().equals(contra)){
+
+                                menuPasajero(scan, personas);
+                                flag = 4;
+                            }
+                        } catch (Exception e) {
+                            throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
+                        }
+                    }
+                    flag ++;
+                    if (flag < 3){
+                        centradoOpciones("\n");
+                        centradoOpciones("Ingrese nuevamente");
+                    }
+                }while (flag < 3);
+
                 break;
 
             case 0:
@@ -43,6 +91,7 @@ public class Menu {
 
 
     }
+
 
     //Sub Menu para recepcionista
     public static void menuRecepcionista (Scanner scan, ArrayList<Persona>personas){
@@ -571,7 +620,11 @@ public class Menu {
 
 
 
+    public static String ingresoUsuarioYClave (Scanner scan, String mensaje){
 
+        Menu.centradoIngreso(mensaje + " : ");
+        return scan.nextLine();
+    }
 
 
 
