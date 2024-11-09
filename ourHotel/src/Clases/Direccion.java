@@ -10,6 +10,7 @@ public class Direccion {
     public Direccion (){
 
     }
+
     public Direccion(String calle, int altura, String ciudad) {
         this.calle = calle;
         this.altura = altura;
