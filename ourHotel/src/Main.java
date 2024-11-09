@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         Scanner entrada = new Scanner(System.in);
 
@@ -22,8 +22,11 @@ public class Main {
         }
 
         //Inicio de menu
+        GestorReserva.mostrarReservas(misReservas);
+        GestorReserva gestorReserva = new GestorReserva();
+        System.out.println(gestorReserva.buscarUnaReserva(-50));
 
-       Menu.menuPrincipal(entrada);
+     //  Menu.menuPrincipal(entrada);
 
     }
 }
