@@ -28,35 +28,37 @@ public class GestorReserva {
 
     }
 
-    public boolean buscarUnaReserva(int numeroReserva) throws ReservaInvalidaException {
-        Reserva reserva = new Reserva();
-        int i = 0;
-        boolean bandera = false;
+    public Reserva buscarUnaReserva(int numeroReserva) throws ReservaInvalidaException {
         if (numeroReserva <= 0) {
-            throw new ReservaInvalidaException("Debe ingresar un numero mayor a 0");
-        }
-        while (i < reservas.size()) {
-            if (reservas.get(i).getIdReserva() == numeroReserva) {
-                reserva = reservas.get(i);
-                reserva.mostrarUnaReserva();
-                bandera = true;
-            }
-            i++;
+            throw new ReservaInvalidaException("Debe ingresar un número mayor a 0");
         }
 
-        return bandera;
+        for (Reserva reserva : reservas) {
+            if (reserva.getIdReserva() == numeroReserva) {
+                reserva.mostrarUnaReserva();
+                return reserva;
+            }
+        }
+
+        throw new ReservaInvalidaException("No se encontró ninguna reserva con el número: " + numeroReserva);
     }
 
-    public Reserva buscarReservasActiva() {
+    public ArrayList<Reserva> buscarReservasActiva() {
+        ArrayList<Reserva> activas = new ArrayList<>();
+
         for (Reserva reserva : reservas) {
 
-
+            if (reserva.getEstadoReserva() == Estado_Reserva.RESERVADO) {
+                activas.add(reserva);
+            }
         }
 
-        return null;
+        if(reservas.isEmpty())
+        {
+            System.out.println("No se encontraron Reservas Activas");
+        }
+
+        return activas;
     }
-
-
-
 
 }
