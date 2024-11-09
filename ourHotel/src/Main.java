@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         Scanner entrada = new Scanner(System.in);
 
@@ -21,9 +21,9 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        //Inicio de menu
 
-       Menu.menuPrincipal(entrada);
+
+     //  Menu.menuPrincipal(entrada);
 
     }
 }
