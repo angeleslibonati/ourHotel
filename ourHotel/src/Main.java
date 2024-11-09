@@ -21,10 +21,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        //Inicio de menu
-        GestorReserva.mostrarReservas(misReservas);
-        GestorReserva gestorReserva = new GestorReserva();
-        System.out.println(gestorReserva.buscarUnaReserva(-50));
+
 
      //  Menu.menuPrincipal(entrada);
 
