@@ -1,4 +1,5 @@
 package Clases;
+import Enum.Tipo_Usuario;
 
 public abstract class Persona {
 
@@ -11,7 +12,7 @@ public abstract class Persona {
     protected Direccion direccion;
     protected String usuario;
     protected String contrasenia;
-
+    protected Tipo_Usuario rol;
 
 
     public String getUsuario() {
@@ -74,16 +75,17 @@ public abstract class Persona {
         this.contrasenia = contrasenia;
     }
 
-    @Override
-    public String toString() {
-        return "Persona:" +
-                "\ndni=" + dni +
-                "\nnombre='" + nombre +
-                "\napellido='" + apellido +
-                "\ntelefono='" + telefono +
-                "\nemail='" + email  +
-                "\ndireccion=" + direccion +
-                "\nusuario='" + usuario +
-                "\ncontrasenia='" + contrasenia;
+    public String getContrasenia() {
+        return contrasenia;
     }
+
+    public void setRol(Tipo_Usuario rol) {
+        this.rol = rol;
+    }
+
+    public Tipo_Usuario getRol() {
+        return rol;
+    }
+
+
 }

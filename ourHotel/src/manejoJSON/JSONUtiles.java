@@ -28,7 +28,7 @@ public class JSONUtiles {
         JSONTokener tokener = null;
 
         try {
-            tokener = new JSONTokener(new FileReader(archivo));
+            tokener = new JSONTokener(new FileReader("hotel.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

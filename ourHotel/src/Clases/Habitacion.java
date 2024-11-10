@@ -2,6 +2,14 @@ package Clases;
 import Enum.Estado_Habitacion;
 import Enum.Tipo_Cama;
 import Enum.Tipo_Habitacion;
+import manejoJSON.JSONUtiles;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import Enum.*;
 
 public class Habitacion {
     protected int numHabitacion;
@@ -10,23 +18,39 @@ public class Habitacion {
     protected Tipo_Habitacion tipoHabitacion;
     protected Tipo_Cama tipoCama;
     protected Estado_Habitacion estadoHabitacion;
+    protected ArrayList<Servicio_Habitacion> servicios;
 
     //Constructores
-    public Habitacion (){
+    public Habitacion() {
 
     }
-    public Habitacion(int numHabitacion, double valorPorNoche, int cantPersonas, Tipo_Habitacion tipoHabitacion,
-                      Tipo_Cama tipoCama, Estado_Habitacion estadoHabitacion) {
+
+
+    public Habitacion(int numHabitacion, double valorPorNoche, int cantPersonas, Tipo_Habitacion tipoHabitacion, Tipo_Cama tipoCama, Estado_Habitacion estadoHabitacion, ArrayList<Servicio_Habitacion> servicios) {
         this.numHabitacion = numHabitacion;
         this.valorPorNoche = valorPorNoche;
         this.cantPersonas = cantPersonas;
         this.tipoHabitacion = tipoHabitacion;
         this.tipoCama = tipoCama;
         this.estadoHabitacion = estadoHabitacion;
+        this.servicios = servicios;
     }
 
     public int getNumHabitacion() {
         return numHabitacion;
+    }
+
+
+    public void setEstadoHabitacion(Estado_Habitacion estadoHabitacion) {
+        this.estadoHabitacion = estadoHabitacion;
+    }
+
+    public ArrayList<Servicio_Habitacion> getServicios() {
+        return servicios;
+    }
+
+    public void setServicios(ArrayList<Servicio_Habitacion> servicios) {
+        this.servicios = servicios;
     }
 
     public double getValorPorNoche() {
@@ -69,28 +93,16 @@ public class Habitacion {
         this.tipoCama = tipoCama;
     }
 
-    public void setEstadoHabitacion(Estado_Habitacion estadoHabitacion) {
-        this.estadoHabitacion = estadoHabitacion;
-    }
-
-    public void marcarHabitacionLibre(){
-        if(getEstadoHabitacion().equals(Estado_Habitacion.OCUPADA))
-        {
-            this.estadoHabitacion = Estado_Habitacion.LIBRE;
-        }
-
-    }
-
-
-
     @Override
     public String toString() {
-        return "Habitacion:" +
-                "\nnumHabitacion=" + numHabitacion +
-                "\nvalorPorNoche=" + valorPorNoche +
-                "\ncantPersonas=" + cantPersonas +
-                "\ntipoHabitacion=" + tipoHabitacion +
-                "\ntipoCama=" + tipoCama +
-                "\nestadoHabitacion=" + estadoHabitacion;
+        return "Habitacion{" +
+                "numHabitacion=" + numHabitacion +
+                ", valorPorNoche=" + valorPorNoche +
+                ", cantPersonas=" + cantPersonas +
+                ", tipoHabitacion=" + tipoHabitacion +
+                ", tipoCama=" + tipoCama +
+                ", estadoHabitacion=" + estadoHabitacion +
+                ", servicios=" + servicios +
+                '}';
     }
 }

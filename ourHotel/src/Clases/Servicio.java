@@ -30,10 +30,5 @@ public class Servicio {
         this.costo = costo;
     }
 
-    @Override
-    public String toString() {
-        return "Servicio:" +
-                "\nnombreServicio=" + nombreServicio +
-                "\ncosto=" + costo;
-    }
+
 }

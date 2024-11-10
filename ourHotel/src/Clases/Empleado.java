@@ -4,7 +4,7 @@ import Enum.Estado_Empleado;
 
 public class Empleado extends Persona{
 
-    private int id = ++Empleado.contador;
+    private final int id = ++Empleado.contador;
     private static int contador = 0;
     protected Tipo_Usuario rol;
     protected double horasTrabajadas;
@@ -14,8 +14,11 @@ public class Empleado extends Persona{
     public Empleado(){
 
     }
-    public Empleado(Tipo_Usuario roll, double horasTrabajadas, Estado_Empleado estadoEmpleado) {
-        this.rol = roll;
+
+
+
+    public Empleado(Tipo_Usuario rol, double horasTrabajadas, Estado_Empleado estadoEmpleado) {
+        this.rol = rol;
         this.horasTrabajadas = horasTrabajadas;
         this.estadoEmpleado = estadoEmpleado;
     }
@@ -41,21 +44,34 @@ public class Empleado extends Persona{
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Estado_Empleado getEstadoEmpleado() {
+        return estadoEmpleado;
     }
+
+    public void setEstadoEmpleado(Estado_Empleado estadoEmpleado) {this.estadoEmpleado = estadoEmpleado;
+    }
+
+
 
     @Override
     public String toString() {
-        return "Empleado: " +
-                super.toString() +
-                "\nid=" + id +
-                "\nrol=" + rol +
-                "\nhorasTrabajadas=" + horasTrabajadas +
-                "\nestadoEmpleado=" + estadoEmpleado;
+        return "Empleado{" +
+                "id=" + id +
+                ", rol=" + rol +
+                ", horasTrabajadas=" + horasTrabajadas +
+                ", estadoEmpleado=" + estadoEmpleado +
+                ", dni='" + dni + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", email='" + email + '\'' +
+                ", direccion=" + direccion +
+                ", usuario='" + usuario + '\'' +
+                ", contrasenia='" + contrasenia + '\'' +
+                ", rol=" + rol +
+                "} " + super.toString();
     }
-
-    //Funciones:
+//Funciones:
 
     //Cargar pasajero (abm)
     //Hacer check in - check out
