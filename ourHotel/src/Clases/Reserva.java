@@ -103,6 +103,7 @@ public class Reserva {
         Menu.centradoOpciones("Fecha Fin: " + this.getFormattedDate(getFechaFin(), "yyyy-MM-dd"));
         Menu.centradoOpciones("Estado Reserva: " + this.getEstadoReserva());
         Menu.dibujarTerminacion();
+
     }
 
 

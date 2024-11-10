@@ -1,6 +1,7 @@
 import Clases.Menu;
 import Clases.Persona;
 import Clases.Reserva;
+import Gestores.GestorHabitacion;
 import Gestores.GestorReserva;
 import manejoJSON.GestorJson;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         Scanner entrada = new Scanner(System.in);
 
@@ -28,7 +29,9 @@ public class Main {
         ArrayList<Persona>misPersonas = new ArrayList<>();
         //Inicio de menu
 
+
        Menu.menuPrincipal(entrada, misPersonas);
+     //  Menu.menuPrincipal(entrada);
 
     }
 }

@@ -14,6 +14,7 @@ public abstract class Persona {
     protected String contrasenia;
 
 
+
     public String getUsuario() {
         return usuario;
     }
