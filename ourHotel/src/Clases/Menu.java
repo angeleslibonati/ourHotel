@@ -1,6 +1,6 @@
 package Clases;
 
-import Gestores.GestorReserva;
+//import Gestores.GestorReserva;
 import manejoJSON.GestorJson;
 
 import java.io.IOException;

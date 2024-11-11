@@ -1,7 +1,7 @@
 package Gestores;
 
 import Gestores.*;
-import Enum.Servicio_Habitacion;
+import Enum.*;
 import Clases.Habitacion;
 import Clases.Menu;
 import Clases.Servicio;
@@ -19,44 +19,44 @@ public class GestorHabitacion {
     }
 
     //Funcion check out
-    public static double cambioEstadoPorCheckOut(int numHabitacion) {
-        double costoPorConsumos = 0;
-        Habitacion habitacion = new Habitacion();
+//    public static double cambioEstadoPorCheckOut(int numHabitacion) {
+//        double costoPorConsumos = 0;
+//        Habitacion habitacion = new Habitacion();
+//
+//        // habitacion = //Busca la habitacion por numero  (devolver una HABITACION)
+//        //cambia el estado de OCUPADA A LIMPIEZA
+//
+//        //sumatoria de servicio
+//        costoPorConsumos = consumosExtra( habitacion);
+//
+//        return costoPorConsumos;
+//    }
 
-        // habitacion = //Busca la habitacion por numero  (devolver una HABITACION)
-        //cambia el estado de OCUPADA A LIMPIEZA
-
-        //sumatoria de servicio
-        costoPorConsumos = consumosExtra( habitacion);
-
-        return costoPorConsumos;
-    }
-
-    //Funcion para saber los consumos extras. sino  tuvo devuelve valor $0
-    public static double consumosExtra(Habitacion h) {
-
-        double costoPorConsumo = 0;
-
-        for (int i = 0; i < h.getServicios().size(); i++) {
-
-            Servicio_Habitacion servicio = h.getServicios().get(i);
-
-            if (servicio.equals(Servicio_Habitacion.MASAJE) ||
-                    servicio.equals(Servicio_Habitacion.SPA) ||
-                    servicio.equals(Servicio_Habitacion.SAUNA) ||
-                    servicio.equals(Servicio_Habitacion.HIDROMASAJE) ||
-                    servicio.equals(Servicio_Habitacion.DESAYUNO) ||
-                    servicio.equals(Servicio_Habitacion.ALMUERZO_CENA) ||
-                    servicio.equals(Servicio_Habitacion.SERVICIO_BRINDIS) ||
-                    servicio.equals(Servicio_Habitacion.BEBIDA_SIN_ALCOHOL)) {
-
-                costoPorConsumo = costoPorConsumo + servicio.getCosto();
-
-            }
-        }
-
-        return costoPorConsumo;
-    }
+//    //Funcion para saber los consumos extras. sino  tuvo devuelve valor $0
+//    public static double consumosExtra(Habitacion h) {
+//
+//        double costoPorConsumo = 0;
+//
+//        for (int i = 0; i < h.getServicios().size(); i++) {
+//
+//            Servicio_Habitacion servicio = h.getServicios().get(i);
+//
+//            if (servicio.equals(Servicio_Habitacion.MASAJE) ||
+//                    servicio.equals(Servicio_Habitacion.SPA) ||
+//                    servicio.equals(Servicio_Habitacion.SAUNA) ||
+//                    servicio.equals(Servicio_Habitacion.HIDROMASAJE) ||
+//                    servicio.equals(Servicio_Habitacion.DESAYUNO) ||
+//                    servicio.equals(Servicio_Habitacion.ALMUERZO_CENA) ||
+//                    servicio.equals(Servicio_Habitacion.SERVICIO_BRINDIS) ||
+//                    servicio.equals(Servicio_Habitacion.BEBIDA_SIN_ALCOHOL)) {
+//
+//                costoPorConsumo = costoPorConsumo + servicio.getCosto();
+//
+//            }
+//        }
+//
+//        return costoPorConsumo;
+//    }
 
 //
 //    //Chequear dudosaa !!!!!!!!!!!!!

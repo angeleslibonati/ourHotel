@@ -18,7 +18,7 @@ public class Habitacion {
     protected Tipo_Habitacion tipoHabitacion;
     protected Tipo_Cama tipoCama;
     protected Estado_Habitacion estadoHabitacion;
-    protected ArrayList<Servicio_Habitacion> servicios;
+    protected List<Servicio> servicios;
 
     //Constructores
     public Habitacion() {
@@ -26,7 +26,7 @@ public class Habitacion {
     }
 
 
-    public Habitacion(int numHabitacion, double valorPorNoche, int cantPersonas, Tipo_Habitacion tipoHabitacion, Tipo_Cama tipoCama, Estado_Habitacion estadoHabitacion, ArrayList<Servicio_Habitacion> servicios) {
+    public Habitacion(int numHabitacion, double valorPorNoche, int cantPersonas, Tipo_Habitacion tipoHabitacion, Tipo_Cama tipoCama, Estado_Habitacion estadoHabitacion, List<Servicio> servicios) {
         this.numHabitacion = numHabitacion;
         this.valorPorNoche = valorPorNoche;
         this.cantPersonas = cantPersonas;
@@ -45,11 +45,11 @@ public class Habitacion {
         this.estadoHabitacion = estadoHabitacion;
     }
 
-    public ArrayList<Servicio_Habitacion> getServicios() {
+    public List<Servicio> getServicios() {
         return servicios;
     }
 
-    public void setServicios(ArrayList<Servicio_Habitacion> servicios) {
+    public void setServicios(List<Servicio> servicios) {
         this.servicios = servicios;
     }
 

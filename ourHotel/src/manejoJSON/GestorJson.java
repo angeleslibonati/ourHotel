@@ -50,17 +50,23 @@ public class GestorJson {
                 habitacion.setEstadoHabitacion(estadoHabitacion);
 
                 JSONArray jServicios = jHabitacion.getJSONArray("servicios");
-                ArrayList<Servicio_Habitacion> servicios = new ArrayList<>();
+                ArrayList<Servicio> servicios = new ArrayList<>();
                 for (int j = 0; j < jServicios.length(); j++) {
-                    servicios.add (Servicio_Habitacion.valueOf(jServicios.getString(j).trim().toUpperCase()));
+                    JSONObject jServicio = jServicios.getJSONObject(j);
+                    Servicio servicio = new Servicio();
+
+                    servicio.setNombre(Servicio_Habitacion.valueOf(jServicio.getString("nombre").trim().toUpperCase()));
+                    servicio.setCosto(jServicio.getDouble("costo"));
+
+                    servicios.add(servicio);
                 }
+
                 habitacion.setServicios(servicios);
-
-
-                hotel.getHabitaciones().add(habitacion);
+                habitaciones.add(habitacion);
 
             }
 
+            hotel.setHabitaciones(habitaciones);
 
             // Procesar pasajeros
             JSONArray jPasajeros = jHotel.getJSONObject("persona").getJSONArray("pasajero");
@@ -129,13 +135,18 @@ public class GestorJson {
     }
 
     public static void toJsonHotel(Hotel hotel) {
-        JSONObject jHotel = new JSONObject();
-        JSONArray jHabitaciones = new JSONArray();
+
         JSONArray jPasajeros = new JSONArray();
         JSONArray jEmpleados = new JSONArray();
 
         try {
 
+            JSONObject json = new JSONObject(JSONUtiles.leer("hotel.json"));
+
+            // Crear la estructura de hotel dentro del JSON
+            JSONObject jHotel = new JSONObject();
+
+            JSONArray jHabitaciones = new JSONArray();
             // Convertir habitaciones a JSON
             for (Habitacion habitacion : hotel.getHabitaciones()) {
                 JSONObject jHabitacion = new JSONObject();
@@ -147,8 +158,12 @@ public class GestorJson {
                 jHabitacion.put("estadoHabitacion", habitacion.getEstadoHabitacion().toString().toLowerCase());
 
                 JSONArray jServicios = new JSONArray();
-                for (Servicio_Habitacion servicio : habitacion.getServicios()) {
-                    jServicios.put(servicio.name());  // Usar el nombre del enum tal cual para consistencia con el JSON de entrada
+                for (Servicio servicio : habitacion.getServicios()) {
+                   JSONObject jServicio = new JSONObject();
+
+                   jServicio.put("nombre", servicio.getNombre().toString().toLowerCase());
+                   jServicio.put("costo", servicio.getCosto());
+                   jServicios.put(jServicio);
                 }
                 jHabitacion.put("servicios", jServicios);
 
@@ -210,10 +225,14 @@ public class GestorJson {
             jPersona.put("pasajero", jPasajeros);
             jPersona.put("empleado", jEmpleados);
 
-            // Completar el JSON final de hotel
-            jHotel.put("persona", jPersona);
+            // Agregar "persona" y otros datos al objeto hotel
 
-            JSONUtiles.grabarObjeto(jHotel);  // Usa el método grabarObjeto para escribir directamente el objeto hotel
+            jHotel.put("persona", jPersona);
+            json.put("hotel", jHotel); // Agregar el objeto jHotel al JSON completo
+
+            // Grabar el JSON completo de nuevo en el archivo
+
+            JSONUtiles.grabarObjeto(json);
 
 
         } catch (JSONException l) {

@@ -1,14 +1,15 @@
 package Clases;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Hotel {
 
 
 
-    ArrayList<Pasajero> pasajeros ;
-    ArrayList <Empleado> empleados;
-    ArrayList <Habitacion> habitaciones;
+    List <Pasajero> pasajeros ;
+    List <Empleado> empleados;
+    List <Habitacion> habitaciones;
 
     //Constructor
 
@@ -18,28 +19,27 @@ public class Hotel {
         this.habitaciones = new ArrayList<>();
     }
 
-    public ArrayList<Pasajero> getPasajeros() {
+    public List<Pasajero> getPasajeros() {
         return pasajeros;
     }
 
-    public void setPasajeros(ArrayList<Pasajero> pasajeros) {
+    public void setPasajeros(List<Pasajero> pasajeros) {
         this.pasajeros = pasajeros;
     }
 
-    public ArrayList<Empleado> getEmpleados() {
+    public List<Empleado> getEmpleados() {
         return empleados;
     }
 
-    public void setEmpleados(ArrayList<Empleado> empleados) {
+    public void setEmpleados(List<Empleado> empleados) {
         this.empleados = empleados;
     }
 
-    public ArrayList<Habitacion> getHabitaciones() {
+    public List<Habitacion> getHabitaciones() {
         return habitaciones;
     }
 
-    public void setHabitacions(ArrayList<Habitacion> habitaciones) {
-        this.habitaciones = habitaciones;
+    public void setHabitaciones(List<Habitacion> habitaciones) {this.habitaciones = habitaciones;
     }
 
     @Override
