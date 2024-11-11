@@ -40,11 +40,10 @@ public class Direccion {
         this.ciudad = ciudad;
     }
 
-    @Override
-    public String toString() {
-        return "Direccion:" +
-                "\ncalle='" + calle + '\'' +
-                "\naltura=" + altura +
-                "\nciudad='" + ciudad;
+
+    public void mostrarDireccion(){
+        Menu.centradoOpciones("Direccion: " + this.calle);
+        Menu.centradoOpciones("Altura: " + this.altura);
+        Menu.centradoOpciones("Ciudad: " + this.ciudad);
     }
 }

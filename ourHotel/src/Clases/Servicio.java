@@ -3,32 +3,40 @@ import Enum.Servicio_Habitacion;
 
 public class Servicio {
 
-    protected Servicio_Habitacion nombre;
+    protected Servicio_Habitacion nombreServicio;
     protected double costo;
 
     public Servicio(){
 
     }
     public Servicio(Servicio_Habitacion nombreServicio, double costo) {
-        this.nombre = nombre;
+        this.nombreServicio = nombreServicio;
         this.costo = costo;
     }
 
-    public Servicio_Habitacion getNombre() {
-        return nombre;
+    public Servicio_Habitacion getNombreServicio() {
+        return nombreServicio;
     }
 
     public double getCosto() {
         return costo;
     }
 
-    public void setNombre(Servicio_Habitacion nombre) {
-        this.nombre = nombre;
+    public void setNombreServicio(Servicio_Habitacion nombre) {
+        this.nombreServicio = nombre;
     }
 
     public void setCosto(double costo) {
         this.costo = costo;
     }
 
+
+    public void mostrarServicio (){
+
+        Menu.dibujarTerminacion();
+        Menu.encabezadoMenu("Servicio Extra");
+        Menu.centradoOpciones("Servicio: " + this.nombreServicio);
+        Menu.centradoOpciones("Costo: $ " + this.costo);
+    }
 
 }

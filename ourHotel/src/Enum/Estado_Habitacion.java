@@ -6,4 +6,6 @@ public enum Estado_Habitacion {
     REPARACION,
     LIBRE,
     OCUPADA;
+
+
 }
