@@ -6,8 +6,6 @@ import Clases.Reserva;
 import Enum.*;
 import Excepciones.ReservaInvalidaException;
 import manejoJSON.GestorJson;
-
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 

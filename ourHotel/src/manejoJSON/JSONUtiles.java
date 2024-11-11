@@ -11,9 +11,9 @@ import org.json.JSONTokener;
 
 public class JSONUtiles {
 
-    public static void grabar(JSONArray array) {
+    public static void grabar(JSONArray array, String archivo) {
         try {
-            FileWriter file = new FileWriter("hotel.json");
+            FileWriter file = new FileWriter(archivo);
             file.write(array.toString());
             file.flush();
             file.close();
@@ -28,16 +28,16 @@ public class JSONUtiles {
         JSONTokener tokener = null;
 
         try {
-            tokener = new JSONTokener(new FileReader("hotel.json"));
+            tokener = new JSONTokener(new FileReader(archivo));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return tokener;
     }
 
-    public static void grabarObjeto(JSONObject object) {
+    public static void grabarObjeto(JSONObject object, String archivo) {
         try {
-            FileWriter file = new FileWriter("hotel.json");
+            FileWriter file = new FileWriter(archivo);
             file.write(object.toString());
             file.flush();
             file.close();

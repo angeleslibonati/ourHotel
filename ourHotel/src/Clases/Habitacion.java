@@ -2,16 +2,8 @@ package Clases;
 import Enum.Estado_Habitacion;
 import Enum.Tipo_Cama;
 import Enum.Tipo_Habitacion;
-import manejoJSON.JSONUtiles;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
-import Enum.*;
 
-import java.util.ArrayList;
 
 public class Habitacion {
     protected int numHabitacion;
@@ -21,7 +13,7 @@ public class Habitacion {
     protected Tipo_Cama tipoCama;
     protected Estado_Habitacion estadoHabitacion;
     protected ArrayList<Servicio> servicios;
-    protected ArrayList<Servicio_Habitacion> servicios;
+
 
     //Constructores
     public Habitacion() {
@@ -29,32 +21,20 @@ public class Habitacion {
     }
 
 
-    public Habitacion(int numHabitacion, double valorPorNoche, int cantPersonas, Tipo_Habitacion tipoHabitacion, Tipo_Cama tipoCama, Estado_Habitacion estadoHabitacion, ArrayList<Servicio_Habitacion> servicios) {
+    public Habitacion(int numHabitacion, double valorPorNoche, int cantPersonas, Tipo_Habitacion tipoHabitacion, Tipo_Cama tipoCama, Estado_Habitacion estadoHabitacion) {
         this.numHabitacion = numHabitacion;
         this.valorPorNoche = valorPorNoche;
         this.cantPersonas = cantPersonas;
         this.tipoHabitacion = tipoHabitacion;
         this.tipoCama = tipoCama;
         this.estadoHabitacion = estadoHabitacion;
-        this.servicios = servicios;
+        this.servicios = new ArrayList<>();
     }
 
     public int getNumHabitacion() {
         return numHabitacion;
     }
 
-
-    public void setEstadoHabitacion(Estado_Habitacion estadoHabitacion) {
-        this.estadoHabitacion = estadoHabitacion;
-    }
-
-    public ArrayList<Servicio_Habitacion> getServicios() {
-        return servicios;
-    }
-
-    public void setServicios(ArrayList<Servicio_Habitacion> servicios) {
-        this.servicios = servicios;
-    }
 
     public double getValorPorNoche() {
         return valorPorNoche;
@@ -129,16 +109,4 @@ public class Habitacion {
     }
 
 
-    @Override
-    public String toString() {
-        return "Habitacion{" +
-                "numHabitacion=" + numHabitacion +
-                ", valorPorNoche=" + valorPorNoche +
-                ", cantPersonas=" + cantPersonas +
-                ", tipoHabitacion=" + tipoHabitacion +
-                ", tipoCama=" + tipoCama +
-                ", estadoHabitacion=" + estadoHabitacion +
-                ", servicios=" + servicios +
-                '}';
-    }
 }

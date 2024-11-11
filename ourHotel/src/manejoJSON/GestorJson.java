@@ -1,34 +1,32 @@
 package manejoJSON;
 
+import Clases.*;
+import Enum.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-import Clases.*;
-import Enum.*;
-import static Enum.Tipo_Usuario.*;
-import static manejoJSON.JSONUtiles.grabar;
+import java.util.Date;
 
 public class GestorJson {
 
-
-    public static Hotel fromJsonHotel() {
+    public static final String archivo_hotel = "hotel.json";
+    public static final String archivo_reservas = "reserva.json";
+    public static Hotel fromJsonHotel() throws JSONException {
 
         Hotel hotel = new Hotel();
 
         try {
 
-            JSONObject json = new JSONObject(JSONUtiles.leer("hotel.json"));
+            JSONObject json = new JSONObject(JSONUtiles.leer(archivo_hotel));
             System.out.println(json.toString(2));
             JSONObject jHotel = json.getJSONObject("hotel");
 
             JSONArray jHabitaciones = jHotel.getJSONArray("habitacion");
-            List<Habitacion> habitaciones = new ArrayList<>();
+            ArrayList<Habitacion> habitaciones = new ArrayList<>();
 
             for (int i = 0; i < jHabitaciones.length(); i++) {
 
@@ -50,17 +48,23 @@ public class GestorJson {
                 habitacion.setEstadoHabitacion(estadoHabitacion);
 
                 JSONArray jServicios = jHabitacion.getJSONArray("servicios");
-                ArrayList<Servicio_Habitacion> servicios = new ArrayList<>();
+                ArrayList<Servicio> servicios = new ArrayList<>();
                 for (int j = 0; j < jServicios.length(); j++) {
-                    servicios.add (Servicio_Habitacion.valueOf(jServicios.getString(j).trim().toUpperCase()));
+                    JSONObject jServicio = jServicios.getJSONObject(j);
+                    Servicio servicio = new Servicio();
+
+                    servicio.setNombreServicio(Servicio_Habitacion.valueOf(jServicio.getString("nombre").trim().toUpperCase()));
+                    servicio.setCosto(jServicio.getDouble("costo"));
+
+                    servicios.add(servicio);
                 }
+
                 habitacion.setServicios(servicios);
-
-
-                hotel.getHabitaciones().add(habitacion);
+                habitaciones.add(habitacion);
 
             }
 
+            hotel.setHabitacions(habitaciones);
 
             // Procesar pasajeros
             JSONArray jPasajeros = jHotel.getJSONObject("persona").getJSONArray("pasajero");
@@ -129,13 +133,18 @@ public class GestorJson {
     }
 
     public static void toJsonHotel(Hotel hotel) {
-        JSONObject jHotel = new JSONObject();
-        JSONArray jHabitaciones = new JSONArray();
+
         JSONArray jPasajeros = new JSONArray();
         JSONArray jEmpleados = new JSONArray();
 
         try {
 
+            JSONObject json = new JSONObject(JSONUtiles.leer("hotel.json"));
+
+            // Crear la estructura de hotel dentro del JSON
+            JSONObject jHotel = new JSONObject();
+
+            JSONArray jHabitaciones = new JSONArray();
             // Convertir habitaciones a JSON
             for (Habitacion habitacion : hotel.getHabitaciones()) {
                 JSONObject jHabitacion = new JSONObject();
@@ -147,8 +156,12 @@ public class GestorJson {
                 jHabitacion.put("estadoHabitacion", habitacion.getEstadoHabitacion().toString().toLowerCase());
 
                 JSONArray jServicios = new JSONArray();
-                for (Servicio_Habitacion servicio : habitacion.getServicios()) {
-                    jServicios.put(servicio.name());  // Usar el nombre del enum tal cual para consistencia con el JSON de entrada
+                for (Servicio servicio : habitacion.getServicios()) {
+                    JSONObject jServicio = new JSONObject();
+
+                    jServicio.put("nombre", servicio.getNombreServicio().toString().toLowerCase());
+                    jServicio.put("costo", servicio.getCosto());
+                    jServicios.put(jServicio);
                 }
                 jHabitacion.put("servicios", jServicios);
 
@@ -210,10 +223,14 @@ public class GestorJson {
             jPersona.put("pasajero", jPasajeros);
             jPersona.put("empleado", jEmpleados);
 
-            // Completar el JSON final de hotel
-            jHotel.put("persona", jPersona);
+            // Agregar "persona" y otros datos al objeto hotel
 
-            JSONUtiles.grabarObjeto(jHotel);  // Usa el método grabarObjeto para escribir directamente el objeto hotel
+            jHotel.put("persona", jPersona);
+            json.put("hotel", jHotel); // Agregar el objeto jHotel al JSON completo
+
+            // Grabar el JSON completo de nuevo en el archivo
+
+            JSONUtiles.grabarObjeto(json, archivo_hotel);
 
 
         } catch (JSONException l) {
@@ -223,7 +240,61 @@ public class GestorJson {
     }
 
 
+    public static ArrayList<Reserva> mapeoReserva () throws ParseException {
 
+        ArrayList <Reserva> misReservas = new ArrayList<>();
+        try {
+            JSONObject reserva = new JSONObject(JSONUtiles.leer(archivo_reservas));
+
+            JSONArray JReserva = reserva.getJSONArray("reserva");
+
+
+            for (int i = 0; i < JReserva.length(); i++){
+                JSONObject OReserva = JReserva.getJSONObject(i);
+                Reserva miReserva = new Reserva();
+
+                JSONObject OHabitacion = OReserva.getJSONObject("habitacion");
+                Habitacion miHabitacion = new Habitacion();
+
+                miHabitacion.setNumHabitacion(OHabitacion.getInt("numHabitacion"));
+
+                JSONObject OPasajero = OReserva.getJSONObject("pasajero");
+                Pasajero miPasajero = new Pasajero();
+
+                miPasajero.setDni(OPasajero.getString("dni"));
+
+                miReserva.setHabitacion(miHabitacion);
+                miReserva.setPasajero(miPasajero);
+                miReserva.setIdReserva(OReserva.getInt("idReserva"));
+
+                //Convertir un String a un valor tipo Date
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date fechaInicio = format.parse(OReserva.getString("fechaInicio"));
+                miReserva.setFechaInicio(fechaInicio);
+
+                Date fechaFin = format.parse(OReserva.getString("fechaFin"));
+                miReserva.setFechaFin(fechaFin);
+
+                // Convertir los valores de cadena a los enums correspondientes
+
+                miReserva.setEstadoReserva(Estado_Reserva.fromString(OReserva.getString("estadoReserva")));
+
+                JSONObject OEmpleado = OReserva.getJSONObject("empleado");
+
+                Empleado miEmpleado = new Empleado();
+
+                miEmpleado.setId(OEmpleado.getInt("id"));
+
+                miReserva.setEmpleado(miEmpleado);
+
+                misReservas.add(miReserva);
+            }
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return misReservas;
+    }
 
 }
 
