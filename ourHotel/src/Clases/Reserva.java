@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Reserva {
 
-    protected  int idReserva = ++Reserva.contador;
+    protected int idReserva = ++Reserva.contador;
     private static int contador = 0;
     protected Habitacion habitacion; //traer num habitacion
     protected Pasajero pasajero; //traer dni
@@ -17,7 +17,7 @@ public class Reserva {
     protected Estado_Reserva estadoReserva;
 
     //Constructor
-    public Reserva (){
+    public Reserva() {
 
     }
 
@@ -86,12 +86,12 @@ public class Reserva {
         this.empleado = empleado;
     }
 
-    private String getFormattedDate(Date date, String format){
+    private String getFormattedDate(Date date, String format) {
         return new SimpleDateFormat(format).format(date);
     }
 
 
-    public void mostrarUnaReserva (){
+    public void mostrarUnaReserva() {
 
         Menu.dibujarTerminacion();
         Menu.encabezadoMenu("Reserva");
@@ -103,7 +103,6 @@ public class Reserva {
         Menu.centradoOpciones("Fecha Fin: " + this.getFormattedDate(getFechaFin(), "yyyy-MM-dd"));
         Menu.centradoOpciones("Estado Reserva: " + this.getEstadoReserva());
         Menu.dibujarTerminacion();
-
     }
 
 

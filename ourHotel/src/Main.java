@@ -1,8 +1,7 @@
 import Clases.Menu;
 import Clases.Persona;
 import Clases.Reserva;
-import Gestores.GestorHabitacion;
-import Gestores.GestorReserva;
+//import Gestores.GestorReserva;
 import manejoJSON.GestorJson;
 
 import java.text.ParseException;
