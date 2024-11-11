@@ -84,7 +84,7 @@ public class Habitacion {
         this.servicios = servicios;
     }
 
-    public void mostrarHabitacion (){
+    public void mostrarHabitacion () {
 
         Menu.dibujarTerminacion();
         Menu.encabezadoMenu("Habitacion");
@@ -95,24 +95,14 @@ public class Habitacion {
         Menu.centradoOpciones("Tipo de Cama: " + this.tipoCama);
         Menu.centradoOpciones("Estado de la Habitacion: " + this.estadoHabitacion);
         Menu.dibujarTerminacion();
+    }
+
     public void marcarHabitacionLibre(){
         if(getEstadoHabitacion().equals(Estado_Habitacion.OCUPADA))
         {
             this.estadoHabitacion = Estado_Habitacion.LIBRE;
         }
-
     }
 
 
-
-    @Override
-    public String toString() {
-        return "Habitacion:" +
-                "\nnumHabitacion=" + numHabitacion +
-                "\nvalorPorNoche=" + valorPorNoche +
-                "\ncantPersonas=" + cantPersonas +
-                "\ntipoHabitacion=" + tipoHabitacion +
-                "\ntipoCama=" + tipoCama +
-                "\nestadoHabitacion=" + estadoHabitacion;
-    }
 }

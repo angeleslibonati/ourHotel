@@ -27,11 +27,11 @@ public class Main {
             throw new RuntimeException(e);
         }
         ArrayList<Persona>misPersonas = new ArrayList<>();
+
         //Inicio de menu
 
-
        Menu.menuPrincipal(entrada, misPersonas);
-     //  Menu.menuPrincipal(entrada);
+
 
     }
 }

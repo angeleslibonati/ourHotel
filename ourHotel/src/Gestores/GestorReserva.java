@@ -1,6 +1,7 @@
 package Gestores;
 
 import Clases.Habitacion;
+import Clases.Menu;
 import Clases.Reserva;
 import Enum.*;
 import Excepciones.ReservaInvalidaException;
@@ -56,7 +57,7 @@ public class GestorReserva {
 
         if(reservas.isEmpty())
         {
-            System.out.println("No se encontraron Reservas Activas");
+            Menu.centradoOpciones("No se encontraron Reservas Activas");
         }
 
         return activas;
@@ -67,23 +68,17 @@ public class GestorReserva {
         if (reserva != null) {
 
             reserva.setEstadoReserva(Estado_Reserva.CANCELADO);
-            System.out.println("La reserva numero " + numeroReserva + " ha sido cancelada.");
-
+            Menu.centradoOpciones("La reserva numero " + numeroReserva + " ha sido cancelada.");
 
             Habitacion habitacion = reserva.getHabitacion();
             if (habitacion != null) {
                 habitacion.setEstadoHabitacion(Estado_Habitacion.LIBRE);
-                System.out.println("La habitación " + habitacion.getNumHabitacion() + " ahora se encuentra Libre.");
+                Menu.centradoOpciones("La habitación " + habitacion.getNumHabitacion() + " ahora se encuentra Libre.");
             }
         } else {
             throw new ReservaInvalidaException("No se encontró ninguna reserva con el numero: " + numeroReserva);
         }
     }
-
-
-
-
-
 
     //cambia estado por reserva confirmada por check in
     public static int cambiaEstadoPorCheckIn (int idReserva){

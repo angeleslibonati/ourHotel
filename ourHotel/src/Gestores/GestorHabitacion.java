@@ -25,7 +25,7 @@ public class GestorHabitacion {
 
     public void mostrarTodasLasHabitaciones() {
         for (Habitacion habitacion : habitaciones) {
-            System.out.println(habitacion);
+            habitacion.mostrarHabitacion();
         }
     }
 
