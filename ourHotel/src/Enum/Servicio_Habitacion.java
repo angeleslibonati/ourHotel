@@ -28,4 +28,13 @@ public enum Servicio_Habitacion {
     public double getCosto() {
         return costo;
     }
+
+    public static Servicio_Habitacion fromString(String value) {
+        try {
+            return Servicio_Habitacion.valueOf(value.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+
+        }
+        return null;
+    }
 }

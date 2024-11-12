@@ -1,8 +1,9 @@
-import Clases.Menu;
-import Clases.Persona;
-import Clases.Reserva;
+import Clases.*;
 //import Gestores.GestorReserva;
+import Gestores.GestorHotel;
+import Gestores.GestorReserva;
 import manejoJSON.GestorJson;
+import org.json.JSONException;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -14,22 +15,25 @@ public class Main {
         Scanner entrada = new Scanner(System.in);
 
         //Mapeo de Json Hotel
+        Hotel hotel = new Hotel();
 
+        try {
+            GestorHotel miHotel = new GestorHotel();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
 
         //Mapeo de Json Reserva
-        ArrayList<Reserva> misReservas = new ArrayList<>();
-        try {
-            misReservas = GestorJson.mapeoReserva();
 
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        GestorReserva reserva = new GestorReserva();
+
         ArrayList<Persona>misPersonas = new ArrayList<>();
+        ArrayList<Pasajero>misPasjeros =new ArrayList<>();
 
         //Inicio de menu
 
-       Menu.menuPrincipal(entrada, misPersonas);
+       Menu.menuPrincipal(entrada, misPersonas,misPasjeros);
 
 
     }

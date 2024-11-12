@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class GestorReserva {
 
-    ArrayList<Reserva> reservas;
+    static ArrayList<Reserva> reservas;
 
     public GestorReserva() throws ParseException {
         this.reservas = new ArrayList<>();
@@ -28,7 +28,7 @@ public class GestorReserva {
 
     }
 
-    public Reserva buscarUnaReserva(int numeroReserva) throws ReservaInvalidaException {
+    public static Reserva buscarUnaReserva(int numeroReserva) throws ReservaInvalidaException {
         if (numeroReserva <= 0) {
             throw new ReservaInvalidaException("Debe ingresar un número mayor a 0");
         }
@@ -43,7 +43,7 @@ public class GestorReserva {
         throw new ReservaInvalidaException("No se encontró ninguna reserva con el número: " + numeroReserva);
     }
 
-    public ArrayList<Reserva> buscarReservasActiva() {
+    public static ArrayList<Reserva> buscarReservasActiva() {
         ArrayList<Reserva> activas = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
@@ -61,7 +61,9 @@ public class GestorReserva {
         return activas;
     }
 
-    public void cancelarReserva(int numeroReserva) throws ReservaInvalidaException {
+
+
+    public static void cancelarReserva(int numeroReserva) throws ReservaInvalidaException {
         Reserva reserva = buscarUnaReserva(numeroReserva);
         if (reserva != null) {
 
@@ -100,4 +102,21 @@ public class GestorReserva {
     }
 
 
+    public static ArrayList<Reserva> buscarReservasHistoricas() {
+        ArrayList<Reserva> historicas = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+
+            if (reserva.getEstadoReserva() == Estado_Reserva.FINALIZADO) {
+                historicas.add(reserva);
+            }
+        }
+
+        if(reservas.isEmpty())
+        {
+            Menu.centradoOpciones("No se encontraron Reservas Finallizadas");
+        }
+
+        return historicas;
+    }
 }

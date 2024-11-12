@@ -1,13 +1,19 @@
 package Gestores;
 
+import Clases.Hotel;
 import Clases.Menu;
-import Clases.Persona;
-import Excepciones.UsuarioYClaveIncorrectoException;
-
-import java.util.ArrayList;
-import java.util.Scanner;
+import manejoJSON.GestorJson;
+import org.json.JSONException;
 
 public class GestorHotel {
+
+    protected Hotel miHotel;
+
+    public GestorHotel() throws JSONException {
+        this.miHotel = new Hotel();
+
+        miHotel = GestorJson.fromJsonHotel();
+    }
 
 
 

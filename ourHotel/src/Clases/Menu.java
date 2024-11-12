@@ -1,12 +1,9 @@
 package Clases;
 
 import Excepciones.UsuarioYClaveIncorrectoException;
-import Gestores.GestorHotel;
+import Gestores.GestorPasajero;
 import Gestores.GestorReserva;
-import manejoJSON.GestorJson;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +11,7 @@ public class Menu {
 
     //menu
 
-    public static void menuPrincipal (Scanner scan, ArrayList<Persona>personas){
+    public static void menuPrincipal (Scanner scan, ArrayList<Persona>personas, ArrayList<Pasajero>pasajeros){
 
         int opc = 0;
         imprimirMenu();
@@ -37,9 +34,9 @@ public class Menu {
 
                             if (e.getRol().equals("RECEPCIONISTA")) {
 
-                                menuRecepcionista(scan, personas);
+                                menuRecepcionista(scan, personas,pasajeros);
                             } else {
-                                menuAdmin(scan, personas);
+                                menuAdmin(scan, personas,pasajeros);
                             }
                         }
                     } catch (Exception ex) {
@@ -53,37 +50,38 @@ public class Menu {
                 // Tiene 3 reintentos al momento de ingresar
                 int flag = 0;
 
-                do {
-                    usuario = ingresoUsuarioYClave(scan, "Usuario");
-                    contra = ingresoUsuarioYClave(scan, "Contrasenia");
-
-                    for (int i = 0; i<personas.size(); i++){
-
-                        Persona p = new Pasajero ();
-                        p = personas.get(i);
-                        try {
-
-                            if(p.getUsuario().equals(usuario) && p.getContrasenia().equals(contra)){
-
-                                menuPasajero(scan, personas);
-                                flag = 4;
-                            }
-                        } catch (Exception e) {
-                            throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
-                        }
-                    }
-                    flag ++;
-                    if (flag < 3){
-                        centradoOpciones("\n");
-                        centradoOpciones("Ingrese nuevamente");
-                    }
-                }while (flag < 3);
+//                do {
+                   usuario = ingresoUsuarioYClave(scan, "Usuario");
+//                    contra = ingresoUsuarioYClave(scan, "Contrasenia");
+//
+//                    for (int i = 0; i<personas.size(); i++){
+//
+//                        Persona p = new Pasajero ();
+//                        p = personas.get(i);
+//                        try {
+//
+//                            if(p.getUsuario().equals(usuario) && p.getContrasenia().equals(contra)){
+//
+                               menuPasajero(scan, personas, usuario,pasajeros);
+//                                flag = 4;
+//                            }
+//                        } catch (Exception e) {
+//                            throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
+//                        }
+//                    }
+//                    flag ++;
+//                    if (flag < 3){
+//                        centradoOpciones("\n");
+//                        centradoOpciones("Ingrese nuevamente");
+//                    }
+//                }while (flag < 3);
 
                 break;
 
             case 0:
                 //Salir
-
+                //Deberia hacer el llamado a cargar el json para persistencia de informacion.
+                
                 break;
 
             default:
@@ -94,7 +92,7 @@ public class Menu {
 
 
     //Sub Menu para recepcionista
-    public static void menuRecepcionista (Scanner scan, ArrayList<Persona>personas){
+    public static void menuRecepcionista (Scanner scan, ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
 
         imprimirMenuRecepcion();
          int opc = elegirOpcion(scan);
@@ -102,31 +100,32 @@ public class Menu {
         switch (opc){
 
             case 1:
-                menuAbmPasajero (scan, personas);
+                menuAbmPasajero (scan, personas,pasajeros);
                 break;
             case  2:
-                MenuAbmReserva(scan,personas);
+                MenuAbmReserva(scan,personas,pasajeros);
                 break;
 
             case 3:
                 //Hacer check in
                 encabezadoMenu("Check in");
+                
                 break;
             case 4:
                 //hacer check out
                 encabezadoMenu("Check out");
             case 5:
-                menuHabitacion(scan,personas);
+                menuHabitacion(scan,personas,pasajeros);
 
                 break;
             case 0:
-                menuPrincipal(scan, personas);
+                menuPrincipal(scan, personas,pasajeros);
 
                 break;
             default:
         }       centradoOpciones("Opcion invalida");
     }
-    public static void menuAbmPasajero (Scanner scan, ArrayList<Persona>personas){
+    public static void menuAbmPasajero (Scanner scan, ArrayList<Persona>personas, ArrayList<Pasajero>pasajeros){
         imprimirAbmPasajero();
         int opc = elegirOpcion(scan);
 
@@ -148,14 +147,14 @@ public class Menu {
                 break;
             case 0:
                 //volver atras
-                menuRecepcionista(scan, personas);
+                menuRecepcionista(scan, personas,pasajeros);
                 break;
 
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuHabitacion (Scanner scan,ArrayList<Persona>personas){
+    public static void menuHabitacion (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
         imprimirMenuHabitacion();
         int opc = elegirOpcion(scan);
 
@@ -175,13 +174,13 @@ public class Menu {
                 break;
             case 0:
                 //volver atras
-                menuRecepcionista(scan,personas);
+                menuRecepcionista(scan,personas,pasajeros);
                 break;
             default:
         }       centradoOpciones("Opcion invalida");
 
     }
-    public static void MenuAbmReserva (Scanner scan,ArrayList<Persona>personas){
+    public static void MenuAbmReserva (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
 
         imprimirAbmReserva();
         int opc = elegirOpcion(scan);
@@ -210,7 +209,7 @@ public class Menu {
 
                 break;
             case 0:
-                menuRecepcionista(scan,personas);
+                menuRecepcionista(scan,personas,pasajeros);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
@@ -219,7 +218,7 @@ public class Menu {
     // --
 
     //Sub Menu para administrador
-    public static void menuAdmin (Scanner scan,ArrayList<Persona>personas){
+    public static void menuAdmin (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
         imprimirMenuAdmin ();
         int opc = elegirOpcion(scan);
 
@@ -227,29 +226,29 @@ public class Menu {
 
             case 1:
                 //abm empleado
-                menuAbmEmpleado (scan,personas);
+                menuAbmEmpleado (scan,personas,pasajeros);
 
                 break;
             case 2:
                 //abm habitacion
-                menuAbmHabitacion (scan,personas);
+                menuAbmHabitacion (scan,personas,pasajeros);
                 break;
             case 3:
-                menuRecepcionista(scan,personas);
+                menuRecepcionista(scan,personas,pasajeros);
                 break;
             case 4:
                 //back up
                 break;
             case 0:
                 //volver atras
-                menuPrincipal(scan,personas);
+                menuPrincipal(scan,personas,pasajeros);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
 
         }
     }
-    public static void menuAbmEmpleado (Scanner scan,ArrayList<Persona>personas){
+    public static void menuAbmEmpleado (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
         imprimirAbmEmpleado();
         int opc = elegirOpcion(scan);
 
@@ -266,7 +265,7 @@ public class Menu {
                 break;
             case 0:
                 //volver atras
-                menuAdmin(scan,personas);
+                menuAdmin(scan,personas,pasajeros);
                 break;
 
             default:
@@ -274,7 +273,7 @@ public class Menu {
 
         }
     }
-    public static void menuAbmHabitacion (Scanner scan,ArrayList<Persona>personas){
+    public static void menuAbmHabitacion (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
         imprimirAbmHabitacion();
         int opc = elegirOpcion(scan);
 
@@ -290,7 +289,7 @@ public class Menu {
                 //modificar una habitacion.
                 break;
             case 0:
-                menuAdmin(scan,personas);
+                menuAdmin(scan,personas,pasajeros);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
@@ -300,34 +299,37 @@ public class Menu {
     // --
 
     //Sub Menu para pasajero
-    public static void menuPasajero (Scanner scan,ArrayList<Persona>personas){
+    public static void menuPasajero (Scanner scan,ArrayList<Persona>personas, String usuario, ArrayList<Pasajero>pasajeros){
+
         imprimirMenuPasajero();
         int opc = elegirOpcion(scan);
-
 
         switch (opc){
 
             case 1:
                 encabezadoMenu("Datos Personales");
-                //muestra datos del pasajero.
+                GestorPasajero.mostrarPasajero(GestorPasajero.buscarPasajero(usuario,pasajeros));
+
                 break;
             case 2:
                 //reservas
-                menuReserva(scan,personas);
+                menuReserva(scan,personas,usuario,pasajeros);
+
                 break;
             case 3:
                 //Servicios extra
-                menuServiciosExtras(scan,personas);
+                menuServiciosExtras(scan,personas,usuario,pasajeros);
+
                 break;
             case 0:
                 //Volver atras
-                menuPrincipal(scan,personas);
+                menuPrincipal(scan,personas,pasajeros);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuReserva (Scanner scan,ArrayList<Persona>personas){
+    public static void menuReserva (Scanner scan,ArrayList<Persona>personas,String usuario, ArrayList<Pasajero>pasajeros){
         imprimirMenuReserva();
         int opc = elegirOpcion(scan);
 
@@ -338,22 +340,41 @@ public class Menu {
 
                 break;
             case 2:
+
                 //cancelar reserva
+                encabezadoMenu("Cancelacion de Reserva");
+                centradoIngreso("Ingrese el numero de reserva");
+                int numReserva = scan.nextInt();
+                scan.nextLine();
+                GestorReserva.cancelarReserva(numReserva);
+
                 break;
             case 3:
                 //ver reservas activas
+                encabezadoMenu("Reservas Activas");
+
+                ArrayList<Reserva>reservasActivas =  GestorReserva.buscarReservasActiva();
+
+                GestorReserva.mostrarReservas(reservasActivas);
+
+                menuReserva(scan, personas, usuario, pasajeros);
                 break;
             case 4:
                 //ver historico
+                encabezadoMenu("Reservas Finalizadas");
+
+                ArrayList<Reserva>reservasFinalizadas = GestorReserva.buscarReservasHistoricas();
+                GestorReserva.mostrarReservas(reservasFinalizadas);
+                menuReserva(scan, personas, usuario, pasajeros);
                 break;
             case 0:
-                menuPasajero(scan,personas);
+                menuPasajero(scan,personas,usuario,pasajeros);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServiciosExtras (Scanner scan,ArrayList<Persona>personas){
+    public static void menuServiciosExtras (Scanner scan,ArrayList<Persona>personas,String usuario, ArrayList<Pasajero>pasajeros){
         imprimirMenuServExtras();
         int opc = elegirOpcion(scan);
 
@@ -361,20 +382,20 @@ public class Menu {
 
             case 1:
                 //Actividades disponibles.
-                menuActividades(scan,personas);
+                menuActividades(scan,personas,usuario,pasajeros);
                 break;
             case 2:
                 //Servicio a la habitacion
-                menuServHabitacion(scan,personas);
+                menuServHabitacion(scan,personas,usuario,pasajeros);
                 break;
             case 0:
-                menuPasajero(scan,personas);
+                menuPasajero(scan,personas,usuario,pasajeros);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuActividades(Scanner scan,ArrayList<Persona>personas){
+    public static void menuActividades(Scanner scan,ArrayList<Persona>personas,String usuario, ArrayList<Pasajero>pasajeros){
 
         imprimirMenuActividades();
         int opc = elegirOpcion(scan);
@@ -382,28 +403,32 @@ public class Menu {
         switch (opc){
             case 1:
                 //masajes
-                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                encabezadoMenu("Masajes");
+                confirmacionServicio(scan, personas,usuario,pasajeros);
                 break;
             case 2:
                 //spa
-                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                encabezadoMenu("Spa");
+                confirmacionServicio(scan, personas,usuario,pasajeros);
                 break;
             case 3:
                 //sauna
-                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                encabezadoMenu("Sauna");
+                confirmacionServicio(scan, personas,usuario,pasajeros);
                 break;
             case 4:
                 //hidromasaje
-                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                encabezadoMenu("Hidromasaje");
+                confirmacionServicio(scan, personas,usuario,pasajeros);
                 break;
             case 0:
-                menuServiciosExtras(scan, personas);
+                menuServiciosExtras(scan, personas,usuario,pasajeros);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServHabitacion (Scanner scan,ArrayList<Persona>personas){
+    public static void menuServHabitacion (Scanner scan,ArrayList<Persona>personas, String usuario, ArrayList<Pasajero>pasajeros){
 
         imprimirMenuServHabitacion();
         int opc = elegirOpcion(scan);
@@ -412,22 +437,26 @@ public class Menu {
 
             case 1:
                 //Solicitar desayuno en la habitacion
-                //Adicional el costo.
+                encabezadoMenu("Desayuno");
+                confirmacionServicio(scan, personas,usuario,pasajeros);
                 break;
             case 2:
                 //Solicitar almuerzo o cena en la habitacion.
-                //Adicional el costo del servicio mas el valor de la comida/menu
+                encabezadoMenu("Almuerzo-Cena");
+                confirmacionServicio(scan, personas,usuario,pasajeros);
                 break;
             case 3:
                 //Servicio de brindis
-                //Adicional el costo mas la bebida que se lleve
+                encabezadoMenu("Servicio de Brindis");
+                confirmacionServicio(scan, personas,usuario,pasajeros);
                 break;
             case 4:
                 //bebida sin alcohol
-                //adicional el costo de las bebidas y cantidades.
+                encabezadoMenu("Bebidas");
+                confirmacionServicio(scan, personas,usuario,pasajeros);
                 break;
             case 0:
-                menuServiciosExtras(scan,personas);
+                menuServiciosExtras(scan,personas,usuario, pasajeros);
                 break;
             default:
                 centradoOpciones("opcion invalida");
@@ -626,6 +655,23 @@ public class Menu {
         return scan.nextLine();
     }
 
+    public static void confirmacionServicio (Scanner scan, ArrayList<Persona>personas,String usuario,ArrayList<Pasajero>pasajeros){
+        Servicio servicio = new Servicio();
+        ArrayList<Servicio>servicios = new ArrayList<>();
+        int confirmar = 0;
 
+        centradoOpciones("Valor: $ " + servicio.getCosto() + ".-");
+        centradoOpciones("1. Confirmar");
+        centradoOpciones("0. Rechazar");
+        dibujarTerminacion();
+        confirmar = elegirOpcion(scan);
+
+        if(confirmar == 1){
+            servicios.add(servicio);
+        }
+        else {
+            menuActividades(scan,personas,usuario,pasajeros);
+        }
+    }
 
 }

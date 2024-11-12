@@ -1,5 +1,6 @@
 package Gestores;
 
+import Clases.Empleado;
 import Enum.*;
 import Clases.Pasajero;
 
@@ -7,9 +8,10 @@ import java.util.ArrayList;
 
 public class GestorEmpleado {
 
-    ArrayList<Pasajero> pasajeros ;
+    ArrayList<Empleado>empleados ;
 
     public GestorEmpleado() {
-        this.pasajeros = new ArrayList<>();
+        this.empleados = new ArrayList<>();
     }
+
 }

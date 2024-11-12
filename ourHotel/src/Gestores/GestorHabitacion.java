@@ -6,6 +6,8 @@ import Clases.Servicio;
 import java.util.ArrayList;
 import Enum.Estado_Habitacion;
 
+import static Enum.Servicio_Habitacion.*;
+
 public class GestorHabitacion {
 
 
@@ -43,17 +45,17 @@ public class GestorHabitacion {
 
             Servicio servicio = h.getServicios().get(i);
 
-//            if (servicio.equals(Servicio_Habitacion.MASAJE) ||
-//                    servicio.equals(Servicio_Habitacion.SPA) ||
-//                    servicio.equals(Servicio_Habitacion.SAUNA) ||
-//                    servicio.equals(Servicio_Habitacion.HIDROMASAJE) ||
-//                    servicio.equals(Servicio_Habitacion.DESAYUNO) ||
-//                    servicio.equals(Servicio_Habitacion.ALMUERZO_CENA) ||
-//                    servicio.equals(Servicio_Habitacion.SERVICIO_BRINDIS) ||
-//                    servicio.equals(Servicio_Habitacion.BEBIDA_SIN_ALCOHOL)) {
-//
-//                costoPorConsumo = costoPorConsumo + servicio.getCosto();
-//            }
+            if (servicio.equals(Servicio_Habitacion.fromString(String.valueOf(MASAJE))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(SPA))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(SAUNA))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(HIDROMASAJE))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(DESAYUNO))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(ALMUERZO_CENA))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(SERVICIO_BRINDIS))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(BEBIDA_SIN_ALCOHOL)))) {
+
+                costoPorConsumo = costoPorConsumo + servicio.getCosto();
+            }
         }
         return costoPorConsumo;
     }
