@@ -141,10 +141,12 @@ public class GestorHabitacion {
 
 
         for (Habitacion habitacion : habitaciones) {
-            Habitacion habitacionLibre = new Habitacion();
+
+            Habitacion habitacionLibre = habitacion;
 
             if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)) {
                 habitacionLibre = habitacion;
+
                 habitacionesLibres.add(habitacionLibre);
             }
             else {

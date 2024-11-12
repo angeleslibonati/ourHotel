@@ -43,12 +43,12 @@ public class GestorReserva {
         throw new ReservaInvalidaException("No se encontró ninguna reserva con el número: " + numeroReserva);
     }
 
-    public static ArrayList<Reserva> buscarReservasActiva() {
+    public static ArrayList<Reserva> buscarReservasActiva(String usuario) {
         ArrayList<Reserva> activas = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
 
-            if (reserva.getEstadoReserva() == Estado_Reserva.RESERVADO) {
+            if (reserva.getPasajero().getUsuario().equals(usuario) && reserva.getEstadoReserva() == Estado_Reserva.RESERVADO) {
                 activas.add(reserva);
             }
         }
@@ -110,12 +110,12 @@ public class GestorReserva {
     }
 
 
-    public static ArrayList<Reserva> buscarReservasHistoricas() {
+    public static ArrayList<Reserva> buscarReservasHistoricas(String usuario) {
         ArrayList<Reserva> historicas = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
 
-            if (reserva.getEstadoReserva() == Estado_Reserva.FINALIZADO) {
+            if (reserva.getPasajero().getUsuario().equals(usuario) && reserva.getEstadoReserva() == Estado_Reserva.FINALIZADO) {
                 historicas.add(reserva);
             }
         }

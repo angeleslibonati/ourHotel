@@ -19,8 +19,7 @@ public class Main {
             GestorHotel miHotel = new GestorHotel();
             //Mapeo de Json Reserva
             GestorReserva reserva = new GestorReserva();
-            ArrayList<Persona>misPersonas = new ArrayList<>();
-
+            
             Menu.menuPrincipal(entrada, miHotel);
         } catch (JSONException e) {
             throw new RuntimeException(e);
