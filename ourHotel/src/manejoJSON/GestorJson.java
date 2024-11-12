@@ -139,7 +139,7 @@ public class GestorJson {
 
         try {
 
-            JSONObject json = new JSONObject(JSONUtiles.leer("hotel.json"));
+            JSONObject json = new JSONObject(JSONUtiles.leer(archivo_hotel));
 
             // Crear la estructura de hotel dentro del JSON
             JSONObject jHotel = new JSONObject();
@@ -277,7 +277,7 @@ public class GestorJson {
 
                 // Convertir los valores de cadena a los enums correspondientes
 
-                miReserva.setEstadoReserva(Estado_Reserva.fromString(OReserva.getString("estadoReserva")));
+                miReserva.setEstadoReserva(Estado_Reserva.fromString(OReserva.getString("estadoReserva").trim().toUpperCase()));
 
                 JSONObject OEmpleado = OReserva.getJSONObject("empleado");
 
@@ -296,5 +296,80 @@ public class GestorJson {
         return misReservas;
     }
 
+
+
+    public static void toJsonReservas(ArrayList<Reserva> reservas) {
+        try {
+
+            JSONObject jsonReservas = new JSONObject(JSONUtiles.leer(archivo_reservas));
+
+            // Obtener el próximo ID autoincremental para las reservas
+            int maxId = obtenerProximoIdReserva(reservas);
+
+
+            JSONArray reservasArray = new JSONArray();
+
+            for (Reserva reserva : reservas) {
+                // Asignar un nuevo ID si la reserva no tiene uno
+                if (reserva.getIdReserva() <= 0) {
+                    reserva.setIdReserva(maxId);
+                    maxId++; // Incrementar el ID para la próxima reserva
+                }
+
+                // Crear el JSON para cada reserva
+                JSONObject jReserva = new JSONObject();
+
+                // Guardar los datos de la reserva
+                jReserva.put("idReserva", reserva.getIdReserva());
+
+                // Formatear fechas a "yyyy-MM-dd"
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                jReserva.put("fechaInicio", format.format(reserva.getFechaInicio()));
+                jReserva.put("fechaFin", format.format(reserva.getFechaFin()));
+                jReserva.put("estadoReserva", reserva.getEstadoReserva().toString().toLowerCase());
+
+                // Guardar los datos de la habitación
+                JSONObject jHabitacion = new JSONObject();
+                jHabitacion.put("numHabitacion", reserva.getHabitacion().getNumHabitacion());
+                jReserva.put("habitacion", jHabitacion);
+
+                // Guardar los datos del pasajero
+                JSONObject jPasajero = new JSONObject();
+                jPasajero.put("dni", reserva.getPasajero().getDni());
+                jReserva.put("pasajero", jPasajero);
+
+                // Guardar los datos del empleado
+                JSONObject jEmpleado = new JSONObject();
+                jEmpleado.put("id", reserva.getEmpleado().getId());
+                jReserva.put("empleado", jEmpleado);
+
+                // Añadir la reserva al array de reservas
+                reservasArray.put(jReserva);
+            }
+
+
+            jsonReservas.put("reserva", reservasArray);
+
+            // Guardar el JSON en el archivo "reserva.json" utilizando JSONUtiles
+            JSONUtiles.grabarObjeto(jsonReservas, archivo_reservas);
+
+        } catch (JSONException e) {
+            throw new RuntimeException("Error al guardar el JSON de reservas", e);
+        }
+       }
+
+       //metodo para crear un id +1 al ultimo creado
+      public static int obtenerProximoIdReserva(ArrayList<Reserva> reservas) {
+        int maxId = 0;
+        for (Reserva reserva : reservas) {
+            if (reserva.getIdReserva() > maxId) {
+                maxId = reserva.getIdReserva();
+            }
+        }
+        return maxId + 1; // El próximo ID será el mayor ID actual + 1
+       }
 }
+
+
+
 
