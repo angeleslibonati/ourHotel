@@ -151,8 +151,10 @@ public class GestorJson {
             JSONObject jHotel = new JSONObject();
 
             JSONArray jHabitaciones = new JSONArray();
+
             // Convertir habitaciones a JSON
             for (Habitacion habitacion : hotel.getHabitaciones()) {
+                
                 JSONObject jHabitacion = new JSONObject();
                 jHabitacion.put("numeronumHabitacion", habitacion.getNumHabitacion());
                 jHabitacion.put("valorPorNoche", habitacion.getValorPorNoche());

@@ -5,6 +5,7 @@ import Gestores.GestorHabitacion;
 import Gestores.GestorHotel;
 import Gestores.GestorPasajero;
 import Gestores.GestorReserva;
+import manejoJSON.GestorJson;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -83,7 +84,9 @@ public class Menu {
             case 0:
                 //Salir
                 //Deberia hacer el llamado a cargar el json para persistencia de informacion.
-                
+                Hotel miHotel = new Hotel();
+
+                GestorJson.toJsonHotel(miHotel);
                 break;
 
             default:
