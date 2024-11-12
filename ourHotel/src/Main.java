@@ -14,30 +14,20 @@ public class Main {
 
         Scanner entrada = new Scanner(System.in);
 
-        //Mapeo de Json Hotel
-        Hotel hotel = new Hotel();
-
         try {
+            //Mapeo de Json Hotel
             GestorHotel miHotel = new GestorHotel();
+            //Mapeo de Json Reserva
+            GestorReserva reserva = new GestorReserva();
+            ArrayList<Persona>misPersonas = new ArrayList<>();
+
+            Menu.menuPrincipal(entrada, miHotel);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
 
 
-        //Mapeo de Json Reserva
 
-        GestorReserva reserva = new GestorReserva();
-
-        ArrayList<Persona>misPersonas = new ArrayList<>();
-        ArrayList<Pasajero>misPasjeros =new ArrayList<>();
-
-        //Inicio de menu
-
-        try {
-            Menu.menuPrincipal(entrada, misPersonas,misPasjeros);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
 
 
     }

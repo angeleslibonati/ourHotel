@@ -14,4 +14,11 @@ public class GestorEmpleado {
         this.empleados = new ArrayList<>();
     }
 
+    public ArrayList<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(ArrayList<Empleado> empleados) {
+        this.empleados = empleados;
+    }
 }
