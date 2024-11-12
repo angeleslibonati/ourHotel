@@ -13,10 +13,18 @@ import static Enum.Servicio_Habitacion.*;
 public class GestorHabitacion {
 
 
-    static ArrayList<Habitacion> habitaciones;
+    protected  ArrayList<Habitacion> habitaciones;
 
     public GestorHabitacion() {
         this.habitaciones = new ArrayList<>();
+    }
+
+    public ArrayList<Habitacion> getHabitaciones() {
+        return habitaciones;
+    }
+
+    public void setHabitaciones(ArrayList<Habitacion> habitaciones) {
+        this.habitaciones = habitaciones;
     }
 
     public void mostrarTodasLasHabitaciones() {
@@ -26,7 +34,7 @@ public class GestorHabitacion {
     }
 
     //Funcion check out
-    public static double cambioEstadoPorCheckOut(int numHabitacion) {
+    public double cambioEstadoPorCheckOut(int numHabitacion) {
 
         double costoPorConsumos = 0;
         Habitacion habitacion = buscaHabitacion(numHabitacion);
@@ -67,7 +75,7 @@ public class GestorHabitacion {
         return costoPorConsumo;
     }
 
-    public static ArrayList<Habitacion> buscarHabitacionesOcupadas() {
+    public ArrayList<Habitacion> buscarHabitacionesOcupadas() {
 
         ArrayList<Habitacion> ocupadas = new ArrayList<>();
 
@@ -83,7 +91,7 @@ public class GestorHabitacion {
 
 
     //Funcion para cambiar estado de habitacion por check in
-    public static void cambioEstadoPorCheckIn(int numHabitacion) throws HabitacionNoDisponibleException{
+    public void cambioEstadoPorCheckIn(int numHabitacion) throws HabitacionNoDisponibleException{
 
         //Buscar una habitacion por numero
         Habitacion habitacion =new Habitacion();
@@ -92,6 +100,7 @@ public class GestorHabitacion {
 
         //Cambia estado de LIBRE A OCUPADA
         if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)){
+
             habitacion.setEstadoHabitacion(Estado_Habitacion.OCUPADA);
             Menu.centradoOpciones("Check in completado");
         }
@@ -102,7 +111,6 @@ public class GestorHabitacion {
     }
 
 
-    //Chequear dudosaa !!!!!!!!!!!!!
     public static double costoPorHabitacion(String dni) {
 
         int cantidadNoches = GestorReserva.cantidadNoches(dni);
@@ -113,19 +121,21 @@ public class GestorHabitacion {
         return costoHospedaje;
     }
 
-    public static Habitacion buscaHabitacion (int numHabitacion){
+    public Habitacion buscaHabitacion(int numHabitacion){
+
         Habitacion habitacion = new Habitacion();
 
         for (Habitacion h : habitaciones){
 
             if (h.getNumHabitacion() == numHabitacion){
                 habitacion = h;
+                habitacion.mostrarHabitacion();
             }
         }
         return habitacion;
     }
 
-    public static ArrayList<Habitacion> buscaHabitacionLibre() throws HabitacionNoDisponibleException {
+    public ArrayList<Habitacion> buscaHabitacionLibre() throws HabitacionNoDisponibleException {
 
         ArrayList<Habitacion>habitacionesLibres = new ArrayList<>();
 

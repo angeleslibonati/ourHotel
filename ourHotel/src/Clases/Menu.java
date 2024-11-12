@@ -6,6 +6,7 @@ import Gestores.GestorHotel;
 import Gestores.GestorPasajero;
 import Gestores.GestorReserva;
 import manejoJSON.GestorJson;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ public class Menu {
 
     //menu
 
-    public static void menuPrincipal (Scanner scan, ArrayList<Persona>personas, ArrayList<Pasajero>pasajeros){
+    public static void menuPrincipal (Scanner scan, ArrayList<Persona>personas, ArrayList<Pasajero>pasajeros) throws JSONException {
 
         int opc = 0;
         imprimirMenu();
@@ -27,25 +28,25 @@ public class Menu {
                 String usuario = ingresoUsuarioYClave(scan, "Usuario");
                 String contra = ingresoUsuarioYClave(scan, "Contrasenia");
 
-//                for (int i = 0; i< personas.size(); i++){
-//                    Persona e = new Empleado();
-//                    e = personas.get(i);
-//
-//                    try {
-//
-//                        if (e.getUsuario().equals(usuario) && e.getContrasenia().equals(contra)){
-//
-//                            if (e.getRol().equals("RECEPCIONISTA")) {
-//
+                for (int i = 0; i< personas.size(); i++){
+                    Persona e = new Empleado();
+                    e = personas.get(i);
+
+                    try {
+
+                        if (e.getUsuario().equals(usuario) && e.getContrasenia().equals(contra)){
+
+                            if (e.getRol().equals("RECEPCIONISTA")) {
+
                                 menuRecepcionista(scan, personas,pasajeros);
-//                            } else {
+                            } else {
                                 menuAdmin(scan, personas,pasajeros);
-//                            }
-//                        }
-//                    } catch (Exception ex) {
-//                        throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
-//                    }
-//                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
+                    }
+                }
                 break;
 
             case 2:
@@ -55,12 +56,13 @@ public class Menu {
 
                 do {
                    usuario = ingresoUsuarioYClave(scan, "Usuario");
-                    contra = ingresoUsuarioYClave(scan, "Contrasenia");
+                   contra = ingresoUsuarioYClave(scan, "Contrasenia");
 
-                    for (int i = 0; i<personas.size(); i++){
+                    for (int i = 0; i< pasajeros.size(); i++){
 
                         Persona p = new Pasajero ();
-                        p = personas.get(i);
+                        p = pasajeros.get(i);
+
                         try {
 
                             if(p.getUsuario().equals(usuario) && p.getContrasenia().equals(contra)){
@@ -84,8 +86,8 @@ public class Menu {
             case 0:
                 //Salir
                 //Deberia hacer el llamado a cargar el json para persistencia de informacion.
-                Hotel miHotel = new Hotel();
 
+                Hotel miHotel = new Hotel();
                 GestorJson.toJsonHotel(miHotel);
                 break;
 
@@ -96,10 +98,12 @@ public class Menu {
     }
 
     //Sub Menu para recepcionista
-    public static void menuRecepcionista (Scanner scan, ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
+    public static void menuRecepcionista (Scanner scan, ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros) throws JSONException {
+
+        GestorHotel miHotel = new GestorHotel();
 
         imprimirMenuRecepcion();
-         int opc = elegirOpcion(scan);
+        int opc = elegirOpcion(scan);
 
         switch (opc){
 
@@ -115,7 +119,8 @@ public class Menu {
                 encabezadoMenu("Check in");
                 centradoOpciones("Ingrese el numero de reserva");
                 int numReserva = elegirOpcion(scan);
-                GestorHotel.hacerCheckIn(numReserva);
+
+                miHotel.hacerCheckIn(numReserva);
 
                 break;
             case 4:
@@ -128,7 +133,7 @@ public class Menu {
                 int numHabitacion = scan.nextInt();
                 scan.nextLine();
 
-                GestorHotel.hacerCheckOut(numHabitacion,dni);
+                miHotel.hacerCheckOut(numHabitacion,dni);
 
             case 5:
                 menuHabitacion(scan,personas,pasajeros);
@@ -141,7 +146,7 @@ public class Menu {
             default:
         }       centradoOpciones("Opcion invalida");
     }
-    public static void menuAbmPasajero (Scanner scan, ArrayList<Persona>personas, ArrayList<Pasajero>pasajeros){
+    public static void menuAbmPasajero (Scanner scan, ArrayList<Persona>personas, ArrayList<Pasajero>pasajeros) throws JSONException {
         imprimirAbmPasajero();
         int opc = elegirOpcion(scan);
 
@@ -170,7 +175,9 @@ public class Menu {
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuHabitacion (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
+    public static void menuHabitacion (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros) throws JSONException {
+
+        GestorHotel mH = new GestorHotel();
         imprimirMenuHabitacion();
         int opc = elegirOpcion(scan);
 
@@ -183,15 +190,15 @@ public class Menu {
                 int numHabitacion = scan.nextInt();
                 scan.nextLine();
 
-                Habitacion habitacion = GestorHabitacion.buscaHabitacion(numHabitacion);
-                habitacion.mostrarHabitacion();
+                mH.buscarHabitacion(numHabitacion);
 
                 break;
             case 2:
                 //buscar segun estado libre.
                 encabezadoMenu("Habitaciones Disponibles");
 
-                ArrayList<Habitacion>habitacionesLibres = GestorHabitacion.buscaHabitacionLibre();
+                ArrayList<Habitacion>habitacionesLibres = mH.buscarHabitacionesLibres();
+
                 for(int i = 0; i<habitacionesLibres.size(); i++){
                     Habitacion hL = habitacionesLibres.get(i);
                     hL.mostrarHabitacion();
@@ -202,7 +209,8 @@ public class Menu {
                 //buscar segun estado ocupado.
                 encabezadoMenu("Habitaciones Ocupadas");
 
-                ArrayList<Habitacion>habitacionesOcupadas = GestorHabitacion.buscarHabitacionesOcupadas();
+                ArrayList<Habitacion>habitacionesOcupadas = mH.buscarHabitacionesOcupadas();
+
                 for (int i = 0; i<habitacionesOcupadas.size(); i++){
                     Habitacion hO = habitacionesOcupadas.get(i);
                     hO.mostrarHabitacion();
@@ -221,7 +229,7 @@ public class Menu {
         }       centradoOpciones("Opcion invalida");
 
     }
-    public static void MenuAbmReserva (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
+    public static void MenuAbmReserva (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros) throws JSONException {
 
         imprimirAbmReserva();
         int opc = elegirOpcion(scan);
@@ -259,7 +267,7 @@ public class Menu {
     // --
 
     //Sub Menu para administrador
-    public static void menuAdmin (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
+    public static void menuAdmin (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros) throws JSONException {
         imprimirMenuAdmin ();
         int opc = elegirOpcion(scan);
 
@@ -289,7 +297,7 @@ public class Menu {
 
         }
     }
-    public static void menuAbmEmpleado (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
+    public static void menuAbmEmpleado (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros) throws JSONException {
         imprimirAbmEmpleado();
         int opc = elegirOpcion(scan);
 
@@ -314,7 +322,7 @@ public class Menu {
 
         }
     }
-    public static void menuAbmHabitacion (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
+    public static void menuAbmHabitacion (Scanner scan,ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros) throws JSONException {
         imprimirAbmHabitacion();
         int opc = elegirOpcion(scan);
 
@@ -340,7 +348,7 @@ public class Menu {
     // --
 
     //Sub Menu para pasajero
-    public static void menuPasajero (Scanner scan,ArrayList<Persona>personas, String usuario, ArrayList<Pasajero>pasajeros){
+    public static void menuPasajero (Scanner scan,ArrayList<Persona>personas, String usuario, ArrayList<Pasajero>pasajeros) throws JSONException {
 
         imprimirMenuPasajero();
         int opc = elegirOpcion(scan);
@@ -370,7 +378,7 @@ public class Menu {
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuReserva (Scanner scan,ArrayList<Persona>personas,String usuario, ArrayList<Pasajero>pasajeros){
+    public static void menuReserva (Scanner scan,ArrayList<Persona>personas,String usuario, ArrayList<Pasajero>pasajeros) throws JSONException {
         imprimirMenuReserva();
         int opc = elegirOpcion(scan);
 
@@ -415,7 +423,7 @@ public class Menu {
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServiciosExtras (Scanner scan,ArrayList<Persona>personas,String usuario, ArrayList<Pasajero>pasajeros){
+    public static void menuServiciosExtras (Scanner scan,ArrayList<Persona>personas,String usuario, ArrayList<Pasajero>pasajeros) throws JSONException {
         imprimirMenuServExtras();
         int opc = elegirOpcion(scan);
 
@@ -436,7 +444,7 @@ public class Menu {
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuActividades(Scanner scan,ArrayList<Persona>personas,String usuario, ArrayList<Pasajero>pasajeros){
+    public static void menuActividades(Scanner scan,ArrayList<Persona>personas,String usuario, ArrayList<Pasajero>pasajeros) throws JSONException {
 
         imprimirMenuActividades();
         int opc = elegirOpcion(scan);
@@ -469,7 +477,7 @@ public class Menu {
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServHabitacion (Scanner scan,ArrayList<Persona>personas, String usuario, ArrayList<Pasajero>pasajeros){
+    public static void menuServHabitacion (Scanner scan,ArrayList<Persona>personas, String usuario, ArrayList<Pasajero>pasajeros) throws JSONException {
 
         imprimirMenuServHabitacion();
         int opc = elegirOpcion(scan);
@@ -696,7 +704,7 @@ public class Menu {
         return scan.nextLine();
     }
 
-    public static void confirmacionServicio (Scanner scan, ArrayList<Persona>personas,String usuario,ArrayList<Pasajero>pasajeros){
+    public static void confirmacionServicio (Scanner scan, ArrayList<Persona>personas,String usuario,ArrayList<Pasajero>pasajeros) throws JSONException {
         Servicio servicio = new Servicio();
         ArrayList<Servicio>servicios = new ArrayList<>();
         int confirmar = 0;

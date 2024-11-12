@@ -33,7 +33,11 @@ public class Main {
 
         //Inicio de menu
 
-       Menu.menuPrincipal(entrada, misPersonas,misPasjeros);
+        try {
+            Menu.menuPrincipal(entrada, misPersonas,misPasjeros);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }

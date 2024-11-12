@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 public class Pasajero extends Persona{
 
-
+    protected ArrayList<Pasajero>misPasajeros;
 
     //Constructores
     public Pasajero (){
-
+        this.misPasajeros = new ArrayList<>();
     }
 
 

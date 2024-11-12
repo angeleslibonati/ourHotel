@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class GestorPasajero {
 
-    ArrayList<Pasajero>pasajeros;
+    protected ArrayList<Pasajero>pasajeros;
 
     public GestorPasajero() {
         this.pasajeros = new ArrayList<>();

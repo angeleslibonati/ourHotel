@@ -1,33 +1,45 @@
 package Gestores;
 
+import Clases.Habitacion;
 import Clases.Hotel;
 import Clases.Menu;
 import manejoJSON.GestorJson;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 public class GestorHotel {
 
     protected Hotel miHotel;
+    protected GestorEmpleado gestorEmpleado = new GestorEmpleado();
+    protected GestorHabitacion gestorHabitacion = new GestorHabitacion();
+    protected GestorPasajero gestorPasajero = new GestorPasajero();
+
 
     public GestorHotel() throws JSONException {
         this.miHotel = new Hotel();
+
+        miHotel.setEmpleados(gestorEmpleado.empleados);
+        miHotel.setHabitaciones(gestorHabitacion.habitaciones);
+        miHotel.setPasajeros(gestorPasajero.pasajeros);
 
         miHotel = GestorJson.fromJsonHotel();
     }
 
 
     //Funcion chek in (llama a gestor reserva y gestor habitacion)
-    public static void hacerCheckIn (int idReserva){
+    public void hacerCheckIn(int idReserva){
 
         int numHabitacion = GestorReserva.cambiaEstadoPorCheckIn(idReserva);
-        GestorHabitacion.cambioEstadoPorCheckIn(numHabitacion);
+        this.gestorHabitacion.cambioEstadoPorCheckIn(numHabitacion);
+
     }
 
 
     //Funcion check out
-    public static void hacerCheckOut (int numHabitacion, String dni){
+    public void hacerCheckOut(int numHabitacion, String dni){
 
-        double consumos = GestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
+        double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
 
         double costoHabitacion = GestorHabitacion.costoPorHabitacion(dni);
 
@@ -37,6 +49,21 @@ public class GestorHotel {
         Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
 
     }
+
+    public void buscarHabitacion (int numHabitacion){
+
+        this.gestorHabitacion.buscaHabitacion(numHabitacion);
+
+    }
+
+    public ArrayList<Habitacion> buscarHabitacionesLibres (){
+        return this.gestorHabitacion.buscaHabitacionLibre();
+    }
+
+    public ArrayList<Habitacion> buscarHabitacionesOcupadas() {
+        return this.gestorHabitacion.buscarHabitacionesOcupadas();
+    }
+
 
 
 
