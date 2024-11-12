@@ -81,13 +81,21 @@ public class GestorReserva {
     }
 
     //cambia estado por reserva confirmada por check in
-    public static int cambiaEstadoPorCheckIn (int idReserva){
+    public static int cambiaEstadoPorCheckIn (int idReserva)throws ReservaInvalidaException{
         int numHabitacion = 0;
 
         //Busca la reserva
-        //Cambia el estado de "Reservado" a Confirmado.
-        //trae el numero de habitacion y la retorna
+        Reserva miReserva = buscarUnaReserva(idReserva);
 
+        if (miReserva.getEstadoReserva().equals(Estado_Reserva.RESERVADO)){
+            miReserva.setEstadoReserva(Estado_Reserva.CONFIRMADO);
+        }
+        else {
+            throw new ReservaInvalidaException("Numero Reserva invalida");
+        }
+
+        //trae el numero de habitacion y la retorna
+        numHabitacion = miReserva.getHabitacion().getNumHabitacion();
         return numHabitacion;
     }
 
@@ -119,4 +127,6 @@ public class GestorReserva {
 
         return historicas;
     }
+
+
 }

@@ -1,6 +1,8 @@
 package Clases;
 
 import Excepciones.UsuarioYClaveIncorrectoException;
+import Gestores.GestorHabitacion;
+import Gestores.GestorHotel;
 import Gestores.GestorPasajero;
 import Gestores.GestorReserva;
 
@@ -24,25 +26,25 @@ public class Menu {
                 String usuario = ingresoUsuarioYClave(scan, "Usuario");
                 String contra = ingresoUsuarioYClave(scan, "Contrasenia");
 
-                for (int i = 0; i< personas.size(); i++){
-                    Persona e = new Empleado();
-                    e = personas.get(i);
-
-                    try {
-
-                        if (e.getUsuario().equals(usuario) && e.getContrasenia().equals(contra)){
-
-                            if (e.getRol().equals("RECEPCIONISTA")) {
-
+//                for (int i = 0; i< personas.size(); i++){
+//                    Persona e = new Empleado();
+//                    e = personas.get(i);
+//
+//                    try {
+//
+//                        if (e.getUsuario().equals(usuario) && e.getContrasenia().equals(contra)){
+//
+//                            if (e.getRol().equals("RECEPCIONISTA")) {
+//
                                 menuRecepcionista(scan, personas,pasajeros);
-                            } else {
+//                            } else {
                                 menuAdmin(scan, personas,pasajeros);
-                            }
-                        }
-                    } catch (Exception ex) {
-                        throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
-                    }
-                }
+//                            }
+//                        }
+//                    } catch (Exception ex) {
+//                        throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
+//                    }
+//                }
                 break;
 
             case 2:
@@ -50,31 +52,31 @@ public class Menu {
                 // Tiene 3 reintentos al momento de ingresar
                 int flag = 0;
 
-//                do {
+                do {
                    usuario = ingresoUsuarioYClave(scan, "Usuario");
-//                    contra = ingresoUsuarioYClave(scan, "Contrasenia");
-//
-//                    for (int i = 0; i<personas.size(); i++){
-//
-//                        Persona p = new Pasajero ();
-//                        p = personas.get(i);
-//                        try {
-//
-//                            if(p.getUsuario().equals(usuario) && p.getContrasenia().equals(contra)){
-//
+                    contra = ingresoUsuarioYClave(scan, "Contrasenia");
+
+                    for (int i = 0; i<personas.size(); i++){
+
+                        Persona p = new Pasajero ();
+                        p = personas.get(i);
+                        try {
+
+                            if(p.getUsuario().equals(usuario) && p.getContrasenia().equals(contra)){
+
                                menuPasajero(scan, personas, usuario,pasajeros);
-//                                flag = 4;
-//                            }
-//                        } catch (Exception e) {
-//                            throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
-//                        }
-//                    }
-//                    flag ++;
-//                    if (flag < 3){
-//                        centradoOpciones("\n");
-//                        centradoOpciones("Ingrese nuevamente");
-//                    }
-//                }while (flag < 3);
+                                flag = 4;
+                            }
+                        } catch (Exception e) {
+                            throw new UsuarioYClaveIncorrectoException("Usuario y/o Contrasenia Incorrecta");
+                        }
+                    }
+                    flag ++;
+                    if (flag < 3){
+                        centradoOpciones("\n");
+                        centradoOpciones("Ingrese nuevamente");
+                    }
+                }while (flag < 3);
 
                 break;
 
@@ -89,7 +91,6 @@ public class Menu {
 
 
     }
-
 
     //Sub Menu para recepcionista
     public static void menuRecepcionista (Scanner scan, ArrayList<Persona>personas,ArrayList<Pasajero>pasajeros){
@@ -109,11 +110,23 @@ public class Menu {
             case 3:
                 //Hacer check in
                 encabezadoMenu("Check in");
-                
+                centradoOpciones("Ingrese el numero de reserva");
+                int numReserva = elegirOpcion(scan);
+                GestorHotel.hacerCheckIn(numReserva);
+
                 break;
             case 4:
                 //hacer check out
                 encabezadoMenu("Check out");
+                centradoIngreso("Ingrese el dni del pasajero ");
+                String dni = scan.nextLine();
+
+                centradoIngreso("Ingrese el numero de Habitacion ");
+                int numHabitacion = scan.nextInt();
+                scan.nextLine();
+
+                GestorHotel.hacerCheckOut(numHabitacion,dni);
+
             case 5:
                 menuHabitacion(scan,personas,pasajeros);
 
@@ -162,15 +175,40 @@ public class Menu {
 
             case 1:
                 //buscar una habitacion
+                encabezadoMenu("Buscar una habitacion");
+                centradoIngreso("Ingrese el numero de habitacion: ");
+                int numHabitacion = scan.nextInt();
+                scan.nextLine();
+
+                Habitacion habitacion = GestorHabitacion.buscaHabitacion(numHabitacion);
+                habitacion.mostrarHabitacion();
+
                 break;
             case 2:
                 //buscar segun estado libre.
+                encabezadoMenu("Habitaciones Disponibles");
+
+                ArrayList<Habitacion>habitacionesLibres = GestorHabitacion.buscaHabitacionLibre();
+                for(int i = 0; i<habitacionesLibres.size(); i++){
+                    Habitacion hL = habitacionesLibres.get(i);
+                    hL.mostrarHabitacion();
+                }
+
                 break;
             case 3:
                 //buscar segun estado ocupado.
+                encabezadoMenu("Habitaciones Ocupadas");
+
+                ArrayList<Habitacion>habitacionesOcupadas = GestorHabitacion.buscarHabitacionesOcupadas();
+                for (int i = 0; i<habitacionesOcupadas.size(); i++){
+                    Habitacion hO = habitacionesOcupadas.get(i);
+                    hO.mostrarHabitacion();
+                }
+
                 break;
             case 4:
                 //modificar una habitacion.
+
                 break;
             case 0:
                 //volver atras

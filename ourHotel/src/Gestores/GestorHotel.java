@@ -16,7 +16,6 @@ public class GestorHotel {
     }
 
 
-
     //Funcion chek in (llama a gestor reserva y gestor habitacion)
     public static void hacerCheckIn (int idReserva){
 
@@ -29,6 +28,7 @@ public class GestorHotel {
     public static void hacerCheckOut (int numHabitacion, String dni){
 
         double consumos = GestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
+
         double costoHabitacion = GestorHabitacion.costoPorHabitacion(dni);
 
         Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);

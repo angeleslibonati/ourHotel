@@ -1,10 +1,12 @@
 package Gestores;
 
+import Clases.Menu;
 import Enum.Servicio_Habitacion;
 import Clases.Habitacion;
 import Clases.Servicio;
 import java.util.ArrayList;
 import Enum.Estado_Habitacion;
+import Excepciones.HabitacionNoDisponibleException;
 
 import static Enum.Servicio_Habitacion.*;
 
@@ -22,14 +24,19 @@ public class GestorHabitacion {
             habitacion.mostrarHabitacion();
         }
     }
+
     //Funcion check out
     public static double cambioEstadoPorCheckOut(int numHabitacion) {
+
         double costoPorConsumos = 0;
-        Habitacion habitacion = new Habitacion();
+        Habitacion habitacion = buscaHabitacion(numHabitacion);
 
-        // habitacion = //Busca la habitacion por numero  (devolver una HABITACION)
-        //cambia el estado de OCUPADA A LIMPIEZA
+        if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.OCUPADA)){
 
+            //cambia el estado de OCUPADA A LIMPIEZA
+            habitacion.setEstadoHabitacion(Estado_Habitacion.LIMPIEZA);
+            Menu.centradoOpciones("Servicio Limpieza en proceso");
+        }
         //sumatoria de servicio
         costoPorConsumos = consumosExtra( habitacion);
 
@@ -76,10 +83,22 @@ public class GestorHabitacion {
 
 
     //Funcion para cambiar estado de habitacion por check in
-    public static void cambioEstadoPorCheckIn(int numHabitacion) {
+    public static void cambioEstadoPorCheckIn(int numHabitacion) throws HabitacionNoDisponibleException{
 
         //Buscar una habitacion por numero
+        Habitacion habitacion =new Habitacion();
+
+        habitacion = buscaHabitacion(numHabitacion);
+
         //Cambia estado de LIBRE A OCUPADA
+        if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)){
+            habitacion.setEstadoHabitacion(Estado_Habitacion.OCUPADA);
+            Menu.centradoOpciones("Check in completado");
+        }
+        else {
+            throw new HabitacionNoDisponibleException("Habitacion no disponible");
+        }
+
     }
 
 
@@ -92,6 +111,38 @@ public class GestorHabitacion {
         double costoHospedaje = cantidadNoches * habitacion.getValorPorNoche();
 
         return costoHospedaje;
+    }
+
+    public static Habitacion buscaHabitacion (int numHabitacion){
+        Habitacion habitacion = new Habitacion();
+
+        for (Habitacion h : habitaciones){
+
+            if (h.getNumHabitacion() == numHabitacion){
+                habitacion = h;
+            }
+        }
+        return habitacion;
+    }
+
+    public static ArrayList<Habitacion> buscaHabitacionLibre() throws HabitacionNoDisponibleException {
+
+        ArrayList<Habitacion>habitacionesLibres = new ArrayList<>();
+
+
+        for (Habitacion habitacion : habitaciones) {
+            Habitacion habitacionLibre = new Habitacion();
+
+            if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)) {
+                habitacionLibre = habitacion;
+                habitacionesLibres.add(habitacionLibre);
+            }
+            else {
+                throw new HabitacionNoDisponibleException("No contamos con Habitaciones Libres");
+            }
+        }
+
+        return habitacionesLibres;
     }
 
 

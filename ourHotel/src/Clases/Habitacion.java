@@ -101,6 +101,8 @@ public class Habitacion {
         Menu.dibujarTerminacion();
     }
 
+
+    //ver esto!
     public void marcarHabitacionLibre(){
         if(getEstadoHabitacion().equals(Estado_Habitacion.OCUPADA))
         {
