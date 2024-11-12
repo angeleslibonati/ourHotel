@@ -100,4 +100,40 @@ public class GestorReserva {
     }
 
 
+    //metodo para filtar por reservas finalizadas
+
+    public ArrayList<Reserva> buscarReservasFinalizadas() throws ReservaInvalidaException {
+        ArrayList<Reserva> finalizadas = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+            if (reserva.getEstadoReserva() == Estado_Reserva.FINALIZADO) {
+                finalizadas.add(reserva);
+            }
+        }
+
+        if (finalizadas.isEmpty()) {
+            throw new ReservaInvalidaException("No se encontraron reservas finalizadas.");
+        }
+
+        return finalizadas;
+    }
+
+
+    //meotod para filtar por reservas finalizadas de un pasajero en particular
+    public ArrayList<Reserva> buscarHistorialReservasPorDni(String dni) throws ReservaInvalidaException {
+        ArrayList<Reserva> historialPorDni = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+            if (reserva.getEstadoReserva() == Estado_Reserva.FINALIZADO && reserva.getPasajero().getDni().equals(dni)) {
+                historialPorDni.add(reserva);
+            }
+        }
+
+        if (historialPorDni.isEmpty()) {
+            throw new ReservaInvalidaException("No se encontraron reservas finalizadas para el DNI: " + dni);
+        }
+
+        return historialPorDni;
+    }
+
 }
