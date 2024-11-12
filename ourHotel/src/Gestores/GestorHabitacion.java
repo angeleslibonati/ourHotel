@@ -135,7 +135,7 @@ public class GestorHabitacion {
         return habitacion;
     }
 
-    public ArrayList<Habitacion> buscaHabitacionLibre() throws HabitacionNoDisponibleException {
+    public ArrayList<Habitacion> buscaHabitacionLibre()  {
 
         ArrayList<Habitacion>habitacionesLibres = new ArrayList<>();
 
@@ -149,9 +149,7 @@ public class GestorHabitacion {
 
                 habitacionesLibres.add(habitacionLibre);
             }
-            else {
-                throw new HabitacionNoDisponibleException("No contamos con Habitaciones Libres");
-            }
+
         }
 
         return habitacionesLibres;

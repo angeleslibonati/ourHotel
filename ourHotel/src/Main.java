@@ -1,12 +1,10 @@
 import Clases.*;
-//import Gestores.GestorReserva;
+
 import Gestores.GestorHotel;
 import Gestores.GestorReserva;
-import manejoJSON.GestorJson;
-import org.json.JSONException;
 
+import org.json.JSONException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {

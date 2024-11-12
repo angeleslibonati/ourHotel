@@ -6,6 +6,7 @@ import Clases.Reserva;
 import Enum.*;
 import Excepciones.ReservaInvalidaException;
 import manejoJSON.GestorJson;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -43,24 +44,22 @@ public class GestorReserva {
         throw new ReservaInvalidaException("No se encontró ninguna reserva con el número: " + numeroReserva);
     }
 
-    public static ArrayList<Reserva> buscarReservasActiva(String usuario) {
+    public static ArrayList<Reserva> buscarReservasActiva(String dni) {
         ArrayList<Reserva> activas = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
 
-            if (reserva.getPasajero().getUsuario().equals(usuario) && reserva.getEstadoReserva() == Estado_Reserva.RESERVADO) {
+            if (reserva.getPasajero().getDni().equals(dni) && reserva.getEstadoReserva().equals(Estado_Reserva.RESERVADO)) {
                 activas.add(reserva);
             }
         }
 
-        if(reservas.isEmpty())
-        {
+        if (reservas.isEmpty()) {
             Menu.centradoOpciones("No se encontraron Reservas Activas");
         }
 
         return activas;
     }
-
 
 
     public static void cancelarReserva(int numeroReserva) throws ReservaInvalidaException {
@@ -81,16 +80,15 @@ public class GestorReserva {
     }
 
     //cambia estado por reserva confirmada por check in
-    public static int cambiaEstadoPorCheckIn (int idReserva)throws ReservaInvalidaException{
+    public static int cambiaEstadoPorCheckIn(int idReserva) throws ReservaInvalidaException {
         int numHabitacion = 0;
 
         //Busca la reserva
         Reserva miReserva = buscarUnaReserva(idReserva);
 
-        if (miReserva.getEstadoReserva().equals(Estado_Reserva.RESERVADO)){
+        if (miReserva.getEstadoReserva().equals(Estado_Reserva.RESERVADO)) {
             miReserva.setEstadoReserva(Estado_Reserva.CONFIRMADO);
-        }
-        else {
+        } else {
             throw new ReservaInvalidaException("Numero Reserva invalida");
         }
 
@@ -99,34 +97,50 @@ public class GestorReserva {
         return numHabitacion;
     }
 
-    public static int cantidadNoches (String dni){
+    public static int cantidadNoches(String dni) {
 
         //Busca la reserva por dni.
         Reserva reserva = new Reserva();
         int canDias = (int) ((reserva.getFechaInicio().getTime() - reserva.getFechaFin().getTime()));
-      //  int dias = (int) ((fechaInicio.getTime() - fechaactual.getTime()));
+        //  int dias = (int) ((fechaInicio.getTime() - fechaactual.getTime()));
 
         return canDias;
     }
 
 
-    public static ArrayList<Reserva> buscarReservasHistoricas(String usuario) {
+    public static ArrayList<Reserva> buscarReservasHistoricas(String dni) {
         ArrayList<Reserva> historicas = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
 
-            if (reserva.getPasajero().getUsuario().equals(usuario) && reserva.getEstadoReserva() == Estado_Reserva.FINALIZADO) {
+            if (reserva.getPasajero().getDni().equals(dni) && reserva.getEstadoReserva().equals(Estado_Reserva.FINALIZADO)) {
                 historicas.add(reserva);
             }
         }
 
-        if(reservas.isEmpty())
-        {
+        if (reservas.isEmpty()) {
             Menu.centradoOpciones("No se encontraron Reservas Finallizadas");
         }
 
         return historicas;
     }
 
+    public static ArrayList<Reserva> buscarReservasActivas() {
+
+        ArrayList<Reserva> activas = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+
+            if (reserva.getEstadoReserva().equals(Estado_Reserva.RESERVADO)) {
+                activas.add(reserva);
+            }
+        }
+
+        if (reservas.isEmpty()) {
+            Menu.centradoOpciones("No se encontraron Reservas Activas");
+        }
+
+        return activas;
+    }
 
 }

@@ -16,7 +16,7 @@ public class Menu {
 
     //menu
 
-    public static void menuPrincipal (Scanner scan,  GestorHotel miHotel) throws JSONException {
+    public static void menuPrincipal (Scanner scan,  GestorHotel miHotel) throws JSONException, UsuarioYClaveIncorrectoException {
 
         int opc = 0;
         imprimirMenu();
@@ -272,10 +272,12 @@ public class Menu {
             case 5:
                 //ver todas las reservas disponibles
                 encabezadoMenu("Todas las Reservas");
-                ArrayList<Reserva>reservasActivas =  GestorReserva.buscarReservasActiva(usuario);
+
+                ArrayList<Reserva>reservasActivas =  GestorReserva.buscarReservasActivas();
 
                 GestorReserva.mostrarReservas(reservasActivas);
                 MenuAbmReserva(scan,usuario);
+
                 break;
             case 0:
                 menuRecepcionista(scan,usuario);
@@ -421,6 +423,7 @@ public class Menu {
     public static void menuReserva (Scanner scan,String usuario, GestorHotel miHotel) throws JSONException {
         imprimirMenuReserva();
         int opc = elegirOpcion(scan);
+        String dni = "";
 
         switch (opc){
 
@@ -432,7 +435,7 @@ public class Menu {
 
                 //cancelar reserva
                 encabezadoMenu("Cancelacion de Reserva");
-                centradoIngreso("Ingrese el numero de reserva");
+                centradoIngreso("Ingrese el numero de reserva ");
                 int numReserva = scan.nextInt();
                 scan.nextLine();
                 GestorReserva.cancelarReserva(numReserva);
@@ -443,7 +446,14 @@ public class Menu {
                 //ver reservas activas
                 encabezadoMenu("Reservas Activas");
 
-                ArrayList<Reserva>reservasActivas =  GestorReserva.buscarReservasActiva(usuario);
+                for (int i = 0; i<miHotel.getPasajeros().size(); i++){
+                    Pasajero p = miHotel.getPasajeros().get(i);
+                    
+                    if(p.getUsuario().equals(usuario)){
+                       dni = p.getDni(); 
+                    }
+                }
+                ArrayList<Reserva>reservasActivas =  GestorReserva.buscarReservasActiva(dni);
 
                 GestorReserva.mostrarReservas(reservasActivas);
 
@@ -453,7 +463,14 @@ public class Menu {
                 //ver historico
                 encabezadoMenu("Reservas Finalizadas");
 
-                ArrayList<Reserva>reservasFinalizadas = GestorReserva.buscarReservasHistoricas(usuario);
+                for (int i = 0; i<miHotel.getPasajeros().size(); i++){
+                    Pasajero p = miHotel.getPasajeros().get(i);
+
+                    if(p.getUsuario().equals(usuario)){
+                        dni = p.getDni();
+                    }
+                }
+                ArrayList<Reserva>reservasFinalizadas = GestorReserva.buscarReservasHistoricas(dni);
                 GestorReserva.mostrarReservas(reservasFinalizadas);
 
                 menuReserva(scan, usuario, miHotel);
@@ -765,9 +782,16 @@ public class Menu {
     public static void confirmacionServicio (Scanner scan,String usuario, GestorHotel miHotel) throws JSONException {
         Servicio servicio = new Servicio();
         ArrayList<Servicio>servicios = new ArrayList<>();
+
+        for (int i = 0; i< miHotel.getHabitacion().size(); i++){
+            Habitacion h = miHotel.getHabitacion().get(i);
+
+            servicio = h.getServicios().get(i);
+
+        }
         int confirmar = 0;
 
-        centradoOpciones("Valor: $ " + servicio.getCosto() + ".-");
+        centradoOpciones("Valor: $ " + servicio.costo + ".-");
         centradoOpciones("1. Confirmar");
         centradoOpciones("0. Rechazar");
         dibujarTerminacion();
