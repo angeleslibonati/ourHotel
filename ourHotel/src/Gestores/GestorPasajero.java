@@ -23,7 +23,7 @@ public class GestorPasajero implements I_ABM {
         this.pasajeros = pasajeros;
     }
 
-    public static Pasajero buscarPasajero(String usuario, ArrayList<Pasajero>misPasajeros){
+    public Pasajero buscarPasajero(String usuario, ArrayList<Pasajero>misPasajeros){
 
         Pasajero pasajeroEncontrado = new Pasajero();
 
@@ -148,6 +148,17 @@ public class GestorPasajero implements I_ABM {
             opcion = scan.nextLine().toUpperCase().charAt(0);
 
         }
+    }
+
+    public Pasajero buscarPasajeroPorDni (String dni){
+
+        for(Pasajero pasajero : pasajeros){
+            if(pasajero.getDni().equals(dni)){
+
+                return pasajero;
+            }
+        }
+        return null;
     }
 
 }

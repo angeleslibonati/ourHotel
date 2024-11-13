@@ -179,6 +179,13 @@ public class Menu {
 
                 menuAbmPasajero(scan,usuario,misReservas,miHotel);
                 break;
+            case 4:
+                //Ver datos de un pasajero
+                centradoIngreso("Ingrese el Dni del pasajero: ");
+                String dni = scan.nextLine();
+                GestorPasajero.mostrarPasajero(miHotel.buscarPasajeroPorDni(dni));
+                menuAbmPasajero(scan,usuario,misReservas,miHotel);
+                break;
             case 0:
                 //volver atras
                 menuRecepcionista(scan,usuario,misReservas);
@@ -362,6 +369,14 @@ public class Menu {
 
                 menuAbmEmpleado(scan, miHotel,usuario,misReservas);
                 break;
+            case 4:
+                //Ver datos de un empleado
+                centradoIngreso("Ingrese Numero de legajo: ");
+                int numId = scan.nextInt();
+                scan.nextLine();
+                
+                menuAbmEmpleado(scan, miHotel, usuario, misReservas);
+                break;
             case 0:
                 //volver atras
                 menuAdmin(scan, miHotel,usuario,misReservas);
@@ -416,7 +431,8 @@ public class Menu {
 
             case 1:
                 encabezadoMenu("Datos Personales");
-                GestorPasajero.mostrarPasajero(GestorPasajero.buscarPasajero(usuario,mihotel.getPasajeros()));
+                GestorPasajero.mostrarPasajero(mihotel.buscarPasajero(usuario));
+
                 menuPasajero(scan, usuario, mihotel,dni,misReservas);
                 break;
             case 2:
@@ -626,9 +642,10 @@ public class Menu {
 
         dibujarTerminacion();
         encabezadoMenu("Administracion de Pasajeros");
-        centradoOpciones("1. Alta");
-        centradoOpciones("2. Baja");
-        centradoOpciones("3. Modificacion");
+        centradoOpciones("1. Alta Pasajero");
+        centradoOpciones("2. Baja Pasajero");
+        centradoOpciones("3. Modificacion datos Pasajero");
+        centradoOpciones("4. Ver datos Pasajero");
         centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }
