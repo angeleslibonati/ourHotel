@@ -110,5 +110,19 @@ public class Habitacion {
         }
     }
 
+    public int buscarPorNroHabitacion(int nroHab, ArrayList<Habitacion> habitaciones) {
+        int index = -1;
+        int cont = 0;
+
+        while (cont < (habitaciones.size()-1) && index == -1) {
+
+            if (nroHab == habitaciones.get(cont).getNumHabitacion()) {
+                index = cont;
+            }
+            cont ++;
+        }
+        return index;
+    }
+
 
 }

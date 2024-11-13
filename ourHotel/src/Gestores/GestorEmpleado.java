@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class GestorEmpleado implements I_ABM {
 
     ArrayList<Empleado> empleados ;
-    ArrayList<Empleado>empleados ;
+
 
     public GestorEmpleado() {
         this.empleados = new ArrayList<>();
@@ -62,7 +62,7 @@ public class GestorEmpleado implements I_ABM {
             empleado.setDireccion(dir);
 
             Menu.centradoIngreso("Tipo de Usuario:");
-            empleado.setRol(Tipo_Usuario.valueOf(scan.nextLine()));
+            empleado.setRol(Tipo_Usuario.valueOf(scan.nextLine().toUpperCase()));
 
             empleado.setEstadoEmpleado(Estado_Empleado.ACTIVO);
             empleado.setUsuario(empleado.getNombre() + "_" + empleado.getApellido());
@@ -70,9 +70,11 @@ public class GestorEmpleado implements I_ABM {
 
             empleados.add(empleado);
 
+            Menu.centradoOpciones("CARGA EXITOSA");
+
         } else {
             Menu.centradoOpciones("El empleado ya existe");
-            Menu.centradoOpciones(empleados.get(index).toString());
+            empleados.get(index).mostrarEmpleado();
         }
     }
 
@@ -80,10 +82,12 @@ public class GestorEmpleado implements I_ABM {
     public void baja(Scanner scan) {
         Empleado empl = new Empleado();
 
-        Menu.centradoIngreso("Ingrese el número de Legajo:");
+        Menu.centradoIngreso("Ingrese el número de Legajo: ");
         empl = buscarEmpleadoXLegajo(scan.nextInt());
 
         empl.setEstadoEmpleado(Estado_Empleado.INACTIVO);
+
+        Menu.centradoOpciones("EMPLEADO DADO DE BAJA");
     }
 
     @Override
@@ -91,41 +95,45 @@ public class GestorEmpleado implements I_ABM {
         Empleado empl = new Empleado();
         char opcion = 'S';
 
-        Menu.centradoIngreso("Legajo del Empleado:");
+        Menu.centradoIngreso("Legajo del Empleado: ");
         empl = buscarEmpleadoXLegajo(scan.nextInt());
 
-        System.out.println(empl);
+        empl.mostrarEmpleado();
 
         while (opcion == 'S') {
-            Menu.centradoIngreso("Igrese el campo a modificar:");
+            Menu.centradoIngreso("Ingrese el campo a modificar: ");
             String campo = scan.nextLine();
 
             if (campo.equalsIgnoreCase("nombre")) {
-                Menu.centradoIngreso("Ingrese el nuevo nombre:");
+                Menu.centradoIngreso("Ingrese el nuevo nombre: ");
                 empl.setNombre(scan.nextLine());
             } else if (campo.equalsIgnoreCase("apellido")) {
-                Menu.centradoIngreso("Ingrese el nuevo Apellido:");
+                Menu.centradoIngreso("Ingrese el nuevo Apellido: ");
                 empl.setApellido(scan.nextLine());
             } else if (campo.equalsIgnoreCase("telefono")) {
-                Menu.centradoIngreso("Ingrese el nuevo teléfono:");
+                Menu.centradoIngreso("Ingrese el nuevo teléfono: ");
                 empl.setTelefono(scan.nextLine());
             } else if (campo.equalsIgnoreCase("email")) {
-                Menu.centradoIngreso("Ingrese la nueva dirección email:");
+                Menu.centradoIngreso("Ingrese la nueva dirección email: ");
                 empl.setEmail(scan.nextLine());
             } else if (campo.equalsIgnoreCase("direccion") || campo.equalsIgnoreCase("dirección")) {
                 Direccion dir = empl.getDireccion();
-                Menu.centradoIngreso("Ingrese calle:");
+                Menu.centradoIngreso("Ingrese calle: ");
                 dir.setCalle(scan.nextLine());
-                Menu.centradoIngreso("Ingrese altura:");
+                Menu.centradoIngreso("Ingrese altura: ");
                 dir.setAltura(scan.nextInt());
-                Menu.centradoIngreso("Ingrese ciudad:");
+                scan.nextLine();
+                Menu.centradoIngreso("Ingrese ciudad: ");
                 dir.setCiudad(scan.nextLine());
             } else {
                 Menu.centradoOpciones("La opción ingresada es inválida o no se puede modificar");
             }
 
-            Menu.centradoIngreso("Desea modificar otro dato S/N:");
+            Menu.centradoIngreso("Desea modificar otro dato S/N: ");
             opcion = scan.nextLine().toUpperCase().charAt(0);
+
+            Menu.encabezadoMenu("Empleado modificado");
+            empl.mostrarEmpleado();
 
         }
     }
