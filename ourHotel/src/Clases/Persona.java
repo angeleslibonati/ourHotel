@@ -106,13 +106,13 @@ public abstract class Persona {
         Menu.dibujarTerminacion();
     }
 
-    public static int buscarPorDni(String dni, ArrayList<Persona> personas) {
+    public int buscarPorDni(String dni, ArrayList<Persona> personas) {
         int index = -1;
         int cont = 0;
 
         while (cont < (personas.size()-1) && index == -1) {
 
-            if (dni.equalsIgnoreCase(personas.get(cont).getDni())) {
+            if (dni.equals(personas.get(cont).getDni())) {
                 index = cont;
             }
             cont ++;

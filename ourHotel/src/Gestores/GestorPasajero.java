@@ -43,6 +43,20 @@ public class GestorPasajero implements I_ABM {
         pasajero.mostrarPasajero();
     }
 
+    public static Pasajero buscarPasajeroDni(String dni, ArrayList<Pasajero> pasajeros) {
+        Pasajero pas = new Pasajero();
+        pas.setDni("-1");
+        int cont = 0;
+
+        for (Pasajero p : pasajeros) {
+            if (p.getDni().equals(dni)) {
+                pas = p;
+            }
+        }
+
+        return pas;
+    }
+
 
     @Override
     public void alta(Scanner scan) {
@@ -51,12 +65,10 @@ public class GestorPasajero implements I_ABM {
         Menu.centradoIngreso("Ingrese DNI: ");
         String dni = scan.nextLine();
 
-        ArrayList<Persona> personas = new ArrayList<>();
-        personas.addAll(pasajeros);
 
-        int index = Persona.buscarPorDni(dni, personas);
+        pas = buscarPasajeroDni(dni, pasajeros);
 
-        if(index == -1) {
+        if(pas.getDni().equals("-1")) {
             pas.setDni(dni);
             Menu.centradoIngreso("Ingrese Nombre:");
             pas.setNombre(scan.nextLine());
@@ -82,11 +94,11 @@ public class GestorPasajero implements I_ABM {
             pas.setUsuario(pas.getNombre() + "_" + pas.getApellido());
             pas.setContrasenia("1234");
 
-            pasajeros.add(pas);
+            this.pasajeros.add(pas);
 
         } else {
             Menu.centradoOpciones("El pasajero ya existe");
-            Menu.centradoOpciones(pasajeros.get(index).toString());
+            pas.mostrarPasajero();
         }
     }
 
@@ -94,13 +106,13 @@ public class GestorPasajero implements I_ABM {
     public void baja(Scanner scan) {
         Pasajero pas = new Pasajero();
 
-        ArrayList<Persona> personas = new ArrayList<>();
-        personas.addAll(pasajeros);
 
         Menu.centradoIngreso("Ingrese el número de DNI:");
-        pas = pasajeros.get(Persona.buscarPorDni(scan.nextLine(), personas));
+        pas = buscarPasajeroDni(scan.nextLine(), pasajeros);
 
         pas.setActivo(false);
+
+        Menu.centradoOpciones("PASAJERO DADO DE BAJA");
     }
 
     @Override
@@ -108,13 +120,10 @@ public class GestorPasajero implements I_ABM {
         Pasajero pas = new Pasajero();
         char opcion = 'S';
 
-        ArrayList<Persona> personas = new ArrayList<>();
-        personas.addAll(pasajeros);
-
         Menu.centradoIngreso("DNI del Pasajero:");
-        pas = pasajeros.get(Persona.buscarPorDni(scan.nextLine(), personas));
+        pas = buscarPasajeroDni(scan.nextLine(), pasajeros);
 
-        Menu.centradoOpciones(pas.toString());
+        pas.mostrarPasajero();
 
         while (opcion == 'S') {
             Menu.centradoIngreso("Igrese el campo a modificar:");
@@ -147,7 +156,12 @@ public class GestorPasajero implements I_ABM {
             Menu.centradoIngreso("Desea modificar otro dato S/N:");
             opcion = scan.nextLine().toUpperCase().charAt(0);
 
+            Menu.encabezadoMenu("Pasajero Modificado");
+            pas.mostrarPasajero();
+
         }
     }
+
+
 
 }

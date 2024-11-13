@@ -1,6 +1,7 @@
 import Clases.*;
 
 import Gestores.GestorHotel;
+import Gestores.GestorPasajero;
 import Gestores.GestorReserva;
 
 import org.json.JSONException;
@@ -17,7 +18,6 @@ public class Main {
             GestorHotel miHotel = new GestorHotel();
             //Mapeo de Json Reserva
             GestorReserva reserva = new GestorReserva();
-            
             Menu.menuPrincipal(entrada, miHotel,reserva);
         } catch (JSONException e) {
             throw new RuntimeException(e);

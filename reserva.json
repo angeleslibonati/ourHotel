@@ -52,7 +52,7 @@
 
     {
          "habitacion":{
-        "numeronumHabitacion": 101
+        "numHabitacion": 101
          },
          "pasajero":{
         "dni": "12345678"
@@ -68,7 +68,7 @@
     {
 
         "habitacion":{
-        "habitacionNumero": 301
+        "numHabitacion": 301
         },
         "pasajero":{
         "dni": "12345678"
@@ -84,7 +84,7 @@
     
     {
         "habitacion":{
-        "habitacionNumero": 102
+        "numHabitacion": 102
         },
         "pasajero":{
         "dni": "87654321"

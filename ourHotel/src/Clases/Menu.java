@@ -255,6 +255,7 @@ public class Menu {
             case 1:
                 //nueva reserva (alta)
                 encabezadoMenu("Nueva Reserva");
+                
 
                 MenuAbmReserva(scan,usuario,misReservas);
                 break;

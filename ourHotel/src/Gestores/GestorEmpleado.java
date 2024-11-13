@@ -28,18 +28,28 @@ public class GestorEmpleado implements I_ABM {
         return empl;
     }
 
+    public static Empleado buscarEmpleadoXDni(String dni, ArrayList<Empleado> empleados) {
+        Empleado empl = new Empleado();
+        empl.setDni("-1");
+
+        for (Empleado e : empleados) {
+            if (e.getDni().equals(dni)) {
+                empl = e;
+            }
+        }
+
+        return empl;
+    }
+
     @Override
     public void alta(Scanner scan) {
         Empleado empleado = new Empleado();
         Menu.centradoIngreso("Ingrese DNI: ");
         String dni = scan.nextLine();
 
-        ArrayList<Persona> personas = new ArrayList<>();
-        personas.addAll(empleados);
+        empleado =  buscarEmpleadoXDni(dni, empleados);
 
-        int index = Persona.buscarPorDni(dni, personas);
-
-        if(index == -1) {
+        if(empleado.getDni().equals("-1")) {
             empleado.setDni(dni);
             Menu.centradoIngreso("Ingrese Nombre: ");
             empleado.setNombre(scan.nextLine());
@@ -74,7 +84,7 @@ public class GestorEmpleado implements I_ABM {
 
         } else {
             Menu.centradoOpciones("El empleado ya existe");
-            empleados.get(index).mostrarEmpleado();
+            empleado.mostrarEmpleado();
         }
     }
 

@@ -16,12 +16,16 @@ public class Pasajero extends Persona{
 
     public boolean isActivo() { return activo; }
 
-    public void setActivo(boolean activo) { this.activo = activo; }
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 
     public void mostrarPasajero (){
 
         super.mostarPersona();
         Menu.dibujarTerminacion();
     }
+
+
 
 }
