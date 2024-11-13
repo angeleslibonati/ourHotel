@@ -91,7 +91,7 @@ public class GestorEmpleado implements I_ABM {
     }
 
     @Override
-    public void modificacion(Scanner scan) {
+    public void modificacion(Scanner scan, GestorHotel miHotel) {
         Empleado empl = new Empleado();
         char opcion = 'S';
 

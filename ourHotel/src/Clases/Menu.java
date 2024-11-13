@@ -175,7 +175,7 @@ public class Menu {
                 break;
             case 3:
                 //modificar datos pasajero
-                miHotel.modificarPasajero(scan);
+                miHotel.modificarPasajero(scan,miHotel);
 
                 menuAbmPasajero(scan,usuario,misReservas,miHotel);
                 break;
@@ -240,7 +240,7 @@ public class Menu {
                 break;
             case 4:
                 //modificar una habitacion.
-                miHotel.modificarHabitacion(scan);
+                miHotel.modificarHabitacion(scan,miHotel);
 
                 menuHabitacion(scan,usuario,misReservas,miHotel);
                 break;
@@ -280,7 +280,7 @@ public class Menu {
             case 3:
                 //modificar una reserva
                 encabezadoMenu("Modificar Reserva");
-                misReservas.modificacion(scan);
+                misReservas.modificacion(scan,miHotel);
 
                 MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
@@ -372,7 +372,7 @@ public class Menu {
                 break;
             case 3:
                 //modificar datos de un empleado
-                miHotel.modificacionEmpleado(scan);
+                miHotel.modificacionEmpleado(scan,miHotel);
 
                 menuAbmEmpleado(scan, miHotel,usuario,misReservas);
                 break;
@@ -414,7 +414,7 @@ public class Menu {
                 break;
             case 3:
                 //modificar una habitacion.
-                miHotel.modificarHabitacion(scan);
+                miHotel.modificarHabitacion(scan,miHotel);
 
                 menuAbmHabitacion(scan, miHotel,usuario,misReservas);
                 break;
@@ -453,7 +453,7 @@ public class Menu {
 
                 break;
             case 4:
-                mihotel.modificarPasajero(scan);
+                mihotel.modificarPasajero(scan,mihotel);
                 menuPasajero(scan, usuario, mihotel, dni, misReservas);
                 break;
             case 0:

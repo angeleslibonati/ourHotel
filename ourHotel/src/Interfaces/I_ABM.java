@@ -9,5 +9,5 @@ public interface I_ABM {
 
     void baja(Scanner scan);
 
-    void modificacion(Scanner scan);
+    void modificacion(Scanner scan, GestorHotel miHotel);
 }

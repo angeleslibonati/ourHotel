@@ -324,21 +324,18 @@ public class GestorReserva implements I_ABM {
     }
 
     @Override
-    public void modificacion(Scanner scan) {
+    public void modificacion(Scanner scan, GestorHotel miHotel) {
         char opcion = 'S';
         Menu.centradoIngreso("Ingrese el número de reserva: ");
         Reserva reserva = buscarUnaReserva(scan.nextInt());
         scan.nextLine();
         Habitacion hab = new Habitacion();
-        ArrayList <Habitacion> habis = new Hotel().getHabitaciones();
-
+        ArrayList <Habitacion> habis = miHotel.getHabitacion();
 
         reserva.mostrarUnaReserva();
 
-        Menu.centradoIngreso("Ingrese el campo a modificar");
-
         while (opcion == 'S') {
-            Menu.centradoIngreso("Igrese el campo a modificar:");
+            Menu.centradoIngreso("Igrese el campo a modificar: ");
             String campo = scan.nextLine();
 
             if (campo.equalsIgnoreCase("habitacion") || campo.equalsIgnoreCase("habitación")) {
@@ -353,7 +350,7 @@ public class GestorReserva implements I_ABM {
                 }
 
             } else if (campo.equalsIgnoreCase("ingreso")) {
-                Menu.centradoIngreso("Ingrese la nueva fecha de ingreso:");
+                Menu.centradoIngreso("Ingrese la nueva fecha de ingreso: ");
                 LocalDate fInic = LocalDate.parse(scan.nextLine());
                 if(reservaDisponible(fInic, reserva.getFechaFin(), reserva.getHabitacion().getNumHabitacion())) {
                     reserva.setFechaInicio(fInic);
@@ -362,7 +359,7 @@ public class GestorReserva implements I_ABM {
                 }
 
             } else if (campo.equalsIgnoreCase("egreso")) {
-                Menu.centradoIngreso("Ingrese la nueva fecha de egreso:");
+                Menu.centradoIngreso("Ingrese la nueva fecha de egreso: ");
                 LocalDate fFin = LocalDate.parse(scan.nextLine());
                 if (reservaDisponible(reserva.getFechaInicio(), fFin, reserva.getHabitacion().getNumHabitacion())) {
                     reserva.setFechaFin(fFin);
@@ -373,7 +370,7 @@ public class GestorReserva implements I_ABM {
                 Menu.centradoOpciones("La opción ingresada es inválida o no se puede modificar");
             }
 
-            Menu.centradoIngreso("Desea modificar otro dato S/N:");
+            Menu.centradoIngreso("Desea modificar otro dato S/N: ");
             opcion = scan.nextLine().toUpperCase().charAt(0);
 
         }

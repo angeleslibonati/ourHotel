@@ -107,8 +107,8 @@ public class GestorHotel {
         this.gestorEmpleado.baja(scan);
     }
 
-    public void modificacionEmpleado (Scanner scan){
-        this.gestorEmpleado.modificacion(scan);
+    public void modificacionEmpleado (Scanner scan,GestorHotel miHotel){
+        this.gestorEmpleado.modificacion(scan,miHotel);
     }
 
     public void altaPasajero (Scanner scan, GestorHotel miHotel){
@@ -118,8 +118,8 @@ public class GestorHotel {
     public void bajaPasajero (Scanner scan){
         this.gestorPasajero.baja(scan);
     }
-    public void modificarPasajero (Scanner scan){
-        this.gestorPasajero.modificacion(scan);
+    public void modificarPasajero (Scanner scan,GestorHotel miHotel){
+        this.gestorPasajero.modificacion(scan,miHotel);
     }
 
 
@@ -129,8 +129,8 @@ public class GestorHotel {
     public void bajaHabitacion (Scanner scan){
         this.gestorHabitacion.baja(scan);
     }
-    public void modificarHabitacion(Scanner scan){
-        this.gestorHabitacion.modificacion(scan);
+    public void modificarHabitacion(Scanner scan, GestorHotel miHotel){
+        this.gestorHabitacion.modificacion(scan, miHotel);
     }
 
 

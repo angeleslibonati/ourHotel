@@ -245,7 +245,7 @@ public class GestorHabitacion implements I_ABM {
     }
 
     @Override
-    public void modificacion(Scanner scan) {
+    public void modificacion(Scanner scan,GestorHotel miHotel) {
         Habitacion hab = new Habitacion();
         char opcion = 'S';
 
