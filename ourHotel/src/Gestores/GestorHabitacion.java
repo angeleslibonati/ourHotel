@@ -184,23 +184,25 @@ public class GestorHabitacion implements I_ABM {
 
         if(index == -1) {
             hab.setNumHabitacion(numHab);
-            Menu.centradoIngreso("Ingrese Valor por noche:");
+            Menu.centradoIngreso("Ingrese Valor por noche: ");
             hab.setValorPorNoche(scan.nextDouble());
             scan.nextLine();
-            Menu.centradoIngreso("Ingrese Capacidad Máxima de pasajero:");
+            Menu.centradoIngreso("Ingrese Capacidad Máxima de pasajero: ");
             hab.setCantPersonas(scan.nextInt());
             scan.nextLine();
-            Menu.centradoIngreso("Ingrese Tipo de Habitación:");
+            Menu.centradoIngreso("Ingrese Tipo de Habitación: ");
             hab.setTipoHabitacion(Tipo_Habitacion.valueOf(scan.nextLine().toUpperCase()));
-            Menu.centradoIngreso("Ingrese Tipo de cama:");
+            Menu.centradoIngreso("Ingrese Tipo de cama: ");
             hab.setTipoCama(Tipo_Cama.valueOf(scan.nextLine().toUpperCase()));
             hab.setEstadoHabitacion(Estado_Habitacion.LIBRE);
 
             habitaciones.add(hab);
 
+            Menu.centradoOpciones("HABITACIÓN CARGADA");
+
         } else {
             Menu.centradoOpciones("La habitación ya existe");
-            Menu.centradoOpciones(habitaciones.get(index).toString());
+            habitaciones.get(index).mostrarHabitacion();
         }
     }
 
@@ -210,6 +212,11 @@ public class GestorHabitacion implements I_ABM {
 
         Menu.centradoIngreso("Ingrese número de habitación:");
         hab = habitaciones.get(buscarPorNroHabitacion(scan.nextInt()));
+
+        Menu.encabezadoMenu("Motivo de baja");
+        Menu.centradoOpciones("1 - REPARACIÓN");
+        Menu.centradoOpciones("2 - OCUPADA");
+        Menu.centradoOpciones("3 - LIMPIEZA");
 
         Menu.centradoIngreso("Ingrese el motivo de baja:");
         int motivo = scan.nextInt();
@@ -227,6 +234,8 @@ public class GestorHabitacion implements I_ABM {
                 break;
             default:
                 Menu.centradoOpciones("El motivo ingresado es inválido.");
+
+                Menu.centradoOpciones("HABITACION DADA DE BAJA");
         }
     }
 
@@ -238,7 +247,7 @@ public class GestorHabitacion implements I_ABM {
         Menu.centradoIngreso("Número de habitación:");
         hab = habitaciones.get(buscarPorNroHabitacion(scan.nextInt()));
 
-        System.out.println(hab);
+        hab.mostrarHabitacion();
 
         while (opcion == 'S') {
             Menu.centradoIngreso("Igrese el campo a modificar:");
@@ -247,9 +256,11 @@ public class GestorHabitacion implements I_ABM {
             if (campo.equalsIgnoreCase("valor por noche")) {
                 Menu.centradoIngreso("Ingrese el nuevo valor:");
                 hab.setValorPorNoche(scan.nextDouble());
+                scan.nextLine();
             } else if (campo.equalsIgnoreCase("cantidad de personas")) {
                 Menu.centradoIngreso("Ingrese la nueva cantidad:");
                 hab.setCantPersonas(scan.nextInt());
+                scan.nextLine();
             } else if (campo.equalsIgnoreCase("tipo de habitacion")) {
                 Menu.centradoIngreso("Ingrese tipo de habitación:");
                 hab.setTipoHabitacion(Tipo_Habitacion.valueOf(scan.nextLine().toUpperCase()));

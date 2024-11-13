@@ -1,6 +1,8 @@
 package Clases;
 import Enum.Estado_Empleado;
 
+import java.util.ArrayList;
+
 public class Empleado extends Persona{
 
     private int id = ++Empleado.contador;
@@ -46,6 +48,18 @@ public class Empleado extends Persona{
         Menu.centradoOpciones("Horas Trabajadas: " + this.horasTrabajadas);
         Menu.centradoOpciones("Estado del Empleado: " + this.estadoEmpleado);
         Menu.dibujarTerminacion();
+    }
+
+    public Empleado buscarEmpleadoXLegajo (int legajo, ArrayList <Empleado> empleados) {
+        Empleado empl = new Empleado();
+
+        for (Empleado e : empleados) {
+            if (e.getId() == legajo) {
+                empl = e;
+            }
+        }
+
+        return empl;
     }
 
 

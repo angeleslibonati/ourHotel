@@ -197,6 +197,7 @@ public class GestorJson {
                 jDireccion.put("altura", pasajero.getDireccion().getAltura());
                 jDireccion.put("ciudad", pasajero.getDireccion().getCiudad());
                 jPasajero.put("direccion", jDireccion);
+                jPasajero.put("activo", pasajero.isActivo());
 
                 jPasajeros.put(jPasajero);
             }
