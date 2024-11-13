@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public class Reserva {
 
     protected int idReserva = ++Reserva.contador;
@@ -85,6 +86,8 @@ public class Reserva {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
+
+
 
     private String getFormattedDate(Date date, String format) {
         return new SimpleDateFormat(format).format(date);
