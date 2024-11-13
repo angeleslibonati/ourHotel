@@ -255,7 +255,7 @@ public class GestorReserva implements I_ABM {
         if (fIngreso == LocalDate.now()) {
             if(hab.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE) && ocupada == false) {
                 reserva.setHabitacion(hab);
-                reserva.setFechaFin(fIngreso);
+                reserva.setFechaInicio(fIngreso);
                 reserva.setFechaFin(fEgreso);
 
                 ArrayList<Pasajero> pasas = miHotel.getPasajeros();
@@ -286,7 +286,7 @@ public class GestorReserva implements I_ABM {
 
             if (disponible) {
                 reserva.setHabitacion(hab);
-                reserva.setFechaFin(fIngreso);
+                reserva.setFechaInicio(fIngreso);
                 reserva.setFechaFin(fEgreso);
 
                 ArrayList<Pasajero> pasas = miHotel.getPasajeros();

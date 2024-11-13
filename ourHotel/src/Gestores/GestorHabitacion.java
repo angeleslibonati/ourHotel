@@ -39,12 +39,12 @@ public class GestorHabitacion implements I_ABM {
     }
 
     //Funcion check out
-    public double cambioEstadoPorCheckOut(int numHabitacion) {
+    public double cambioEstadoPorCheckOut(int numHabitacion, String dni, GestorReserva miReserva) {
 
         double costoPorConsumos = 0;
         Habitacion habitacion = buscaHabitacion(numHabitacion);
 
-        if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.OCUPADA)){
+        if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.OCUPADA) ){
 
             //cambia el estado de OCUPADA A LIMPIEZA
             habitacion.setEstadoHabitacion(Estado_Habitacion.LIMPIEZA);
