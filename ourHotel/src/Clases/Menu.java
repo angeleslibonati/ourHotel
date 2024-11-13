@@ -8,7 +8,7 @@ import Gestores.GestorReserva;
 import Enum.Tipo_Usuario;
 import manejoJSON.GestorJson;
 import org.json.JSONException;
-
+import Enum.Servicio_Habitacion;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -56,7 +56,7 @@ public class Menu {
                 //Pasajero
                 // Tiene 3 reintentos al momento de ingresar
                 int flag = 0;
-
+                String dni = "";
                 do {
                    usuario = ingresoUsuarioYClave(scan, "Usuario");
                    contra = ingresoUsuarioYClave(scan, "Contrasenia");
@@ -69,6 +69,7 @@ public class Menu {
                         try {
 
                             if(p.getUsuario().equals(usuario) && p.getContrasenia().equals(contra)){
+                                dni = p.getDni();
 
                                menuPasajero(scan,usuario,miHotel);
                                 flag = 4;
@@ -512,28 +513,29 @@ public class Menu {
             case 1:
                 //masajes
                 encabezadoMenu("Masajes");
-                confirmacionServicio(scan,usuario,miHotel);
+
+                confirmacionServicio(scan,Servicio_Habitacion.MASAJE);
 
                 menuActividades(scan, usuario, miHotel);
                 break;
             case 2:
                 //spa
                 encabezadoMenu("Spa");
-                confirmacionServicio(scan,usuario,miHotel);
+                confirmacionServicio(scan,Servicio_Habitacion.SPA);
 
                 menuActividades(scan, usuario, miHotel);
                 break;
             case 3:
                 //sauna
                 encabezadoMenu("Sauna");
-                confirmacionServicio(scan,usuario,miHotel);
+                confirmacionServicio(scan,Servicio_Habitacion.SAUNA);
 
                 menuActividades(scan, usuario, miHotel);
                 break;
             case 4:
                 //hidromasaje
                 encabezadoMenu("Hidromasaje");
-                confirmacionServicio(scan,usuario,miHotel);
+                confirmacionServicio(scan,Servicio_Habitacion.HIDROMASAJE);
 
                 menuActividades(scan, usuario, miHotel);
                 break;
@@ -554,28 +556,28 @@ public class Menu {
             case 1:
                 //Solicitar desayuno en la habitacion
                 encabezadoMenu("Desayuno");
-                confirmacionServicio(scan,usuario, miHotel);
+                confirmacionServicio(scan,Servicio_Habitacion.DESAYUNO);
 
                 menuServHabitacion(scan, usuario, miHotel);
                 break;
             case 2:
                 //Solicitar almuerzo o cena en la habitacion.
                 encabezadoMenu("Almuerzo-Cena");
-                confirmacionServicio(scan,usuario, miHotel);
+                confirmacionServicio(scan,Servicio_Habitacion.ALMUERZO_CENA);
 
                 menuServHabitacion(scan, usuario, miHotel);
                 break;
             case 3:
                 //Servicio de brindis
                 encabezadoMenu("Servicio de Brindis");
-                confirmacionServicio(scan,usuario, miHotel);
+                confirmacionServicio(scan,Servicio_Habitacion.SERVICIO_BRINDIS);
 
                 menuServHabitacion(scan, usuario, miHotel);
                 break;
             case 4:
                 //bebida sin alcohol
                 encabezadoMenu("Bebidas");
-                confirmacionServicio(scan,usuario, miHotel);
+                confirmacionServicio(scan,Servicio_Habitacion.BEBIDA_SIN_ALCOHOL);
 
                 menuServHabitacion(scan, usuario, miHotel);
                 break;
@@ -779,19 +781,14 @@ public class Menu {
         return scan.nextLine();
     }
 
-    public static void confirmacionServicio (Scanner scan,String usuario, GestorHotel miHotel) throws JSONException {
+    public static void confirmacionServicio (Scanner scan, Servicio_Habitacion servicioHabitacion)  {
+
         Servicio servicio = new Servicio();
         ArrayList<Servicio>servicios = new ArrayList<>();
 
-        for (int i = 0; i< miHotel.getHabitacion().size(); i++){
-            Habitacion h = miHotel.getHabitacion().get(i);
-
-            servicio = h.getServicios().get(i);
-
-        }
         int confirmar = 0;
 
-        centradoOpciones("Valor: $ " + servicio + ".-");
+        centradoOpciones("Valor: $ " + servicioHabitacion.getCosto() + ".-");
         centradoOpciones("1. Confirmar");
         centradoOpciones("0. Rechazar");
         dibujarTerminacion();
@@ -799,10 +796,10 @@ public class Menu {
 
         if(confirmar == 1){
             servicios.add(servicio);
+            
         }
-        else {
-            menuActividades(scan,usuario, miHotel);
-        }
+
     }
+
 
 }
