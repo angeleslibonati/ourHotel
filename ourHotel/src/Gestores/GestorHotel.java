@@ -60,7 +60,7 @@ public class GestorHotel {
         double costoHabitacion = 0;
         try {
 
-            costoHabitacion = this.gestorHabitacion.costoPorHabitacion(dni,misReservas);
+            costoHabitacion = this.gestorHabitacion.costoPorHabitacion(dni,misReservas,numHabitacion);
             Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
             Menu.centradoOpciones("Sercios extras: $ " + consumos);
             Menu.centradoOpciones("--------------------");

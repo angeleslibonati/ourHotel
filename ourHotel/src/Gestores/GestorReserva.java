@@ -109,10 +109,9 @@ public class GestorReserva implements I_ABM {
 
     public  long cantidadNoches(String dni) {
 
-        //Busca la reserva por dni.
-        Reserva reserva = new Reserva();
+        Reserva reserva = buscaReservaPorDni(dni);
+
         long canDias = ChronoUnit.DAYS.between(reserva.getFechaInicio(), reserva.getFechaFin());
-        //  int dias = (int) ((fechaInicio.getTime() - fechaactual.getTime()));
 
         return canDias;
     }
@@ -223,11 +222,12 @@ public class GestorReserva implements I_ABM {
         int cont = 0;
 
 
-        Menu.centradoIngreso("Ingrese numero de Habitación:");
+        Menu.centradoIngreso("Ingrese numero de Habitación: ");
         int nroHab = scan.nextInt();
-        Menu.centradoIngreso("Ingrese Fecha de ingreso (yyyy-mm-dd):");
+        scan.nextLine();
+        Menu.centradoIngreso("Ingrese Fecha de ingreso (yyyy-mm-dd): ");
         LocalDate fIngreso = LocalDate.parse(scan.nextLine());
-        Menu.centradoIngreso("Ingrese Fecha de egreso (yyyy-mm-dd):");
+        Menu.centradoIngreso("Ingrese Fecha de egreso (yyyy-mm-dd): ");
         LocalDate fEgreso = LocalDate.parse(scan.nextLine());
 
         Habitacion hab = new Habitacion();
@@ -254,6 +254,7 @@ public class GestorReserva implements I_ABM {
                 Empleado empl = new Empleado();
                 Menu.centradoIngreso("Ingrese Legajo del empleado: ");
                 empl.buscarEmpleadoXLegajo(scan.nextInt(), empls);
+                scan.nextLine();
                 reserva.setEmpleado(empl);
 
                 reserva.setEstadoReserva(Estado_Reserva.CONFIRMADO);
@@ -276,7 +277,7 @@ public class GestorReserva implements I_ABM {
                 pers.addAll(pasas);
 
                 Menu.centradoIngreso("Ingrese DNI pasajero: ");
-                Pasajero pas = pasas.get(Pasajero.buscarPorDni(scan.nextLine(),pers));
+                Pasajero pas = pasas.get(Persona.buscarPorDni(scan.nextLine(),pers));
                 reserva.setPasajero(pas);
 
 
@@ -284,6 +285,7 @@ public class GestorReserva implements I_ABM {
                 Empleado empl = new Empleado();
                 Menu.centradoIngreso("Ingrese Legajo del empleado: ");
                 empl.buscarEmpleadoXLegajo(scan.nextInt(), empls);
+                scan.nextLine();
                 reserva.setEmpleado(empl);
 
                 reserva.setEstadoReserva(Estado_Reserva.RESERVADO);
@@ -360,6 +362,16 @@ public class GestorReserva implements I_ABM {
         }
 
 
+    }
+
+    public Reserva buscaReservaPorDni(String dni){
+
+        for (Reserva reserva:reservas){
+            if(reserva.getPasajero().getDni().equals(dni)){
+                return reserva;
+            }
+        }
+        return null;
     }
 
 }

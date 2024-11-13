@@ -48,10 +48,14 @@ public class GestorHabitacion implements I_ABM {
 
             //cambia el estado de OCUPADA A LIMPIEZA
             habitacion.setEstadoHabitacion(Estado_Habitacion.LIMPIEZA);
+            //sumatoria de servicio
+            costoPorConsumos = consumosExtra( habitacion);
+
             Menu.centradoOpciones("Servicio Limpieza en proceso");
+            habitacion.setServicios(new ArrayList<>());
+
+            habitacion.setEstadoHabitacion(Estado_Habitacion.LIBRE);
         }
-        //sumatoria de servicio
-        costoPorConsumos = consumosExtra( habitacion);
 
         return costoPorConsumos;
     }
@@ -65,14 +69,14 @@ public class GestorHabitacion implements I_ABM {
 
             Servicio servicio = h.getServicios().get(i);
 
-            if (servicio.equals(Servicio_Habitacion.fromString(String.valueOf(MASAJE))) ||
-                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(SPA))) ||
-                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(SAUNA))) ||
-                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(HIDROMASAJE))) ||
-                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(DESAYUNO))) ||
-                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(ALMUERZO_CENA))) ||
-                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(SERVICIO_BRINDIS))) ||
-                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(BEBIDA_SIN_ALCOHOL)))) {
+            if (servicio.getNombreServicio().equals(Servicio_Habitacion.fromString(String.valueOf(MASAJE))) ||
+                    servicio.getNombreServicio().equals(Servicio_Habitacion.fromString(String.valueOf(SPA))) ||
+                    servicio.getNombreServicio().equals(Servicio_Habitacion.fromString(String.valueOf(SAUNA))) ||
+                    servicio.getNombreServicio().equals(Servicio_Habitacion.fromString(String.valueOf(HIDROMASAJE))) ||
+                    servicio.getNombreServicio().equals(Servicio_Habitacion.fromString(String.valueOf(DESAYUNO))) ||
+                    servicio.getNombreServicio().equals(Servicio_Habitacion.fromString(String.valueOf(ALMUERZO_CENA))) ||
+                    servicio.getNombreServicio().equals(Servicio_Habitacion.fromString(String.valueOf(SERVICIO_BRINDIS))) ||
+                    servicio.getNombreServicio().equals(Servicio_Habitacion.fromString(String.valueOf(BEBIDA_SIN_ALCOHOL)))) {
 
                 costoPorConsumo = costoPorConsumo + servicio.getCosto();
             }
@@ -114,12 +118,12 @@ public class GestorHabitacion implements I_ABM {
     }
 
 
-    public double costoPorHabitacion(String dni, GestorReserva misReservas) throws ParseException {
+    public double costoPorHabitacion(String dni, GestorReserva misReservas, int numHabitacion) throws ParseException {
 
         long cantidadNoches = misReservas.cantidadNoches(dni);
-        Habitacion habitacion = new Habitacion();
 
-        double costoHospedaje = cantidadNoches * habitacion.getValorPorNoche();
+
+        double costoHospedaje = cantidadNoches * this.buscaHabitacion(numHabitacion).getValorPorNoche();
 
         return costoHospedaje;
     }
@@ -212,6 +216,7 @@ public class GestorHabitacion implements I_ABM {
 
         Menu.centradoIngreso("Ingrese número de habitación:");
         hab = habitaciones.get(buscarPorNroHabitacion(scan.nextInt()));
+        scan.nextLine();
 
         Menu.encabezadoMenu("Motivo de baja");
         Menu.centradoOpciones("1 - REPARACIÓN");

@@ -3,7 +3,6 @@ package Clases;
 import Excepciones.HabitacionInvalidaException;
 import Excepciones.UsuarioYClaveIncorrectoException;
 
-import Gestores.GestorEmpleado;
 import Gestores.GestorHotel;
 import Gestores.GestorPasajero;
 import Gestores.GestorReserva;
@@ -94,6 +93,7 @@ public class Menu {
             case 0:
                 //Salir
                 //Persistencia de informacion.
+
                 encabezadoMenu("Se estan guardando los cambios");
                 miHotel.actualizarHotel();
                 GestorJson.toJsonHotel(miHotel.getMiHotel());
@@ -262,18 +262,21 @@ public class Menu {
             case 1:
                 //nueva reserva (alta)
                 encabezadoMenu("Nueva Reserva");
+                misReservas.alta(scan);
 
                 MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
             case 2:
                 //cancelar reserva (baja)
                 encabezadoMenu("Cancelar Reserva");
+                misReservas.baja(scan);
 
                 MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
             case 3:
                 //modificar una reserva
                 encabezadoMenu("Modificar Reserva");
+                misReservas.modificacion(scan);
 
                 MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
@@ -462,10 +465,11 @@ public class Menu {
 
             case 1:
                 //hacer reserva
+                encabezadoMenu("Realizar Reserva");
+                misReservas.alta(scan);
                 menuReserva(scan, usuario, miHotel,misReservas);
                 break;
             case 2:
-
                 //cancelar reserva
                 encabezadoMenu("Cancelacion de Reserva");
                 centradoIngreso("Ingrese el numero de reserva ");
