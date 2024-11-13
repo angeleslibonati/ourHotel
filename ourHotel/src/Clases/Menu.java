@@ -1,5 +1,6 @@
 package Clases;
 
+import Excepciones.HabitacionInvalidaException;
 import Excepciones.UsuarioYClaveIncorrectoException;
 
 import Gestores.GestorHotel;
@@ -511,12 +512,16 @@ public class Menu {
 
         switch (opc){
             case 1:
-                //masajes
-                encabezadoMenu("Masajes");
+                try {
+                    //masajes
+                    encabezadoMenu("Masajes");
 
-                confirmacionServicio(scan,Servicio_Habitacion.MASAJE,dni);
+                    confirmacionServicio(scan,Servicio_Habitacion.MASAJE,dni);
 
-                menuActividades(scan, usuario, miHotel,dni);
+                    menuActividades(scan, usuario, miHotel,dni);
+                } catch (HabitacionInvalidaException e) {
+                    centradoOpciones(e.getMessage());
+                }
                 break;
             case 2:
                 //spa
@@ -783,7 +788,7 @@ public class Menu {
 
     public static void confirmacionServicio (Scanner scan, Servicio_Habitacion servicioHabitacion, String dni)  {
 
-        Servicio servicio = new Servicio();
+        Servicio servicio = new Servicio(servicioHabitacion, servicioHabitacion.getCosto());
         ArrayList<Servicio>servicios = new ArrayList<>();
 
         int confirmar = 0;
@@ -796,8 +801,14 @@ public class Menu {
 
         if(confirmar == 1){
            // servicios.add(servicio);
-            Habitacion h = GestorReserva.buscarUnaReservaDni(dni);
-            h.getServicios().add(servicio);
+            Habitacion h = GestorReserva.buscarUnaHabitacionDni(dni);
+            if (h != null){
+                h.getServicios().add(servicio);
+                h.mostrarHabitacion();
+
+            }else {
+                throw new HabitacionInvalidaException("Habitacion no encontrada para el pasajero");
+            }
         }
     }
 

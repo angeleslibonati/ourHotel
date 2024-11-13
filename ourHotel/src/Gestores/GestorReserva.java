@@ -143,7 +143,7 @@ public class GestorReserva {
         return activas;
     }
 
-    public static Habitacion buscarUnaReservaDni(String dni)  {
+    public static Habitacion buscarUnaHabitacionDni(String dni)  {
         Habitacion habitacion = new Habitacion();
 
         for (Reserva reserva : reservas) {
