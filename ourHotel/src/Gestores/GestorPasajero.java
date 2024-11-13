@@ -149,6 +149,12 @@ public class GestorPasajero implements I_ABM {
                 dir.setAltura(scan.nextInt());
                 Menu.centradoIngreso("Ingrese ciudad:");
                 dir.setCiudad(scan.nextLine());
+            } else if (campo.equalsIgnoreCase("activo")) {
+                Menu.centradoIngreso("Ingrese 1 para activar nuevamente al pasajero: ");
+                if (scan.nextInt() == 1) {
+                    pas.setActivo(true);
+                }
+                scan.nextLine();
             } else {
                 Menu.centradoOpciones("La opción ingresada es inválida o no se puede modificar");
             }
