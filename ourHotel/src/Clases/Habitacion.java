@@ -104,6 +104,16 @@ public class Habitacion {
         Menu.dibujarTerminacion();
     }
 
+    public void ticketServicios (){
+
+        Menu.dibujarTerminacion();
+        Menu.encabezadoMenu("Ticket Servicios");
+        Menu.centradoOpciones("Numero Habitacion: " + this.numHabitacion);
+        for(Servicio servicio: servicios){
+            servicio.mostrarServicio();
+        }
+        Menu.dibujarTerminacion();
+    }
 
     //ver esto!
     public void marcarHabitacionLibre(){

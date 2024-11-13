@@ -337,16 +337,19 @@ public class Menu {
 
             case 1:
                 //alta nuevo empleado
+                miHotel.altaEmpleado(scan);
 
                 menuAbmEmpleado(scan, miHotel,usuario);
                 break;
             case 2:
                 //baja de un empleado
+                miHotel.bajaEmpleado(scan);
 
                 menuAbmEmpleado(scan, miHotel,usuario);
                 break;
             case 3:
                 //modificar datos de un empleado
+                miHotel.modificacionEmpleado(scan);
 
                 menuAbmEmpleado(scan, miHotel,usuario);
                 break;
@@ -669,7 +672,7 @@ public class Menu {
         centradoOpciones("1. Alta Empleado");
         centradoOpciones("2. Baja Empleado");
         centradoOpciones("3. Modificacion Empleado");
-        centradoIngreso("0. Volver Atras");
+        centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }
     public static void imprimirAbmHabitacion (){
@@ -804,7 +807,7 @@ public class Menu {
             Habitacion h = GestorReserva.buscarUnaHabitacionDni(dni);
             if (h != null){
                 h.getServicios().add(servicio);
-                h.mostrarHabitacion();
+                h.ticketServicios();
 
             }else {
                 throw new HabitacionInvalidaException("Habitacion no encontrada para el pasajero");

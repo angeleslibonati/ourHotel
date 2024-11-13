@@ -5,6 +5,7 @@ import manejoJSON.GestorJson;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GestorHotel {
 
@@ -82,6 +83,19 @@ public class GestorHotel {
         this.miHotel.setHabitaciones(gestorHabitacion.getHabitaciones());
         this.miHotel.setPasajeros(gestorPasajero.getPasajeros());
     }
+
+    public void altaEmpleado (Scanner scan){
+        this.gestorEmpleado.alta(scan);
+    }
+
+    public void bajaEmpleado (Scanner scan){
+        this.gestorEmpleado.baja(scan);
+    }
+
+    public void modificacionEmpleado (Scanner scan){
+        this.gestorEmpleado.modificacion(scan);
+    }
+
 
 
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class GestorEmpleado implements I_ABM {
 
     ArrayList<Empleado> empleados ;
-    ArrayList<Empleado>empleados ;
+
 
     public GestorEmpleado() {
         this.empleados = new ArrayList<>();
@@ -41,27 +41,27 @@ public class GestorEmpleado implements I_ABM {
 
         if(index == -1) {
             empleado.setDni(dni);
-            Menu.centradoIngreso("Ingrese Nombre:");
+            Menu.centradoIngreso("Ingrese Nombre: ");
             empleado.setNombre(scan.nextLine());
-            Menu.centradoIngreso("Ingrese Apellido:");
+            Menu.centradoIngreso("Ingrese Apellido: ");
             empleado.setApellido(scan.nextLine());
-            Menu.centradoIngreso("Ingrese Teléfono:");
+            Menu.centradoIngreso("Ingrese Teléfono: ");
             empleado.setTelefono(scan.nextLine());
-            Menu.centradoIngreso("Ingrese Correo Electrónico:");
+            Menu.centradoIngreso("Ingrese Correo Electrónico: ");
             empleado.setEmail(scan.nextLine());
 
             Direccion dir = new Direccion();
             Menu.centradoOpciones("Dirección:");
-            Menu.centradoIngreso("Ingrese Calle:");
+            Menu.centradoIngreso("Ingrese Calle: ");
             dir.setCalle(scan.nextLine());
-            Menu.centradoIngreso("Ingrese Altura:");
+            Menu.centradoIngreso("Ingrese Altura: ");
             dir.setAltura(scan.nextInt());
             scan.nextLine();
-            Menu.centradoIngreso("Ingrese Ciudad:");
+            Menu.centradoIngreso("Ingrese Ciudad: ");
             dir.setCiudad(scan.nextLine());
             empleado.setDireccion(dir);
 
-            Menu.centradoIngreso("Tipo de Usuario:");
+            Menu.centradoIngreso("Tipo de Usuario: ");
             empleado.setRol(Tipo_Usuario.valueOf(scan.nextLine()));
 
             empleado.setEstadoEmpleado(Estado_Empleado.ACTIVO);
