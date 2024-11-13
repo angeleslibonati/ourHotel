@@ -33,7 +33,6 @@ public class Servicio {
 
     public void mostrarServicio (){
 
-        Menu.dibujarTerminacion();
         Menu.encabezadoMenu("Servicio Extra");
         Menu.centradoOpciones("Servicio: " + this.nombreServicio);
         Menu.centradoOpciones("Costo: $ " + this.costo);

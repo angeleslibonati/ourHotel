@@ -4,6 +4,8 @@ import Clases.Menu;
 import Enum.*;
 import Clases.Habitacion;
 import Clases.Servicio;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -97,9 +99,7 @@ public class GestorHabitacion implements I_ABM {
     public void cambioEstadoPorCheckIn(int numHabitacion) throws HabitacionNoDisponibleException{
 
         //Buscar una habitacion por numero
-        Habitacion habitacion =new Habitacion();
-
-        habitacion = buscaHabitacion(numHabitacion);
+        Habitacion habitacion = buscaHabitacion(numHabitacion);
 
         //Cambia estado de LIBRE A OCUPADA
         if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)){
@@ -114,9 +114,10 @@ public class GestorHabitacion implements I_ABM {
     }
 
 
-    public static double costoPorHabitacion(String dni) {
-
-        long cantidadNoches = GestorReserva.cantidadNoches(dni);
+    public double costoPorHabitacion(String dni, GestorReserva misReservas) throws ParseException {
+        //GestorReserva gR = null;
+        //gR = new GestorReserva();
+        long cantidadNoches = misReservas.cantidadNoches(dni);
         Habitacion habitacion = new Habitacion();
 
         double costoHospedaje = cantidadNoches * habitacion.getValorPorNoche();
@@ -278,6 +279,8 @@ public class GestorHabitacion implements I_ABM {
 
         }
     }
+
+
 
 
 }

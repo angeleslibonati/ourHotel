@@ -4,7 +4,9 @@ import Clases.*;
 import manejoJSON.GestorJson;
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GestorHotel {
 
@@ -41,25 +43,33 @@ public class GestorHotel {
     }
 
     //Funcion chek in (llama a gestor reserva y gestor habitacion)
-    public void hacerCheckIn(int idReserva){
-
-        int numHabitacion = GestorReserva.cambiaEstadoPorCheckIn(idReserva);
+    public void hacerCheckIn(int idReserva, GestorReserva misReservas) throws ParseException {
+        //GestorReserva gR = null;
+        //  gR = new GestorReserva();
+        int numHabitacion = misReservas.cambiaEstadoPorCheckIn(idReserva);
         this.gestorHabitacion.cambioEstadoPorCheckIn(numHabitacion);
+
 
     }
 
 
-    //Funcion check out
-    public void hacerCheckOut(int numHabitacion, String dni){
+   // Funcion check out
+    public void hacerCheckOut(int numHabitacion, String dni,GestorReserva misReservas){
 
         double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
 
-        double costoHabitacion = GestorHabitacion.costoPorHabitacion(dni);
+        double costoHabitacion = 0;
+        try {
 
-        Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
-        Menu.centradoOpciones("Sercios extras: $ " + consumos);
-        Menu.centradoOpciones("--------------------");
-        Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
+            costoHabitacion = this.gestorHabitacion.costoPorHabitacion(dni,misReservas);
+            Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
+            Menu.centradoOpciones("Sercios extras: $ " + consumos);
+            Menu.centradoOpciones("--------------------");
+            Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -82,6 +92,44 @@ public class GestorHotel {
         this.miHotel.setHabitaciones(gestorHabitacion.getHabitaciones());
         this.miHotel.setPasajeros(gestorPasajero.getPasajeros());
     }
+
+    public void altaEmpleado (Scanner scan){
+        this.gestorEmpleado.alta(scan);
+    }
+
+    public void bajaEmpleado (Scanner scan){
+        this.gestorEmpleado.baja(scan);
+    }
+
+    public void modificacionEmpleado (Scanner scan){
+        this.gestorEmpleado.modificacion(scan);
+    }
+
+    public void altaPasajero (Scanner scan){
+        this.gestorPasajero.alta(scan);
+    }
+
+    public void bajaPasajero (Scanner scan){
+        this.gestorPasajero.baja(scan);
+    }
+    public void modificarPasajero (Scanner scan){
+        this.gestorPasajero.modificacion(scan);
+    }
+
+
+    public void altaHabitacion (Scanner scan){
+        this.gestorHabitacion.alta(scan);
+    }
+    public void bajaHabitacion (Scanner scan){
+        this.gestorHabitacion.baja(scan);
+    }
+    public void modificarHabitacion(Scanner scan){
+        this.gestorHabitacion.modificacion(scan);
+    }
+
+
+
+
 
 
 

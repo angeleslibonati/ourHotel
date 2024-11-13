@@ -17,7 +17,7 @@ public class Habitacion {
 
     //Constructores
     public Habitacion() {
-
+        this.servicios = new ArrayList<>();
     }
 
 
@@ -98,9 +98,22 @@ public class Habitacion {
         Menu.centradoOpciones("Tipo de Habitacion: " + this.tipoHabitacion);
         Menu.centradoOpciones("Tipo de Cama: " + this.tipoCama);
         Menu.centradoOpciones("Estado de la Habitacion: " + this.estadoHabitacion);
+        for(Servicio servicio: servicios){
+            servicio.mostrarServicio();
+        }
         Menu.dibujarTerminacion();
     }
 
+    public void ticketServicios (){
+
+        Menu.dibujarTerminacion();
+        Menu.encabezadoMenu("Ticket Servicios");
+        Menu.centradoOpciones("Numero Habitacion: " + this.numHabitacion);
+        for(Servicio servicio: servicios){
+            servicio.mostrarServicio();
+        }
+        Menu.dibujarTerminacion();
+    }
 
     //ver esto!
     public void marcarHabitacionLibre(){

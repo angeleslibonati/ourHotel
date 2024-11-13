@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class GestorReserva implements I_ABM {
 
-    static ArrayList<Reserva> reservas;
+     protected ArrayList<Reserva> reservas;
 
     public GestorReserva() throws ParseException {
         this.reservas = new ArrayList<>();
@@ -22,7 +22,15 @@ public class GestorReserva implements I_ABM {
         reservas = GestorJson.mapeoReserva();
     }
 
-    public static void mostrarReservas(ArrayList<Reserva> misReservas) {
+    public  ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public  void setReservas() {
+        this.reservas = reservas;
+    }
+
+    public  void mostrarReservas(ArrayList<Reserva> misReservas) {
 
         for (int i = 0; i < misReservas.size(); i++) {
             Reserva reserva = misReservas.get(i);
@@ -31,7 +39,7 @@ public class GestorReserva implements I_ABM {
 
     }
 
-    public static Reserva buscarUnaReserva(int numeroReserva) throws ReservaInvalidaException {
+    public  Reserva buscarUnaReserva(int numeroReserva) throws ReservaInvalidaException {
         if (numeroReserva <= 0) {
             throw new ReservaInvalidaException("Debe ingresar un número mayor a 0");
         }
@@ -46,7 +54,7 @@ public class GestorReserva implements I_ABM {
         throw new ReservaInvalidaException("No se encontró ninguna reserva con el número: " + numeroReserva);
     }
 
-    public static ArrayList<Reserva> buscarReservasActiva(String dni) {
+    public  ArrayList<Reserva> buscarReservasActiva(String dni) {
         ArrayList<Reserva> activas = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
@@ -64,7 +72,7 @@ public class GestorReserva implements I_ABM {
     }
 
 
-    public static void cancelarReserva(int numeroReserva) throws ReservaInvalidaException {
+    public void cancelarReserva(int numeroReserva) throws ReservaInvalidaException {
         Reserva reserva = buscarUnaReserva(numeroReserva);
         if (reserva != null) {
 
@@ -82,7 +90,7 @@ public class GestorReserva implements I_ABM {
     }
 
     //cambia estado por reserva confirmada por check in
-    public static int cambiaEstadoPorCheckIn(int idReserva) throws ReservaInvalidaException {
+    public  int cambiaEstadoPorCheckIn(int idReserva) throws ReservaInvalidaException {
         int numHabitacion = 0;
 
         //Busca la reserva
@@ -99,7 +107,7 @@ public class GestorReserva implements I_ABM {
         return numHabitacion;
     }
 
-    public static long cantidadNoches(String dni) {
+    public  long cantidadNoches(String dni) {
 
         //Busca la reserva por dni.
         Reserva reserva = new Reserva();
@@ -110,7 +118,7 @@ public class GestorReserva implements I_ABM {
     }
 
 
-    public static ArrayList<Reserva> buscarReservasHistoricas(String dni) {
+    public  ArrayList<Reserva> buscarReservasHistoricas(String dni) {
         ArrayList<Reserva> historicas = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
@@ -127,7 +135,7 @@ public class GestorReserva implements I_ABM {
         return historicas;
     }
 
-    public static ArrayList<Reserva> buscarReservasActivas() {
+    public  ArrayList<Reserva> buscarReservasActivas() {
 
         ArrayList<Reserva> activas = new ArrayList<>();
 
@@ -143,6 +151,19 @@ public class GestorReserva implements I_ABM {
         }
 
         return activas;
+    }
+
+    public  Habitacion buscarUnaHabitacionDni(String dni)  {
+        Habitacion habitacion = new Habitacion();
+
+        for (Reserva reserva : reservas) {
+            if (reserva.getPasajero().getDni().equals(dni)) {
+                if (reserva.getEstadoReserva().equals(Estado_Reserva.CONFIRMADO)){
+                    habitacion = reserva.getHabitacion();
+                }
+            }
+        }
+        return habitacion;
     }
 
     public boolean reservaSuperpuesta (LocalDate fFin, int nroHab) {
