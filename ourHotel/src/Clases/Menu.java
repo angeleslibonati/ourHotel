@@ -71,7 +71,7 @@ public class Menu {
                             if(p.getUsuario().equals(usuario) && p.getContrasenia().equals(contra)){
                                 dni = p.getDni();
 
-                               menuPasajero(scan,usuario,miHotel);
+                               menuPasajero(scan,usuario,miHotel,dni);
                                 flag = 4;
                             }
                         } catch (Exception e) {
@@ -391,7 +391,7 @@ public class Menu {
     // --
 
     //Sub Menu para pasajero
-    public static void menuPasajero (Scanner scan, String usuario, GestorHotel mihotel) throws JSONException {
+    public static void menuPasajero (Scanner scan, String usuario, GestorHotel mihotel, String dni) throws JSONException {
 
         imprimirMenuPasajero();
         int opc = elegirOpcion(scan);
@@ -401,7 +401,7 @@ public class Menu {
             case 1:
                 encabezadoMenu("Datos Personales");
                 GestorPasajero.mostrarPasajero(GestorPasajero.buscarPasajero(usuario,mihotel.getPasajeros()));
-                menuPasajero(scan, usuario, mihotel);
+                menuPasajero(scan, usuario, mihotel,dni);
                 break;
             case 2:
                 //reservas
@@ -410,7 +410,7 @@ public class Menu {
                 break;
             case 3:
                 //Servicios extra
-                menuServiciosExtras(scan,usuario,mihotel);
+                menuServiciosExtras(scan,usuario,mihotel,dni);
 
                 break;
             case 0:
@@ -477,13 +477,13 @@ public class Menu {
                 menuReserva(scan, usuario, miHotel);
                 break;
             case 0:
-                menuPasajero(scan,usuario,miHotel);
+                menuPasajero(scan,usuario,miHotel,dni);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServiciosExtras (Scanner scan,String usuario, GestorHotel miHotel) throws JSONException {
+    public static void menuServiciosExtras (Scanner scan,String usuario, GestorHotel miHotel,String dni) throws JSONException {
         imprimirMenuServExtras();
         int opc = elegirOpcion(scan);
 
@@ -491,20 +491,20 @@ public class Menu {
 
             case 1:
                 //Actividades disponibles.
-                menuActividades(scan,usuario,miHotel);
+                menuActividades(scan,usuario,miHotel,dni);
                 break;
             case 2:
                 //Servicio a la habitacion
-                menuServHabitacion(scan,usuario,miHotel);
+                menuServHabitacion(scan,usuario,miHotel,dni);
                 break;
             case 0:
-                menuPasajero(scan,usuario,miHotel);
+                menuPasajero(scan,usuario,miHotel,dni);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuActividades(Scanner scan,String usuario,GestorHotel miHotel) throws JSONException {
+    public static void menuActividades(Scanner scan,String usuario,GestorHotel miHotel, String dni) throws JSONException {
 
         imprimirMenuActividades();
         int opc = elegirOpcion(scan);
@@ -514,39 +514,39 @@ public class Menu {
                 //masajes
                 encabezadoMenu("Masajes");
 
-                confirmacionServicio(scan,Servicio_Habitacion.MASAJE);
+                confirmacionServicio(scan,Servicio_Habitacion.MASAJE,dni);
 
-                menuActividades(scan, usuario, miHotel);
+                menuActividades(scan, usuario, miHotel,dni);
                 break;
             case 2:
                 //spa
                 encabezadoMenu("Spa");
-                confirmacionServicio(scan,Servicio_Habitacion.SPA);
+                confirmacionServicio(scan,Servicio_Habitacion.SPA,dni);
 
-                menuActividades(scan, usuario, miHotel);
+                menuActividades(scan, usuario, miHotel,dni);
                 break;
             case 3:
                 //sauna
                 encabezadoMenu("Sauna");
-                confirmacionServicio(scan,Servicio_Habitacion.SAUNA);
+                confirmacionServicio(scan,Servicio_Habitacion.SAUNA,dni);
 
-                menuActividades(scan, usuario, miHotel);
+                menuActividades(scan, usuario, miHotel,dni);
                 break;
             case 4:
                 //hidromasaje
                 encabezadoMenu("Hidromasaje");
-                confirmacionServicio(scan,Servicio_Habitacion.HIDROMASAJE);
+                confirmacionServicio(scan,Servicio_Habitacion.HIDROMASAJE,dni);
 
-                menuActividades(scan, usuario, miHotel);
+                menuActividades(scan, usuario, miHotel,dni);
                 break;
             case 0:
-                menuServiciosExtras(scan,usuario,miHotel);
+                menuServiciosExtras(scan,usuario,miHotel,dni);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServHabitacion (Scanner scan, String usuario, GestorHotel miHotel) throws JSONException {
+    public static void menuServHabitacion (Scanner scan, String usuario, GestorHotel miHotel,String dni) throws JSONException {
 
         imprimirMenuServHabitacion();
         int opc = elegirOpcion(scan);
@@ -556,33 +556,33 @@ public class Menu {
             case 1:
                 //Solicitar desayuno en la habitacion
                 encabezadoMenu("Desayuno");
-                confirmacionServicio(scan,Servicio_Habitacion.DESAYUNO);
+                confirmacionServicio(scan,Servicio_Habitacion.DESAYUNO,dni);
 
-                menuServHabitacion(scan, usuario, miHotel);
+                menuServHabitacion(scan, usuario, miHotel,dni);
                 break;
             case 2:
                 //Solicitar almuerzo o cena en la habitacion.
                 encabezadoMenu("Almuerzo-Cena");
-                confirmacionServicio(scan,Servicio_Habitacion.ALMUERZO_CENA);
+                confirmacionServicio(scan,Servicio_Habitacion.ALMUERZO_CENA,dni);
 
-                menuServHabitacion(scan, usuario, miHotel);
+                menuServHabitacion(scan, usuario, miHotel,dni);
                 break;
             case 3:
                 //Servicio de brindis
                 encabezadoMenu("Servicio de Brindis");
-                confirmacionServicio(scan,Servicio_Habitacion.SERVICIO_BRINDIS);
+                confirmacionServicio(scan,Servicio_Habitacion.SERVICIO_BRINDIS,dni);
 
-                menuServHabitacion(scan, usuario, miHotel);
+                menuServHabitacion(scan, usuario, miHotel,dni);
                 break;
             case 4:
                 //bebida sin alcohol
                 encabezadoMenu("Bebidas");
-                confirmacionServicio(scan,Servicio_Habitacion.BEBIDA_SIN_ALCOHOL);
+                confirmacionServicio(scan,Servicio_Habitacion.BEBIDA_SIN_ALCOHOL,dni);
 
-                menuServHabitacion(scan, usuario, miHotel);
+                menuServHabitacion(scan, usuario, miHotel,dni);
                 break;
             case 0:
-                menuServiciosExtras(scan,usuario, miHotel);
+                menuServiciosExtras(scan,usuario, miHotel,dni);
                 break;
             default:
                 centradoOpciones("opcion invalida");
@@ -781,7 +781,7 @@ public class Menu {
         return scan.nextLine();
     }
 
-    public static void confirmacionServicio (Scanner scan, Servicio_Habitacion servicioHabitacion)  {
+    public static void confirmacionServicio (Scanner scan, Servicio_Habitacion servicioHabitacion, String dni)  {
 
         Servicio servicio = new Servicio();
         ArrayList<Servicio>servicios = new ArrayList<>();
@@ -795,11 +795,12 @@ public class Menu {
         confirmar = elegirOpcion(scan);
 
         if(confirmar == 1){
-            servicios.add(servicio);
-            
+           // servicios.add(servicio);
+            Habitacion h = GestorReserva.buscarUnaReservaDni(dni);
+            h.getServicios().add(servicio);
         }
-
     }
+
 
 
 }

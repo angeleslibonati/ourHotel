@@ -143,4 +143,17 @@ public class GestorReserva {
         return activas;
     }
 
+    public static Habitacion buscarUnaReservaDni(String dni)  {
+        Habitacion habitacion = new Habitacion();
+
+        for (Reserva reserva : reservas) {
+            if (reserva.getPasajero().getDni().equals(dni)) {
+                if (reserva.getEstadoReserva().equals(Estado_Reserva.CONFIRMADO)){
+                    habitacion = reserva.getHabitacion();
+                }
+            }
+        }
+        return habitacion;
+    }
+
 }
