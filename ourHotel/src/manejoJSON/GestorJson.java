@@ -337,7 +337,7 @@ public class GestorJson {
 
                 // Guardar los datos de la habitación
                 JSONObject jHabitacion = new JSONObject();
-                jHabitacion.put("numHabitacion", reserva.getHabitacion().getNumHabitacion());
+                jHabitacion.put("numeronumHabitacion", reserva.getHabitacion().getNumHabitacion());
                 jReserva.put("habitacion", jHabitacion);
 
                 // Guardar los datos del pasajero

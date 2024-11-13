@@ -114,7 +114,7 @@ public class Menu {
         switch (opc){
 
             case 1:
-                menuAbmPasajero (scan,usuario);
+                menuAbmPasajero (scan,usuario, miHotel);
                 break;
             case  2:
                 MenuAbmReserva(scan,usuario);
@@ -152,25 +152,28 @@ public class Menu {
             default:
         }       centradoOpciones("Opcion invalida");
     }
-    public static void menuAbmPasajero (Scanner scan,String usuario) throws JSONException {
+    public static void menuAbmPasajero (Scanner scan,String usuario, GestorHotel miHotel) throws JSONException {
         imprimirAbmPasajero();
         int opc = elegirOpcion(scan);
 
         switch (opc){
             case 1:
                 //alta pasajero
-                menuAbmPasajero(scan,usuario);
+                miHotel.altaPasajero(scan);
+                menuAbmPasajero(scan, usuario, miHotel);
                 break;
             case 2:
                 //baja pasajero
-                menuAbmPasajero(scan,usuario);
+                miHotel.bajaPasajero(scan);
+                menuAbmPasajero(scan,usuario, miHotel);
                 break;
             case 3:
                 //modificar datos pasajero
+                miHotel.modificarPasajero(scan);
                 centradoOpciones("Ingrese opcion a modificar");
                 // case para datos ??
 
-                menuAbmPasajero(scan,usuario);
+                menuAbmPasajero(scan,usuario, miHotel);
                 break;
             case 0:
                 //volver atras
