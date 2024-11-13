@@ -11,6 +11,8 @@ import manejoJSON.GestorJson;
 import org.json.JSONException;
 import Enum.Servicio_Habitacion;
 import Enum.Estado_Empleado;
+
+import javax.swing.text.html.MinimalHTMLWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -361,7 +363,6 @@ public class Menu {
             case 1:
                 //alta nuevo empleado
                 miHotel.altaEmpleado(scan, miHotel);
-
                 menuAbmEmpleado(scan, miHotel,usuario,misReservas);
                 break;
             case 2:
@@ -710,6 +711,7 @@ public class Menu {
         centradoOpciones("1. Alta Empleado");
         centradoOpciones("2. Baja Empleado");
         centradoOpciones("3. Modificacion Empleado");
+        centradoOpciones("4. Ver datos Empleado");
         centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }

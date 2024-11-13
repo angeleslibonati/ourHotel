@@ -71,6 +71,7 @@ public class GestorEmpleado implements I_ABM {
             empleados.add(empleado);
 
             Menu.centradoOpciones("CARGA EXITOSA");
+            empleado.mostrarEmpleado();
 
         } else {
             Menu.centradoOpciones("El empleado ya existe");
