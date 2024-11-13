@@ -43,32 +43,20 @@ public class GestorPasajero implements I_ABM {
         pasajero.mostrarPasajero();
     }
 
-    public static Pasajero buscarPasajeroDni(String dni, ArrayList<Pasajero> pasajeros) {
-        Pasajero pas = new Pasajero();
-        pas.setDni("-1");
-        int cont = 0;
-
-        for (Pasajero p : pasajeros) {
-            if (p.getDni().equals(dni)) {
-                pas = p;
-            }
-        }
-
-        return pas;
-    }
-
 
     @Override
-    public void alta(Scanner scan) {
+    public void alta(Scanner scan, GestorHotel miHotel) {
         Pasajero pas = new Pasajero();
 
         Menu.centradoIngreso("Ingrese DNI: ");
         String dni = scan.nextLine();
 
+        ArrayList<Persona> personas = new ArrayList<>();
+        personas.addAll(pasajeros);
 
-        pas = buscarPasajeroDni(dni, pasajeros);
+        int index = Persona.buscarPorDni(dni, personas);
 
-        if(pas.getDni().equals("-1")) {
+        if(index == -1) {
             pas.setDni(dni);
             Menu.centradoIngreso("Ingrese Nombre: ");
             pas.setNombre(scan.nextLine());
@@ -98,7 +86,7 @@ public class GestorPasajero implements I_ABM {
 
         } else {
             Menu.centradoOpciones("El pasajero ya existe");
-            pas.mostrarPasajero();
+            Menu.centradoOpciones(pasajeros.get(index).toString());
         }
     }
 
@@ -106,69 +94,61 @@ public class GestorPasajero implements I_ABM {
     public void baja(Scanner scan) {
         Pasajero pas = new Pasajero();
 
+        ArrayList<Persona> personas = new ArrayList<>();
+        personas.addAll(pasajeros);
 
         Menu.centradoIngreso("Ingrese el número de DNI:");
-        pas = buscarPasajeroDni(scan.nextLine(), pasajeros);
+        pas = pasajeros.get(Persona.buscarPorDni(scan.nextLine(), personas));
 
         pas.setActivo(false);
-
-        Menu.centradoOpciones("PASAJERO DADO DE BAJA");
     }
 
     @Override
-    public void modificacion(Scanner scan) {
+    public void modificacion(Scanner scan,GestorHotel miHotel) {
         Pasajero pas = new Pasajero();
         char opcion = 'S';
 
-        Menu.centradoIngreso("DNI del Pasajero:");
-        pas = buscarPasajeroDni(scan.nextLine(), pasajeros);
+        ArrayList<Persona> personas = new ArrayList<>();
+        personas.addAll(pasajeros);
+
+        Menu.centradoIngreso("DNI del Pasajero: ");
+        pas = pasajeros.get(Persona.buscarPorDni(scan.nextLine(), personas));
 
         pas.mostrarPasajero();
 
         while (opcion == 'S') {
-            Menu.centradoIngreso("Igrese el campo a modificar:");
+            Menu.centradoIngreso("Igrese el campo a modificar: ");
             String campo = scan.nextLine();
 
             if (campo.equalsIgnoreCase("nombre")) {
-                Menu.centradoIngreso("Ingrese el nuevo nombre:");
+                Menu.centradoIngreso("Ingrese el nuevo nombre: ");
                 pas.setNombre(scan.nextLine());
             } else if (campo.equalsIgnoreCase("apellido")) {
-                Menu.centradoIngreso("Ingrese el nuevo Apellido:");
+                Menu.centradoIngreso("Ingrese el nuevo Apellido: ");
                 pas.setApellido(scan.nextLine());
             } else if (campo.equalsIgnoreCase("telefono")) {
-                Menu.centradoIngreso("Ingrese el nuevo teléfono:");
+                Menu.centradoIngreso("Ingrese el nuevo teléfono: ");
                 pas.setTelefono(scan.nextLine());
             } else if (campo.equalsIgnoreCase("email")) {
-                Menu.centradoIngreso("Ingrese la nueva dirección email:");
+                Menu.centradoIngreso("Ingrese la nueva dirección email: ");
                 pas.setEmail(scan.nextLine());
             } else if (campo.equalsIgnoreCase("direccion") || campo.equalsIgnoreCase("dirección")) {
                 Direccion dir = pas.getDireccion();
-                Menu.centradoIngreso("Ingrese calle:");
+                Menu.centradoIngreso("Ingrese calle: ");
                 dir.setCalle(scan.nextLine());
-                Menu.centradoIngreso("Ingrese altura:");
+                Menu.centradoIngreso("Ingrese altura: ");
                 dir.setAltura(scan.nextInt());
-                Menu.centradoIngreso("Ingrese ciudad:");
+                Menu.centradoIngreso("Ingrese ciudad: ");
                 dir.setCiudad(scan.nextLine());
-            } else if (campo.equalsIgnoreCase("activo")) {
-                Menu.centradoIngreso("Ingrese 1 para activar nuevamente al pasajero: ");
-                if (scan.nextInt() == 1) {
-                    pas.setActivo(true);
-                }
-                scan.nextLine();
             } else {
                 Menu.centradoOpciones("La opción ingresada es inválida o no se puede modificar");
             }
 
-            Menu.centradoIngreso("Desea modificar otro dato S/N:");
+            Menu.centradoIngreso("Desea modificar otro dato S/N: ");
             opcion = scan.nextLine().toUpperCase().charAt(0);
-
-            Menu.encabezadoMenu("Pasajero Modificado");
-            pas.mostrarPasajero();
 
         }
     }
-
-
 
     public Pasajero buscarPasajeroPorDni (String dni){
 

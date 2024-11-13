@@ -73,6 +73,12 @@ public class GestorHotel {
 
     }
 
+    public void mostrarHabitaciones(ArrayList<Habitacion> habitaciones){
+        for (Habitacion h : habitaciones){
+            h.mostrarHabitacion();
+        }
+    }
+
     public void buscarHabitacion (int numHabitacion){
 
         this.gestorHabitacion.buscaHabitacion(numHabitacion);
@@ -93,38 +99,38 @@ public class GestorHotel {
         this.miHotel.setPasajeros(gestorPasajero.getPasajeros());
     }
 
-    public void altaEmpleado (Scanner scan){
-        this.gestorEmpleado.alta(scan);
+    public void altaEmpleado (Scanner scan, GestorHotel miHotel){
+        this.gestorEmpleado.alta(scan, miHotel);
     }
 
     public void bajaEmpleado (Scanner scan){
         this.gestorEmpleado.baja(scan);
     }
 
-    public void modificacionEmpleado (Scanner scan){
-        this.gestorEmpleado.modificacion(scan);
+    public void modificacionEmpleado (Scanner scan,GestorHotel miHotel){
+        this.gestorEmpleado.modificacion(scan,miHotel);
     }
 
-    public void altaPasajero (Scanner scan){
-        this.gestorPasajero.alta(scan);
+    public void altaPasajero (Scanner scan, GestorHotel miHotel){
+        this.gestorPasajero.alta(scan, miHotel);
     }
 
     public void bajaPasajero (Scanner scan){
         this.gestorPasajero.baja(scan);
     }
-    public void modificarPasajero (Scanner scan){
-        this.gestorPasajero.modificacion(scan);
+    public void modificarPasajero (Scanner scan,GestorHotel miHotel){
+        this.gestorPasajero.modificacion(scan,miHotel);
     }
 
 
-    public void altaHabitacion (Scanner scan){
-        this.gestorHabitacion.alta(scan);
+    public void altaHabitacion (Scanner scan, GestorHotel miHotel){
+        this.gestorHabitacion.alta(scan, miHotel);
     }
     public void bajaHabitacion (Scanner scan){
         this.gestorHabitacion.baja(scan);
     }
-    public void modificarHabitacion(Scanner scan){
-        this.gestorHabitacion.modificacion(scan);
+    public void modificarHabitacion(Scanner scan, GestorHotel miHotel){
+        this.gestorHabitacion.modificacion(scan, miHotel);
     }
 
 

@@ -12,7 +12,7 @@
           "usuario": "juan_perez",
           "contrasenia": "123",
           "telefono": "223567452",
-          "nombre": "Juan",
+          "nombre": "juan",
           "dni": "12345678",
           "email": "juanperez@gmail.com",
           "rol": "Pasajero",
@@ -48,7 +48,7 @@
           "dni": "34490473",
           "email": "angeles@mail.com",
           "rol": "Pasajero",
-          "activo": true
+          "activo": false
         }
       ],
       "empleado": [
