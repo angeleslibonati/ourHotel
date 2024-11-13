@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -277,10 +278,10 @@ public class GestorJson {
 
                 //Convertir un String a un valor tipo Date
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                Date fechaInicio = format.parse(OReserva.getString("fechaInicio"));
+                LocalDate fechaInicio = LocalDate.parse(OReserva.getString("fechaInicio"));
                 miReserva.setFechaInicio(fechaInicio);
 
-                Date fechaFin = format.parse(OReserva.getString("fechaFin"));
+                LocalDate fechaFin = LocalDate.parse(OReserva.getString("fechaFin"));
                 miReserva.setFechaFin(fechaFin);
 
                 // Convertir los valores de cadena a los enums correspondientes

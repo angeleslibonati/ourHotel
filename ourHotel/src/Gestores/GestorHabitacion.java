@@ -116,7 +116,7 @@ public class GestorHabitacion implements I_ABM {
 
     public double costoPorHabitacion(String dni, GestorReserva misReservas) throws ParseException {
 
-        int cantidadNoches = misReservas.cantidadNoches(dni);
+        long cantidadNoches = misReservas.cantidadNoches(dni);
         Habitacion habitacion = new Habitacion();
 
         double costoHospedaje = cantidadNoches * habitacion.getValorPorNoche();

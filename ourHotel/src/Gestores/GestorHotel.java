@@ -135,7 +135,10 @@ public class GestorHotel {
         return this.gestorPasajero.buscarPasajero(usuario,getPasajeros());
     }
     public Empleado buscarEmpleadoXLegajo (int numId){
-
+        return this.gestorEmpleado.buscarEmpleadoXLegajo(numId);
+    }
+    public void mostrarEmpleado(Empleado empleado){
+        this.gestorEmpleado.mostrarEmpleado(empleado);
     }
 
 
