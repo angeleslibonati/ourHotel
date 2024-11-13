@@ -2,6 +2,7 @@ package Gestores;
 
 import Clases.*;
 import Enum.*;
+import Excepciones.FechaInvalidaException;
 import Excepciones.ReservaInvalidaException;
 import Interfaces.I_ABM;
 import manejoJSON.GestorJson;
@@ -215,23 +216,39 @@ public class GestorReserva implements I_ABM {
     }
 
     @Override
-    public void alta (Scanner scan) {
+    public void alta (Scanner scan,GestorHotel miHotel) {
         Reserva reserva = new Reserva();
         ArrayList<Reserva> resAct = buscarReservasActivas();
         Boolean ocupada;
         int cont = 0;
 
-
-        Menu.centradoIngreso("Ingrese numero de Habitación: ");
-        int nroHab = scan.nextInt();
-        scan.nextLine();
         Menu.centradoIngreso("Ingrese Fecha de ingreso (yyyy-mm-dd): ");
         LocalDate fIngreso = LocalDate.parse(scan.nextLine());
+
+        if (fIngreso.isBefore( LocalDate.now())){
+            throw new FechaInvalidaException("Fecha invalida");
+        }
+
         Menu.centradoIngreso("Ingrese Fecha de egreso (yyyy-mm-dd): ");
         LocalDate fEgreso = LocalDate.parse(scan.nextLine());
+        if (fEgreso.isBefore(fIngreso)){
+            throw new FechaInvalidaException("Fecha invalida");
+        }
+
+        ArrayList<Habitacion> disponibles = new ArrayList<>();
+        for (Habitacion h : miHotel.getHabitacion()){
+            if(reservaDisponible(fIngreso,fEgreso,h.getNumHabitacion()) && h.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)){
+                disponibles.add(h);
+            }
+        }
+
+        miHotel.mostrarHabitaciones(disponibles);
+        Menu.centradoIngreso("Ingrese numero de Habitación deseada: ");
+        int nroHab = scan.nextInt();
+        scan.nextLine();
 
         Habitacion hab = new Habitacion();
-        ArrayList <Habitacion> habis = new Hotel().getHabitaciones();
+        ArrayList <Habitacion> habis = miHotel.getHabitacion();
         hab.buscarPorNroHabitacion(nroHab, habis);
         ocupada = reservaSuperpuesta(fEgreso, nroHab);
 
@@ -241,7 +258,7 @@ public class GestorReserva implements I_ABM {
                 reserva.setFechaFin(fIngreso);
                 reserva.setFechaFin(fEgreso);
 
-                ArrayList<Pasajero> pasas = new Hotel().getPasajeros();
+                ArrayList<Pasajero> pasas = miHotel.getPasajeros();
                 ArrayList<Persona> pers = new ArrayList<>();
                 pers.addAll(pasas);
 
@@ -250,7 +267,7 @@ public class GestorReserva implements I_ABM {
                 reserva.setPasajero(pas);
 
 
-                ArrayList<Empleado> empls = new Hotel().getEmpleados();
+                ArrayList<Empleado> empls = miHotel.getEmpleados();
                 Empleado empl = new Empleado();
                 Menu.centradoIngreso("Ingrese Legajo del empleado: ");
                 empl.buscarEmpleadoXLegajo(scan.nextInt(), empls);
@@ -272,7 +289,7 @@ public class GestorReserva implements I_ABM {
                 reserva.setFechaFin(fIngreso);
                 reserva.setFechaFin(fEgreso);
 
-                ArrayList<Pasajero> pasas = new Hotel().getPasajeros();
+                ArrayList<Pasajero> pasas = miHotel.getPasajeros();
                 ArrayList<Persona> pers = new ArrayList<>();
                 pers.addAll(pasas);
 
@@ -281,7 +298,7 @@ public class GestorReserva implements I_ABM {
                 reserva.setPasajero(pas);
 
 
-                ArrayList<Empleado> empls = new Hotel().getEmpleados();
+                ArrayList<Empleado> empls = miHotel.getEmpleados();
                 Empleado empl = new Empleado();
                 Menu.centradoIngreso("Ingrese Legajo del empleado: ");
                 empl.buscarEmpleadoXLegajo(scan.nextInt(), empls);

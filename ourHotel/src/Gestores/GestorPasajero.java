@@ -45,7 +45,7 @@ public class GestorPasajero implements I_ABM {
 
 
     @Override
-    public void alta(Scanner scan) {
+    public void alta(Scanner scan, GestorHotel miHotel) {
         Pasajero pas = new Pasajero();
 
         Menu.centradoIngreso("Ingrese DNI: ");
@@ -111,40 +111,40 @@ public class GestorPasajero implements I_ABM {
         ArrayList<Persona> personas = new ArrayList<>();
         personas.addAll(pasajeros);
 
-        Menu.centradoIngreso("DNI del Pasajero:");
+        Menu.centradoIngreso("DNI del Pasajero: ");
         pas = pasajeros.get(Persona.buscarPorDni(scan.nextLine(), personas));
 
-        Menu.centradoOpciones(pas.toString());
+        pas.mostrarPasajero();
 
         while (opcion == 'S') {
-            Menu.centradoIngreso("Igrese el campo a modificar:");
+            Menu.centradoIngreso("Igrese el campo a modificar: ");
             String campo = scan.nextLine();
 
             if (campo.equalsIgnoreCase("nombre")) {
-                Menu.centradoIngreso("Ingrese el nuevo nombre:");
+                Menu.centradoIngreso("Ingrese el nuevo nombre: ");
                 pas.setNombre(scan.nextLine());
             } else if (campo.equalsIgnoreCase("apellido")) {
-                Menu.centradoIngreso("Ingrese el nuevo Apellido:");
+                Menu.centradoIngreso("Ingrese el nuevo Apellido: ");
                 pas.setApellido(scan.nextLine());
             } else if (campo.equalsIgnoreCase("telefono")) {
-                Menu.centradoIngreso("Ingrese el nuevo teléfono:");
+                Menu.centradoIngreso("Ingrese el nuevo teléfono: ");
                 pas.setTelefono(scan.nextLine());
             } else if (campo.equalsIgnoreCase("email")) {
-                Menu.centradoIngreso("Ingrese la nueva dirección email:");
+                Menu.centradoIngreso("Ingrese la nueva dirección email: ");
                 pas.setEmail(scan.nextLine());
             } else if (campo.equalsIgnoreCase("direccion") || campo.equalsIgnoreCase("dirección")) {
                 Direccion dir = pas.getDireccion();
-                Menu.centradoIngreso("Ingrese calle:");
+                Menu.centradoIngreso("Ingrese calle: ");
                 dir.setCalle(scan.nextLine());
-                Menu.centradoIngreso("Ingrese altura:");
+                Menu.centradoIngreso("Ingrese altura: ");
                 dir.setAltura(scan.nextInt());
-                Menu.centradoIngreso("Ingrese ciudad:");
+                Menu.centradoIngreso("Ingrese ciudad: ");
                 dir.setCiudad(scan.nextLine());
             } else {
                 Menu.centradoOpciones("La opción ingresada es inválida o no se puede modificar");
             }
 
-            Menu.centradoIngreso("Desea modificar otro dato S/N:");
+            Menu.centradoIngreso("Desea modificar otro dato S/N: ");
             opcion = scan.nextLine().toUpperCase().charAt(0);
 
         }

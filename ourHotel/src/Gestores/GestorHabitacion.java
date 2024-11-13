@@ -178,7 +178,7 @@ public class GestorHabitacion implements I_ABM {
 
 
     @Override
-    public void alta(Scanner scan) {
+    public void alta(Scanner scan, GestorHotel miHotel) {
         Habitacion hab = new Habitacion();
 
         Menu.centradoIngreso("Ingrese Número de habitación: ");

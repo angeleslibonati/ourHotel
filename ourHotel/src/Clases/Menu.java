@@ -165,7 +165,7 @@ public class Menu {
         switch (opc){
             case 1:
                 //alta pasajero
-                miHotel.altaPasajero(scan);
+                miHotel.altaPasajero(scan, miHotel);
                 menuAbmPasajero(scan,usuario,misReservas,miHotel);
                 break;
             case 2:
@@ -261,8 +261,12 @@ public class Menu {
 
             case 1:
                 //nueva reserva (alta)
-                encabezadoMenu("Nueva Reserva");
-                misReservas.alta(scan);
+                try {
+                    encabezadoMenu("Nueva Reserva");
+                    misReservas.alta(scan, miHotel);
+                } catch (Exception e) {
+                    centradoOpciones(e.getMessage());
+                }
 
                 MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
@@ -356,7 +360,7 @@ public class Menu {
 
             case 1:
                 //alta nuevo empleado
-                miHotel.altaEmpleado(scan);
+                miHotel.altaEmpleado(scan, miHotel);
 
                 menuAbmEmpleado(scan, miHotel,usuario,misReservas);
                 break;
@@ -398,7 +402,7 @@ public class Menu {
 
             case 1:
                 //alta nueva habitacion
-                miHotel.altaHabitacion(scan);
+                miHotel.altaHabitacion(scan, miHotel);
 
                 menuAbmHabitacion(scan, miHotel,usuario,misReservas);
                 break;
@@ -448,6 +452,10 @@ public class Menu {
                 menuServiciosExtras(scan,usuario,mihotel,dni,misReservas);
 
                 break;
+            case 4:
+                mihotel.modificarPasajero(scan);
+                menuPasajero(scan, usuario, mihotel, dni, misReservas);
+                break;
             case 0:
                 //Volver atras
                 menuPrincipal(scan, mihotel,misReservas);
@@ -465,8 +473,13 @@ public class Menu {
 
             case 1:
                 //hacer reserva
-                encabezadoMenu("Realizar Reserva");
-                misReservas.alta(scan);
+                try {
+                    encabezadoMenu("Realizar Reserva");
+                    misReservas.alta(scan, miHotel);
+                } catch (Exception e) {
+                    centradoOpciones(e.getMessage());
+                }
+
                 menuReserva(scan, usuario, miHotel,misReservas);
                 break;
             case 2:
@@ -726,6 +739,7 @@ public class Menu {
         centradoOpciones("1. Datos Personales");
         centradoOpciones("2. Reservas");
         centradoOpciones("3. Servicios Extras");
+        centradoOpciones("4. Modificar datos Personales");
         centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }

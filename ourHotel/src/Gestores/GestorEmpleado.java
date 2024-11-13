@@ -29,7 +29,7 @@ public class GestorEmpleado implements I_ABM {
     }
 
     @Override
-    public void alta(Scanner scan) {
+    public void alta(Scanner scan, GestorHotel miHotel) {
         Empleado empleado = new Empleado();
         Menu.centradoIngreso("Ingrese DNI: ");
         String dni = scan.nextLine();
