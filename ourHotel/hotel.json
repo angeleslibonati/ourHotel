@@ -45,7 +45,7 @@
           "contrasenia": "1234",
           "telefono": "2235980991",
           "nombre": "angeles",
-          "dni": "34490473",
+          "dni": "11222333",
           "email": "angeles@mail.com",
           "rol": "Pasajero",
           "activo": false
@@ -110,12 +110,12 @@
             "calle": "Castex"
           },
           "estadoEmpleado": "ACTIVO",
-          "apellido": "Fernandez",
+          "apellido": "Admin",
           "horasTrabajadas": 43,
-          "usuario": "pedro_fernandez",
+          "usuario": "admin_admin",
           "contrasenia": "123",
           "telefono": "22345123",
-          "nombre": "Pedro",
+          "nombre": "admin",
           "dni": "23435678",
           "email": "pedroFernandez@hotmail.com",
           "rol": "administrador"
@@ -162,7 +162,7 @@
           },
           "estadoEmpleado": "ACTIVO",
           "apellido": "empleado",
-          "horasTrabajadas": 0,
+          "horasTrabajadas": 30,
           "usuario": "empleado_empleado",
           "contrasenia": "1234",
           "telefono": "223111111",
@@ -175,20 +175,7 @@
     },
     "habitacion": [
       {
-        "servicios": [
-          {
-            "costo": 1500,
-            "nombre": "masaje"
-          },
-          {
-            "costo": 2500,
-            "nombre": "spa"
-          },
-          {
-            "costo": 3500,
-            "nombre": "sauna"
-          }
-        ],
+        "servicios": [],
         "numeronumHabitacion": 101,
         "tipoCama": "unaplaza",
         "estadoHabitacion": "libre",
@@ -219,16 +206,7 @@
         "tipoHabitacion": "standar"
       },
       {
-        "servicios": [
-          {
-            "costo": 5500,
-            "nombre": "desayuno"
-          },
-          {
-            "costo": 10200,
-            "nombre": "almuerzo_cena"
-          }
-        ],
+        "servicios": [],
         "numeronumHabitacion": 103,
         "tipoCama": "queen",
         "estadoHabitacion": "limpieza",
@@ -237,12 +215,7 @@
         "tipoHabitacion": "deluxe"
       },
       {
-        "servicios": [
-          {
-            "costo": 5500,
-            "nombre": "desayuno"
-          }
-        ],
+        "servicios": [],
         "numeronumHabitacion": 201,
         "tipoCama": "king",
         "estadoHabitacion": "reparacion",
@@ -254,7 +227,7 @@
         "servicios": [],
         "numeronumHabitacion": 301,
         "tipoCama": "california",
-        "estadoHabitacion": "libre",
+        "estadoHabitacion": "ocupada",
         "valorPorNoche": 100000,
         "cantPersonas": 4,
         "tipoHabitacion": "presidencial"

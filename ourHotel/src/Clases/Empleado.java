@@ -24,6 +24,7 @@ public class Empleado extends Persona{
     public int getId() {
         return id;
     }
+
     public double getHorasTrabajadas() {
         return horasTrabajadas;
     }

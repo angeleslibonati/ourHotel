@@ -153,17 +153,17 @@ public class GestorReserva implements I_ABM {
         return activas;
     }
 
-    public  Habitacion buscarUnaHabitacionDni(String dni)  {
-        Habitacion habitacion = new Habitacion();
+    public int buscarUnaHabitacionDni(String dni)  {
+        int numHabitacion = -1;
 
         for (Reserva reserva : reservas) {
             if (reserva.getPasajero().getDni().equals(dni)) {
                 if (reserva.getEstadoReserva().equals(Estado_Reserva.CONFIRMADO)){
-                    habitacion = reserva.getHabitacion();
+                    numHabitacion = reserva.getHabitacion().getNumHabitacion();
                 }
             }
         }
-        return habitacion;
+        return numHabitacion;
     }
 
     public boolean reservaSuperpuesta (LocalDate fFin, int nroHab) {
@@ -263,7 +263,8 @@ public class GestorReserva implements I_ABM {
                 pers.addAll(pasas);
 
                 Menu.centradoIngreso("Ingrese DNI pasajero: ");
-                Pasajero pas = pasas.get(Pasajero.buscarPorDni(scan.nextLine(),pers));
+                String dni = scan.nextLine();
+                Pasajero pas = pasas.get(Pasajero.buscarPorDni(dni,pers));
                 reserva.setPasajero(pas);
 
 
@@ -275,7 +276,7 @@ public class GestorReserva implements I_ABM {
                 reserva.setEmpleado(empl);
 
                 reserva.setEstadoReserva(Estado_Reserva.CONFIRMADO);
-
+                reservas.add(reserva);
 
             } else {
                 Menu.centradoOpciones("La habitación no se encuentra disponible");
@@ -306,6 +307,7 @@ public class GestorReserva implements I_ABM {
                 reserva.setEmpleado(empl);
 
                 reserva.setEstadoReserva(Estado_Reserva.RESERVADO);
+                reservas.add(reserva);
             } else {
 
                 Menu.centradoOpciones("La habitación no se encuentra disponible");

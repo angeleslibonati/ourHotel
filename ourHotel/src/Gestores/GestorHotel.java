@@ -55,7 +55,7 @@ public class GestorHotel {
    // Funcion check out
     public void hacerCheckOut(int numHabitacion, String dni,GestorReserva misReservas){
 
-        double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
+        double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion,dni,misReservas);
 
         double costoHabitacion = 0;
         try {
@@ -79,9 +79,9 @@ public class GestorHotel {
         }
     }
 
-    public void buscarHabitacion (int numHabitacion){
+    public Habitacion buscarHabitacion (int numHabitacion){
 
-        this.gestorHabitacion.buscaHabitacion(numHabitacion);
+        return this.gestorHabitacion.buscaHabitacion(numHabitacion);
 
     }
 

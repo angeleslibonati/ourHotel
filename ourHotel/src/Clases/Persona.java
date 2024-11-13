@@ -110,7 +110,7 @@ public abstract class Persona {
         int index = -1;
         int cont = 0;
 
-        while (cont < (personas.size()-1) && index == -1) {
+        while (cont < (personas.size()) && index == -1) {
 
             if (dni.equalsIgnoreCase(personas.get(cont).getDni())) {
                 index = cont;

@@ -10,7 +10,7 @@ import Enum.Tipo_Usuario;
 import manejoJSON.GestorJson;
 import org.json.JSONException;
 import Enum.Servicio_Habitacion;
-
+import Enum.Estado_Empleado;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -34,13 +34,13 @@ public class Menu {
 
                 for (int i = 0; i< miHotel.getEmpleados().size(); i++){
 
-                    Persona e = new Empleado();
+                    Empleado e = new Empleado();
 
                     e = miHotel.getEmpleados().get(i);
 
                     try {
 
-                        if (e.getUsuario().equals(usuario) && e.getContrasenia().equals(contra)){
+                        if (e.getUsuario().equals(usuario) && e.getContrasenia().equals(contra) && e.getEstadoEmpleado().equals(Estado_Empleado.ACTIVO)){
 
                             if (e.getRol().equals(Tipo_Usuario.RECEPCIONISTA)) {
 
@@ -94,10 +94,14 @@ public class Menu {
                 //Salir
                 //Persistencia de informacion.
 
-                encabezadoMenu("Se estan guardando los cambios");
-                miHotel.actualizarHotel();
-                GestorJson.toJsonHotel(miHotel.getMiHotel());
-                GestorJson.toJsonReservas(misReservas.getReservas());
+                try {
+                    encabezadoMenu("Se estan guardando los cambios");
+                    miHotel.actualizarHotel();
+                    GestorJson.toJsonHotel(miHotel.getMiHotel());
+                    GestorJson.toJsonReservas(misReservas.getReservas());
+                } catch (Exception e) {
+                    centradoOpciones(e.getMessage());
+                }
                 break;
 
             default:
@@ -175,7 +179,7 @@ public class Menu {
                 break;
             case 3:
                 //modificar datos pasajero
-                miHotel.modificarPasajero(scan,miHotel);
+                miHotel.modificarPasajero(scan, miHotel);
 
                 menuAbmPasajero(scan,usuario,misReservas,miHotel);
                 break;
@@ -240,7 +244,7 @@ public class Menu {
                 break;
             case 4:
                 //modificar una habitacion.
-                miHotel.modificarHabitacion(scan,miHotel);
+                miHotel.modificarHabitacion(scan, miHotel);
 
                 menuHabitacion(scan,usuario,misReservas,miHotel);
                 break;
@@ -261,12 +265,8 @@ public class Menu {
 
             case 1:
                 //nueva reserva (alta)
-                try {
-                    encabezadoMenu("Nueva Reserva");
-                    misReservas.alta(scan, miHotel);
-                } catch (Exception e) {
-                    centradoOpciones(e.getMessage());
-                }
+                encabezadoMenu("Nueva Reserva");
+                misReservas.alta(scan, miHotel);
 
                 MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
@@ -280,7 +280,7 @@ public class Menu {
             case 3:
                 //modificar una reserva
                 encabezadoMenu("Modificar Reserva");
-                misReservas.modificacion(scan,miHotel);
+                misReservas.modificacion(scan, miHotel);
 
                 MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
@@ -372,7 +372,7 @@ public class Menu {
                 break;
             case 3:
                 //modificar datos de un empleado
-                miHotel.modificacionEmpleado(scan,miHotel);
+                miHotel.modificacionEmpleado(scan, miHotel);
 
                 menuAbmEmpleado(scan, miHotel,usuario,misReservas);
                 break;
@@ -414,7 +414,7 @@ public class Menu {
                 break;
             case 3:
                 //modificar una habitacion.
-                miHotel.modificarHabitacion(scan,miHotel);
+                miHotel.modificarHabitacion(scan, miHotel);
 
                 menuAbmHabitacion(scan, miHotel,usuario,misReservas);
                 break;
@@ -452,10 +452,6 @@ public class Menu {
                 menuServiciosExtras(scan,usuario,mihotel,dni,misReservas);
 
                 break;
-            case 4:
-                mihotel.modificarPasajero(scan,mihotel);
-                menuPasajero(scan, usuario, mihotel, dni, misReservas);
-                break;
             case 0:
                 //Volver atras
                 menuPrincipal(scan, mihotel,misReservas);
@@ -473,13 +469,8 @@ public class Menu {
 
             case 1:
                 //hacer reserva
-                try {
-                    encabezadoMenu("Realizar Reserva");
-                    misReservas.alta(scan, miHotel);
-                } catch (Exception e) {
-                    centradoOpciones(e.getMessage());
-                }
-
+                encabezadoMenu("Realizar Reserva");
+                misReservas.alta(scan,miHotel);
                 menuReserva(scan, usuario, miHotel,misReservas);
                 break;
             case 2:
@@ -498,9 +489,9 @@ public class Menu {
 
                 for (int i = 0; i<miHotel.getPasajeros().size(); i++){
                     Pasajero p = miHotel.getPasajeros().get(i);
-                    
+
                     if(p.getUsuario().equals(usuario)){
-                       dni = p.getDni(); 
+                       dni = p.getDni();
                     }
                 }
                 ArrayList<Reserva>reservasActivas =  misReservas.buscarReservasActiva(dni);
@@ -564,7 +555,7 @@ public class Menu {
                     //masajes
                     encabezadoMenu("Masajes");
 
-                    confirmacionServicio(scan,Servicio_Habitacion.MASAJE,dni,misReservas);
+                    confirmacionServicio(scan,Servicio_Habitacion.MASAJE,dni,misReservas,miHotel);
 
                     menuActividades(scan, usuario, miHotel,dni,misReservas);
                 } catch (HabitacionInvalidaException e) {
@@ -574,21 +565,21 @@ public class Menu {
             case 2:
                 //spa
                 encabezadoMenu("Spa");
-                confirmacionServicio(scan,Servicio_Habitacion.SPA,dni,misReservas);
+                confirmacionServicio(scan,Servicio_Habitacion.SPA,dni,misReservas,miHotel);
 
                 menuActividades(scan, usuario, miHotel,dni,misReservas);
                 break;
             case 3:
                 //sauna
                 encabezadoMenu("Sauna");
-                confirmacionServicio(scan,Servicio_Habitacion.SAUNA,dni,misReservas);
+                confirmacionServicio(scan,Servicio_Habitacion.SAUNA,dni,misReservas,miHotel);
 
                 menuActividades(scan, usuario, miHotel,dni,misReservas);
                 break;
             case 4:
                 //hidromasaje
                 encabezadoMenu("Hidromasaje");
-                confirmacionServicio(scan,Servicio_Habitacion.HIDROMASAJE,dni,misReservas);
+                confirmacionServicio(scan,Servicio_Habitacion.HIDROMASAJE,dni,misReservas,miHotel);
 
                 menuActividades(scan, usuario, miHotel,dni,misReservas);
                 break;
@@ -609,28 +600,28 @@ public class Menu {
             case 1:
                 //Solicitar desayuno en la habitacion
                 encabezadoMenu("Desayuno");
-                confirmacionServicio(scan,Servicio_Habitacion.DESAYUNO,dni,misReservas);
+                confirmacionServicio(scan,Servicio_Habitacion.DESAYUNO,dni,misReservas,miHotel);
 
                 menuServHabitacion(scan, usuario, miHotel,dni,misReservas);
                 break;
             case 2:
                 //Solicitar almuerzo o cena en la habitacion.
                 encabezadoMenu("Almuerzo-Cena");
-                confirmacionServicio(scan,Servicio_Habitacion.ALMUERZO_CENA,dni,misReservas);
+                confirmacionServicio(scan,Servicio_Habitacion.ALMUERZO_CENA,dni,misReservas,miHotel);
 
                 menuServHabitacion(scan, usuario, miHotel,dni,misReservas);
                 break;
             case 3:
                 //Servicio de brindis
                 encabezadoMenu("Servicio de Brindis");
-                confirmacionServicio(scan,Servicio_Habitacion.SERVICIO_BRINDIS,dni,misReservas);
+                confirmacionServicio(scan,Servicio_Habitacion.SERVICIO_BRINDIS,dni,misReservas, miHotel);
 
                 menuServHabitacion(scan, usuario, miHotel,dni,misReservas);
                 break;
             case 4:
                 //bebida sin alcohol
                 encabezadoMenu("Bebidas");
-                confirmacionServicio(scan,Servicio_Habitacion.BEBIDA_SIN_ALCOHOL,dni, misReservas);
+                confirmacionServicio(scan,Servicio_Habitacion.BEBIDA_SIN_ALCOHOL,dni, misReservas, miHotel);
 
                 menuServHabitacion(scan, usuario, miHotel,dni,misReservas);
                 break;
@@ -739,7 +730,6 @@ public class Menu {
         centradoOpciones("1. Datos Personales");
         centradoOpciones("2. Reservas");
         centradoOpciones("3. Servicios Extras");
-        centradoOpciones("4. Modificar datos Personales");
         centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }
@@ -837,7 +827,7 @@ public class Menu {
         return scan.nextLine();
     }
 
-    public static void confirmacionServicio (Scanner scan, Servicio_Habitacion servicioHabitacion, String dni, GestorReserva misReservas)  {
+    public static void confirmacionServicio (Scanner scan, Servicio_Habitacion servicioHabitacion, String dni, GestorReserva misReservas, GestorHotel miHotel)  {
 
         Servicio servicio = new Servicio(servicioHabitacion, servicioHabitacion.getCosto());
         ArrayList<Servicio>servicios = new ArrayList<>();
@@ -852,7 +842,9 @@ public class Menu {
 
         if(confirmar == 1){
            // servicios.add(servicio);
-            Habitacion h = misReservas.buscarUnaHabitacionDni(dni);
+            int numHabitacion = misReservas.buscarUnaHabitacionDni(dni);
+            Habitacion h = miHotel.buscarHabitacion(numHabitacion);
+
             if (h != null){
                 h.getServicios().add(servicio);
                 h.ticketServicios();
