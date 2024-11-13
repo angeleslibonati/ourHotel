@@ -791,7 +791,7 @@ public class Menu {
         }
         int confirmar = 0;
 
-        centradoOpciones("Valor: $ " + servicio.costo + ".-");
+        centradoOpciones("Valor: $ " + servicio + ".-");
         centradoOpciones("1. Confirmar");
         centradoOpciones("0. Rechazar");
         dibujarTerminacion();
