@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class GestorReserva {
 
-    static ArrayList<Reserva> reservas;
+     protected ArrayList<Reserva> reservas;
 
     public GestorReserva() throws ParseException {
         this.reservas = new ArrayList<>();
@@ -20,7 +20,15 @@ public class GestorReserva {
         reservas = GestorJson.mapeoReserva();
     }
 
-    public static void mostrarReservas(ArrayList<Reserva> misReservas) {
+    public  ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public  void setReservas() {
+        this.reservas = reservas;
+    }
+
+    public  void mostrarReservas(ArrayList<Reserva> misReservas) {
 
         for (int i = 0; i < misReservas.size(); i++) {
             Reserva reserva = misReservas.get(i);
@@ -29,7 +37,7 @@ public class GestorReserva {
 
     }
 
-    public static Reserva buscarUnaReserva(int numeroReserva) throws ReservaInvalidaException {
+    public  Reserva buscarUnaReserva(int numeroReserva) throws ReservaInvalidaException {
         if (numeroReserva <= 0) {
             throw new ReservaInvalidaException("Debe ingresar un número mayor a 0");
         }
@@ -44,7 +52,7 @@ public class GestorReserva {
         throw new ReservaInvalidaException("No se encontró ninguna reserva con el número: " + numeroReserva);
     }
 
-    public static ArrayList<Reserva> buscarReservasActiva(String dni) {
+    public  ArrayList<Reserva> buscarReservasActiva(String dni) {
         ArrayList<Reserva> activas = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
@@ -62,7 +70,7 @@ public class GestorReserva {
     }
 
 
-    public static void cancelarReserva(int numeroReserva) throws ReservaInvalidaException {
+    public void cancelarReserva(int numeroReserva) throws ReservaInvalidaException {
         Reserva reserva = buscarUnaReserva(numeroReserva);
         if (reserva != null) {
 
@@ -80,7 +88,7 @@ public class GestorReserva {
     }
 
     //cambia estado por reserva confirmada por check in
-    public static int cambiaEstadoPorCheckIn(int idReserva) throws ReservaInvalidaException {
+    public  int cambiaEstadoPorCheckIn(int idReserva) throws ReservaInvalidaException {
         int numHabitacion = 0;
 
         //Busca la reserva
@@ -97,7 +105,7 @@ public class GestorReserva {
         return numHabitacion;
     }
 
-    public static int cantidadNoches(String dni) {
+    public  int cantidadNoches(String dni) {
 
         //Busca la reserva por dni.
         Reserva reserva = new Reserva();
@@ -108,7 +116,7 @@ public class GestorReserva {
     }
 
 
-    public static ArrayList<Reserva> buscarReservasHistoricas(String dni) {
+    public  ArrayList<Reserva> buscarReservasHistoricas(String dni) {
         ArrayList<Reserva> historicas = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
@@ -125,7 +133,7 @@ public class GestorReserva {
         return historicas;
     }
 
-    public static ArrayList<Reserva> buscarReservasActivas() {
+    public  ArrayList<Reserva> buscarReservasActivas() {
 
         ArrayList<Reserva> activas = new ArrayList<>();
 
@@ -143,7 +151,7 @@ public class GestorReserva {
         return activas;
     }
 
-    public static Habitacion buscarUnaHabitacionDni(String dni)  {
+    public  Habitacion buscarUnaHabitacionDni(String dni)  {
         Habitacion habitacion = new Habitacion();
 
         for (Reserva reserva : reservas) {

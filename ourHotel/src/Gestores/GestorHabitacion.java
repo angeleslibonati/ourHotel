@@ -4,6 +4,8 @@ import Clases.Menu;
 import Enum.*;
 import Clases.Habitacion;
 import Clases.Servicio;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -114,15 +116,20 @@ public class GestorHabitacion implements I_ABM {
     }
 
 
-    public static double costoPorHabitacion(String dni) {
-
-        int cantidadNoches = GestorReserva.cantidadNoches(dni);
-        Habitacion habitacion = new Habitacion();
-
-        double costoHospedaje = cantidadNoches * habitacion.getValorPorNoche();
-
-        return costoHospedaje;
-    }
+//    public static double costoPorHabitacion(String dni) {
+//        GestorReserva gR = null;
+//        try {
+//            gR = new GestorReserva();
+//            int cantidadNoches = gR.cantidadNoches(dni);
+//            Habitacion habitacion = new Habitacion();
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        double costoHospedaje = cantidadNoches * habitacion.getValorPorNoche();
+//
+//        return costoHospedaje;
+//    }
 
     public Habitacion buscaHabitacion(int numHabitacion){
 
@@ -186,8 +193,10 @@ public class GestorHabitacion implements I_ABM {
             hab.setNumHabitacion(numHab);
             Menu.centradoIngreso("Ingrese Valor por noche:");
             hab.setValorPorNoche(scan.nextDouble());
+            scan.nextLine();
             Menu.centradoIngreso("Ingrese Capacidad Máxima de pasajero:");
             hab.setCantPersonas(scan.nextInt());
+            scan.nextLine();
             Menu.centradoIngreso("Ingrese Tipo de Habitación:");
             hab.setTipoHabitacion(Tipo_Habitacion.valueOf(scan.nextLine().toUpperCase()));
             Menu.centradoIngreso("Ingrese Tipo de cama:");

@@ -4,6 +4,7 @@ import Clases.*;
 import manejoJSON.GestorJson;
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -43,26 +44,32 @@ public class GestorHotel {
 
     //Funcion chek in (llama a gestor reserva y gestor habitacion)
     public void hacerCheckIn(int idReserva){
+        GestorReserva gR = null;
+        try {
+            gR = new GestorReserva();
+            int numHabitacion = gR.cambiaEstadoPorCheckIn(idReserva);
+            this.gestorHabitacion.cambioEstadoPorCheckIn(numHabitacion);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
-        int numHabitacion = GestorReserva.cambiaEstadoPorCheckIn(idReserva);
-        this.gestorHabitacion.cambioEstadoPorCheckIn(numHabitacion);
 
     }
 
 
     //Funcion check out
-    public void hacerCheckOut(int numHabitacion, String dni){
-
-        double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
-
-        double costoHabitacion = GestorHabitacion.costoPorHabitacion(dni);
-
-        Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
-        Menu.centradoOpciones("Sercios extras: $ " + consumos);
-        Menu.centradoOpciones("--------------------");
-        Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
-
-    }
+//    public void hacerCheckOut(int numHabitacion, String dni){
+//
+//        double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
+//
+//        double costoHabitacion = GestorHabitacion.costoPorHabitacion(dni);
+//
+//        Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
+//        Menu.centradoOpciones("Sercios extras: $ " + consumos);
+//        Menu.centradoOpciones("--------------------");
+//        Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
+//
+//    }
 
     public void buscarHabitacion (int numHabitacion){
 
@@ -94,6 +101,28 @@ public class GestorHotel {
 
     public void modificacionEmpleado (Scanner scan){
         this.gestorEmpleado.modificacion(scan);
+    }
+
+    public void altaPasajero (Scanner scan){
+        this.gestorPasajero.alta(scan);
+    }
+
+    public void bajaPasajero (Scanner scan){
+        this.gestorPasajero.baja(scan);
+    }
+    public void modificarPasajero (Scanner scan){
+        this.gestorPasajero.modificacion(scan);
+    }
+
+
+    public void altaHabitacion (Scanner scan){
+        this.gestorHabitacion.alta(scan);
+    }
+    public void bajaHabitacion (Scanner scan){
+        this.gestorHabitacion.baja(scan);
+    }
+    public void modificarHabitacion(Scanner scan){
+        this.gestorHabitacion.modificacion(scan);
     }
 
 
