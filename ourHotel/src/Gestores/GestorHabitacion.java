@@ -1,18 +1,30 @@
 package Gestores;
 
+import Clases.Menu;
 import Enum.Servicio_Habitacion;
 import Clases.Habitacion;
 import Clases.Servicio;
 import java.util.ArrayList;
 import Enum.Estado_Habitacion;
+import Excepciones.HabitacionNoDisponibleException;
+
+import static Enum.Servicio_Habitacion.*;
 
 public class GestorHabitacion {
 
 
-    static ArrayList<Habitacion> habitaciones;
+    protected  ArrayList<Habitacion> habitaciones;
 
     public GestorHabitacion() {
         this.habitaciones = new ArrayList<>();
+    }
+
+    public ArrayList<Habitacion> getHabitaciones() {
+        return habitaciones;
+    }
+
+    public void setHabitaciones(ArrayList<Habitacion> habitaciones) {
+        this.habitaciones = habitaciones;
     }
 
     public void mostrarTodasLasHabitaciones() {
@@ -20,14 +32,19 @@ public class GestorHabitacion {
             habitacion.mostrarHabitacion();
         }
     }
+
     //Funcion check out
-    public static double cambioEstadoPorCheckOut(int numHabitacion) {
+    public double cambioEstadoPorCheckOut(int numHabitacion) {
+
         double costoPorConsumos = 0;
-        Habitacion habitacion = new Habitacion();
+        Habitacion habitacion = buscaHabitacion(numHabitacion);
 
-        // habitacion = //Busca la habitacion por numero  (devolver una HABITACION)
-        //cambia el estado de OCUPADA A LIMPIEZA
+        if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.OCUPADA)){
 
+            //cambia el estado de OCUPADA A LIMPIEZA
+            habitacion.setEstadoHabitacion(Estado_Habitacion.LIMPIEZA);
+            Menu.centradoOpciones("Servicio Limpieza en proceso");
+        }
         //sumatoria de servicio
         costoPorConsumos = consumosExtra( habitacion);
 
@@ -43,22 +60,22 @@ public class GestorHabitacion {
 
             Servicio servicio = h.getServicios().get(i);
 
-//            if (servicio.equals(Servicio_Habitacion.MASAJE) ||
-//                    servicio.equals(Servicio_Habitacion.SPA) ||
-//                    servicio.equals(Servicio_Habitacion.SAUNA) ||
-//                    servicio.equals(Servicio_Habitacion.HIDROMASAJE) ||
-//                    servicio.equals(Servicio_Habitacion.DESAYUNO) ||
-//                    servicio.equals(Servicio_Habitacion.ALMUERZO_CENA) ||
-//                    servicio.equals(Servicio_Habitacion.SERVICIO_BRINDIS) ||
-//                    servicio.equals(Servicio_Habitacion.BEBIDA_SIN_ALCOHOL)) {
-//
-//                costoPorConsumo = costoPorConsumo + servicio.getCosto();
-//            }
+            if (servicio.equals(Servicio_Habitacion.fromString(String.valueOf(MASAJE))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(SPA))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(SAUNA))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(HIDROMASAJE))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(DESAYUNO))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(ALMUERZO_CENA))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(SERVICIO_BRINDIS))) ||
+                    servicio.equals(Servicio_Habitacion.fromString(String.valueOf(BEBIDA_SIN_ALCOHOL)))) {
+
+                costoPorConsumo = costoPorConsumo + servicio.getCosto();
+            }
         }
         return costoPorConsumo;
     }
 
-    public static ArrayList<Habitacion> buscarHabitacionesOcupadas() {
+    public ArrayList<Habitacion> buscarHabitacionesOcupadas() {
 
         ArrayList<Habitacion> ocupadas = new ArrayList<>();
 
@@ -74,14 +91,26 @@ public class GestorHabitacion {
 
 
     //Funcion para cambiar estado de habitacion por check in
-    public static void cambioEstadoPorCheckIn(int numHabitacion) {
+    public void cambioEstadoPorCheckIn(int numHabitacion) throws HabitacionNoDisponibleException{
 
         //Buscar una habitacion por numero
+        Habitacion habitacion =new Habitacion();
+
+        habitacion = buscaHabitacion(numHabitacion);
+
         //Cambia estado de LIBRE A OCUPADA
+        if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)){
+
+            habitacion.setEstadoHabitacion(Estado_Habitacion.OCUPADA);
+            Menu.centradoOpciones("Check in completado");
+        }
+        else {
+            throw new HabitacionNoDisponibleException("Habitacion no disponible");
+        }
+
     }
 
 
-    //Chequear dudosaa !!!!!!!!!!!!!
     public static double costoPorHabitacion(String dni) {
 
         int cantidadNoches = GestorReserva.cantidadNoches(dni);
@@ -90,6 +119,40 @@ public class GestorHabitacion {
         double costoHospedaje = cantidadNoches * habitacion.getValorPorNoche();
 
         return costoHospedaje;
+    }
+
+    public Habitacion buscaHabitacion(int numHabitacion){
+
+        Habitacion habitacion = new Habitacion();
+
+        for (Habitacion h : habitaciones){
+
+            if (h.getNumHabitacion() == numHabitacion){
+                habitacion = h;
+                habitacion.mostrarHabitacion();
+            }
+        }
+        return habitacion;
+    }
+
+    public ArrayList<Habitacion> buscaHabitacionLibre()  {
+
+        ArrayList<Habitacion>habitacionesLibres = new ArrayList<>();
+
+
+        for (Habitacion habitacion : habitaciones) {
+
+            Habitacion habitacionLibre = habitacion;
+
+            if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)) {
+                habitacionLibre = habitacion;
+
+                habitacionesLibres.add(habitacionLibre);
+            }
+
+        }
+
+        return habitacionesLibres;
     }
 
 

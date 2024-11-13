@@ -15,6 +15,7 @@ public class GestorJson {
 
     public static final String archivo_hotel = "hotel.json";
     public static final String archivo_reservas = "reserva.json";
+
     public static Hotel fromJsonHotel() throws JSONException {
 
         Hotel hotel = new Hotel();
@@ -22,7 +23,7 @@ public class GestorJson {
         try {
 
             JSONObject json = new JSONObject(JSONUtiles.leer(archivo_hotel));
-            System.out.println(json.toString(2));
+           //System.out.println(json.toString(2));
             JSONObject jHotel = json.getJSONObject("hotel");
 
             JSONArray jHabitaciones = jHotel.getJSONArray("habitacion");
@@ -68,7 +69,9 @@ public class GestorJson {
 
             // Procesar pasajeros
             JSONArray jPasajeros = jHotel.getJSONObject("persona").getJSONArray("pasajero");
+
             for (int i = 0; i < jPasajeros.length(); i++) {
+
                 JSONObject jPasajero = jPasajeros.getJSONObject(i);
                 Pasajero pasajero = new Pasajero();
 
@@ -78,6 +81,7 @@ public class GestorJson {
 
                 JSONObject jDireccion = jPasajero.getJSONObject("direccion");
                 Direccion direccion = new Direccion();
+
                 direccion.setCalle(jDireccion.getString("calle"));
                 direccion.setAltura(jDireccion.getInt("altura"));
                 direccion.setCiudad(jDireccion.getString("ciudad"));
@@ -88,7 +92,9 @@ public class GestorJson {
 
             // Procesar empleados
             JSONArray jEmpleados = jHotel.getJSONObject("persona").getJSONArray("empleado");
+
             for (int i = 0; i < jEmpleados.length(); i++) {
+
                 JSONObject jEmpleado = jEmpleados.getJSONObject(i);
                 Empleado empleado = new Empleado();
 
@@ -145,8 +151,10 @@ public class GestorJson {
             JSONObject jHotel = new JSONObject();
 
             JSONArray jHabitaciones = new JSONArray();
+
             // Convertir habitaciones a JSON
             for (Habitacion habitacion : hotel.getHabitaciones()) {
+                
                 JSONObject jHabitacion = new JSONObject();
                 jHabitacion.put("numeronumHabitacion", habitacion.getNumHabitacion());
                 jHabitacion.put("valorPorNoche", habitacion.getValorPorNoche());
@@ -172,7 +180,9 @@ public class GestorJson {
             // Convertir pasajeros a JSON
 
             for (Pasajero pasajero : hotel.getPasajeros()) {
+
                 JSONObject jPasajero = new JSONObject();
+
                 jPasajero.put("dni", pasajero.getDni());
                 jPasajero.put("nombre", pasajero.getNombre());
                 jPasajero.put("apellido", pasajero.getApellido());
@@ -190,7 +200,6 @@ public class GestorJson {
 
                 jPasajeros.put(jPasajero);
             }
-
 
             // Convertir empleados a JSON
             for (Empleado empleado : hotel.getEmpleados()) {
@@ -217,7 +226,6 @@ public class GestorJson {
                 jEmpleados.put(jEmpleado);
             }
 
-
             // Agrupar pasajeros y empleados bajo "persona"
             JSONObject jPersona = new JSONObject();
             jPersona.put("pasajero", jPasajeros);
@@ -231,7 +239,6 @@ public class GestorJson {
             // Grabar el JSON completo de nuevo en el archivo
 
             JSONUtiles.grabarObjeto(json, archivo_hotel);
-
 
         } catch (JSONException l) {
             throw new RuntimeException("Error al cargar los datos al Hotel");

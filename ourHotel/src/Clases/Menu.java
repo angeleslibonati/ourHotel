@@ -1,12 +1,14 @@
 package Clases;
 
 import Excepciones.UsuarioYClaveIncorrectoException;
-import Gestores.GestorHotel;
-import Gestores.GestorReserva;
-import manejoJSON.GestorJson;
 
-import java.io.IOException;
-import java.text.ParseException;
+import Gestores.GestorHotel;
+import Gestores.GestorPasajero;
+import Gestores.GestorReserva;
+import Enum.Tipo_Usuario;
+import manejoJSON.GestorJson;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +16,7 @@ public class Menu {
 
     //menu
 
-    public static void menuPrincipal (Scanner scan, ArrayList<Persona>personas){
+    public static void menuPrincipal (Scanner scan,  GestorHotel miHotel) throws JSONException, UsuarioYClaveIncorrectoException {
 
         int opc = 0;
         imprimirMenu();
@@ -27,19 +29,21 @@ public class Menu {
                 String usuario = ingresoUsuarioYClave(scan, "Usuario");
                 String contra = ingresoUsuarioYClave(scan, "Contrasenia");
 
-                for (int i = 0; i< personas.size(); i++){
+                for (int i = 0; i< miHotel.getEmpleados().size(); i++){
+
                     Persona e = new Empleado();
-                    e = personas.get(i);
+
+                    e = miHotel.getEmpleados().get(i);
 
                     try {
 
                         if (e.getUsuario().equals(usuario) && e.getContrasenia().equals(contra)){
 
-                            if (e.getRol().equals("RECEPCIONISTA")) {
+                            if (e.getRol().equals(Tipo_Usuario.RECEPCIONISTA)) {
 
-                                menuRecepcionista(scan, personas);
+                                menuRecepcionista(scan,usuario);
                             } else {
-                                menuAdmin(scan, personas);
+                                menuAdmin(scan, miHotel,usuario);
                             }
                         }
                     } catch (Exception ex) {
@@ -54,18 +58,19 @@ public class Menu {
                 int flag = 0;
 
                 do {
-                    usuario = ingresoUsuarioYClave(scan, "Usuario");
-                    contra = ingresoUsuarioYClave(scan, "Contrasenia");
+                   usuario = ingresoUsuarioYClave(scan, "Usuario");
+                   contra = ingresoUsuarioYClave(scan, "Contrasenia");
 
-                    for (int i = 0; i<personas.size(); i++){
+                    for (int i = 0; i< miHotel.getPasajeros().size(); i++){
 
                         Persona p = new Pasajero ();
-                        p = personas.get(i);
+                        p = miHotel.getPasajeros().get(i);
+
                         try {
 
                             if(p.getUsuario().equals(usuario) && p.getContrasenia().equals(contra)){
 
-                                menuPasajero(scan, personas);
+                               menuPasajero(scan,usuario,miHotel);
                                 flag = 4;
                             }
                         } catch (Exception e) {
@@ -83,7 +88,11 @@ public class Menu {
 
             case 0:
                 //Salir
-
+                //Deberia hacer el llamado a cargar el json para persistencia de informacion.
+                encabezadoMenu("Se estan guardando los cambios");
+                miHotel.actualizarHotel();
+                GestorJson.toJsonHotel(miHotel.getMiHotel());
+                // falta agregar carga a reservas
                 break;
 
             default:
@@ -92,70 +101,87 @@ public class Menu {
 
     }
 
-
     //Sub Menu para recepcionista
-    public static void menuRecepcionista (Scanner scan, ArrayList<Persona>personas){
+    public static void menuRecepcionista (Scanner scan, String usuario) throws JSONException {
+
+        GestorHotel miHotel = new GestorHotel();
 
         imprimirMenuRecepcion();
-         int opc = elegirOpcion(scan);
+        int opc = elegirOpcion(scan);
 
         switch (opc){
 
             case 1:
-                menuAbmPasajero (scan, personas);
+                menuAbmPasajero (scan,usuario);
                 break;
             case  2:
-                MenuAbmReserva(scan,personas);
+                MenuAbmReserva(scan,usuario);
                 break;
 
             case 3:
                 //Hacer check in
                 encabezadoMenu("Check in");
+                centradoOpciones("Ingrese el numero de reserva");
+                int numReserva = elegirOpcion(scan);
+
+                miHotel.hacerCheckIn(numReserva);
+                menuRecepcionista(scan,usuario);
                 break;
             case 4:
                 //hacer check out
                 encabezadoMenu("Check out");
+                centradoIngreso("Ingrese el dni del pasajero ");
+                String dni = scan.nextLine();
+
+                centradoIngreso("Ingrese el numero de Habitacion ");
+                int numHabitacion = scan.nextInt();
+                scan.nextLine();
+
+                miHotel.hacerCheckOut(numHabitacion,dni);
+                menuRecepcionista(scan,usuario);
             case 5:
-                menuHabitacion(scan,personas);
+                menuHabitacion(scan,usuario);
 
                 break;
             case 0:
-                menuPrincipal(scan, personas);
+                menuPrincipal(scan, miHotel);
 
                 break;
             default:
         }       centradoOpciones("Opcion invalida");
     }
-    public static void menuAbmPasajero (Scanner scan, ArrayList<Persona>personas){
+    public static void menuAbmPasajero (Scanner scan,String usuario) throws JSONException {
         imprimirAbmPasajero();
         int opc = elegirOpcion(scan);
 
         switch (opc){
             case 1:
                 //alta pasajero
-
+                menuAbmPasajero(scan,usuario);
                 break;
             case 2:
                 //baja pasajero
-
+                menuAbmPasajero(scan,usuario);
                 break;
             case 3:
                 //modificar datos pasajero
                 centradoOpciones("Ingrese opcion a modificar");
-                // case para datos
+                // case para datos ??
 
-
+                menuAbmPasajero(scan,usuario);
                 break;
             case 0:
                 //volver atras
-                menuRecepcionista(scan, personas);
+                menuRecepcionista(scan,usuario);
                 break;
 
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuHabitacion (Scanner scan,ArrayList<Persona>personas){
+    public static void menuHabitacion (Scanner scan,String usuario) throws JSONException {
+
+        GestorHotel mH = new GestorHotel();
         imprimirMenuHabitacion();
         int opc = elegirOpcion(scan);
 
@@ -163,25 +189,52 @@ public class Menu {
 
             case 1:
                 //buscar una habitacion
+                encabezadoMenu("Buscar una habitacion");
+                centradoIngreso("Ingrese el numero de habitacion: ");
+                int numHabitacion = scan.nextInt();
+                scan.nextLine();
+
+                mH.buscarHabitacion(numHabitacion);
+                menuHabitacion(scan,usuario);
                 break;
             case 2:
                 //buscar segun estado libre.
+                encabezadoMenu("Habitaciones Disponibles");
+
+                ArrayList<Habitacion>habitacionesLibres = mH.buscarHabitacionesLibres();
+
+                for(int i = 0; i<habitacionesLibres.size(); i++){
+
+                    Habitacion hL = habitacionesLibres.get(i);
+                    hL.mostrarHabitacion();
+                }
+                menuHabitacion(scan,usuario);
                 break;
             case 3:
                 //buscar segun estado ocupado.
+                encabezadoMenu("Habitaciones Ocupadas");
+
+                ArrayList<Habitacion>habitacionesOcupadas = mH.buscarHabitacionesOcupadas();
+
+                for (int i = 0; i<habitacionesOcupadas.size(); i++){
+                    Habitacion hO = habitacionesOcupadas.get(i);
+                    hO.mostrarHabitacion();
+                }
+                menuHabitacion(scan,usuario);
                 break;
             case 4:
                 //modificar una habitacion.
+                menuHabitacion(scan,usuario);
                 break;
             case 0:
                 //volver atras
-                menuRecepcionista(scan,personas);
+                menuRecepcionista(scan,usuario);
                 break;
             default:
         }       centradoOpciones("Opcion invalida");
 
     }
-    public static void MenuAbmReserva (Scanner scan,ArrayList<Persona>personas){
+    public static void MenuAbmReserva (Scanner scan, String usuario) throws JSONException {
 
         imprimirAbmReserva();
         int opc = elegirOpcion(scan);
@@ -191,26 +244,43 @@ public class Menu {
             case 1:
                 //nueva reserva (alta)
                 encabezadoMenu("Nueva Reserva");
+
+                MenuAbmReserva(scan,usuario);
                 break;
             case 2:
                 //cancelar reserva (baja)
                 encabezadoMenu("Cancelar Reserva");
+
+                MenuAbmReserva(scan,usuario);
                 break;
             case 3:
                 //modificar una reserva
                 encabezadoMenu("Modificar Reserva");
+
+                MenuAbmReserva(scan,usuario);
                 break;
             case 4:
                 //ver una reserva
                 encabezadoMenu("Ver Reserva");
+                centradoIngreso("Ingrese Numero de reserva ");
+                int numReserva = scan.nextInt();
+                scan.nextLine();
+                Reserva reserva = GestorReserva.buscarUnaReserva(numReserva);
+
+                MenuAbmReserva(scan,usuario);
                 break;
             case 5:
                 //ver todas las reservas disponibles
                 encabezadoMenu("Todas las Reservas");
 
+                ArrayList<Reserva>reservasActivas =  GestorReserva.buscarReservasActivas();
+
+                GestorReserva.mostrarReservas(reservasActivas);
+                MenuAbmReserva(scan,usuario);
+
                 break;
             case 0:
-                menuRecepcionista(scan,personas);
+                menuRecepcionista(scan,usuario);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
@@ -219,7 +289,7 @@ public class Menu {
     // --
 
     //Sub Menu para administrador
-    public static void menuAdmin (Scanner scan,ArrayList<Persona>personas){
+    public static void menuAdmin (Scanner scan, GestorHotel miHotel,String usuario) throws JSONException {
         imprimirMenuAdmin ();
         int opc = elegirOpcion(scan);
 
@@ -227,29 +297,37 @@ public class Menu {
 
             case 1:
                 //abm empleado
-                menuAbmEmpleado (scan,personas);
+                menuAbmEmpleado (scan, miHotel,usuario);
 
                 break;
             case 2:
                 //abm habitacion
-                menuAbmHabitacion (scan,personas);
+                menuAbmHabitacion (scan, miHotel,usuario);
                 break;
             case 3:
-                menuRecepcionista(scan,personas);
+                menuRecepcionista(scan,usuario);
                 break;
             case 4:
                 //back up
+                //Llama funcion para persistencia de datos
+                encabezadoMenu("Back up");
+
+                miHotel.actualizarHotel();
+                GestorJson.toJsonHotel(miHotel.getMiHotel());
+                // falta agregar carga a reserva
+
+                menuAdmin(scan, miHotel, usuario);
                 break;
             case 0:
                 //volver atras
-                menuPrincipal(scan,personas);
+                menuPrincipal(scan, miHotel);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
 
         }
     }
-    public static void menuAbmEmpleado (Scanner scan,ArrayList<Persona>personas){
+    public static void menuAbmEmpleado (Scanner scan, GestorHotel miHotel, String usuario) throws JSONException {
         imprimirAbmEmpleado();
         int opc = elegirOpcion(scan);
 
@@ -257,16 +335,22 @@ public class Menu {
 
             case 1:
                 //alta nuevo empleado
+
+                menuAbmEmpleado(scan, miHotel,usuario);
                 break;
             case 2:
                 //baja de un empleado
+
+                menuAbmEmpleado(scan, miHotel,usuario);
                 break;
             case 3:
                 //modificar datos de un empleado
+
+                menuAbmEmpleado(scan, miHotel,usuario);
                 break;
             case 0:
                 //volver atras
-                menuAdmin(scan,personas);
+                menuAdmin(scan, miHotel,usuario);
                 break;
 
             default:
@@ -274,7 +358,7 @@ public class Menu {
 
         }
     }
-    public static void menuAbmHabitacion (Scanner scan,ArrayList<Persona>personas){
+    public static void menuAbmHabitacion (Scanner scan, GestorHotel miHotel,String usuario) throws JSONException {
         imprimirAbmHabitacion();
         int opc = elegirOpcion(scan);
 
@@ -282,15 +366,21 @@ public class Menu {
 
             case 1:
                 //alta nueva habitacion
+
+                menuAbmHabitacion(scan, miHotel,usuario);
                 break;
             case 2:
                 //baja de habitacion
+
+                menuAbmHabitacion(scan, miHotel,usuario);
                 break;
             case 3:
                 //modificar una habitacion.
+
+                menuAbmHabitacion(scan, miHotel,usuario);
                 break;
             case 0:
-                menuAdmin(scan,personas);
+                menuAdmin(scan, miHotel,usuario);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
@@ -300,60 +390,99 @@ public class Menu {
     // --
 
     //Sub Menu para pasajero
-    public static void menuPasajero (Scanner scan,ArrayList<Persona>personas){
+    public static void menuPasajero (Scanner scan, String usuario, GestorHotel mihotel) throws JSONException {
+
         imprimirMenuPasajero();
         int opc = elegirOpcion(scan);
-
 
         switch (opc){
 
             case 1:
                 encabezadoMenu("Datos Personales");
-                //muestra datos del pasajero.
+                GestorPasajero.mostrarPasajero(GestorPasajero.buscarPasajero(usuario,mihotel.getPasajeros()));
+                menuPasajero(scan, usuario, mihotel);
                 break;
             case 2:
                 //reservas
-                menuReserva(scan,personas);
+                menuReserva(scan,usuario,mihotel);
+
                 break;
             case 3:
                 //Servicios extra
-                menuServiciosExtras(scan,personas);
+                menuServiciosExtras(scan,usuario,mihotel);
+
                 break;
             case 0:
                 //Volver atras
-                menuPrincipal(scan,personas);
+                menuPrincipal(scan, mihotel);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuReserva (Scanner scan,ArrayList<Persona>personas){
+    public static void menuReserva (Scanner scan,String usuario, GestorHotel miHotel) throws JSONException {
         imprimirMenuReserva();
         int opc = elegirOpcion(scan);
+        String dni = "";
 
         switch (opc){
 
             case 1:
                 //hacer reserva
-
+                menuReserva(scan, usuario, miHotel);
                 break;
             case 2:
+
                 //cancelar reserva
+                encabezadoMenu("Cancelacion de Reserva");
+                centradoIngreso("Ingrese el numero de reserva ");
+                int numReserva = scan.nextInt();
+                scan.nextLine();
+                GestorReserva.cancelarReserva(numReserva);
+
+                menuReserva(scan, usuario, miHotel);
                 break;
             case 3:
                 //ver reservas activas
+                encabezadoMenu("Reservas Activas");
+
+                for (int i = 0; i<miHotel.getPasajeros().size(); i++){
+                    Pasajero p = miHotel.getPasajeros().get(i);
+                    
+                    if(p.getUsuario().equals(usuario)){
+                       dni = p.getDni(); 
+                    }
+                }
+                ArrayList<Reserva>reservasActivas =  GestorReserva.buscarReservasActiva(dni);
+
+                GestorReserva.mostrarReservas(reservasActivas);
+
+                menuReserva(scan, usuario,  miHotel);
                 break;
             case 4:
                 //ver historico
+                encabezadoMenu("Reservas Finalizadas");
+
+                for (int i = 0; i<miHotel.getPasajeros().size(); i++){
+                    Pasajero p = miHotel.getPasajeros().get(i);
+
+                    if(p.getUsuario().equals(usuario)){
+                        dni = p.getDni();
+                    }
+                }
+                ArrayList<Reserva>reservasFinalizadas = GestorReserva.buscarReservasHistoricas(dni);
+                GestorReserva.mostrarReservas(reservasFinalizadas);
+
+                menuReserva(scan, usuario, miHotel);
                 break;
             case 0:
-                menuPasajero(scan,personas);
+                menuPasajero(scan,usuario,miHotel);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServiciosExtras (Scanner scan,ArrayList<Persona>personas){
+    public static void menuServiciosExtras (Scanner scan,String usuario, GestorHotel miHotel) throws JSONException {
         imprimirMenuServExtras();
         int opc = elegirOpcion(scan);
 
@@ -361,20 +490,20 @@ public class Menu {
 
             case 1:
                 //Actividades disponibles.
-                menuActividades(scan,personas);
+                menuActividades(scan,usuario,miHotel);
                 break;
             case 2:
                 //Servicio a la habitacion
-                menuServHabitacion(scan,personas);
+                menuServHabitacion(scan,usuario,miHotel);
                 break;
             case 0:
-                menuPasajero(scan,personas);
+                menuPasajero(scan,usuario,miHotel);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuActividades(Scanner scan,ArrayList<Persona>personas){
+    public static void menuActividades(Scanner scan,String usuario,GestorHotel miHotel) throws JSONException {
 
         imprimirMenuActividades();
         int opc = elegirOpcion(scan);
@@ -382,28 +511,40 @@ public class Menu {
         switch (opc){
             case 1:
                 //masajes
-                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                encabezadoMenu("Masajes");
+                confirmacionServicio(scan,usuario,miHotel);
+
+                menuActividades(scan, usuario, miHotel);
                 break;
             case 2:
                 //spa
-                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                encabezadoMenu("Spa");
+                confirmacionServicio(scan,usuario,miHotel);
+
+                menuActividades(scan, usuario, miHotel);
                 break;
             case 3:
                 //sauna
-                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                encabezadoMenu("Sauna");
+                confirmacionServicio(scan,usuario,miHotel);
+
+                menuActividades(scan, usuario, miHotel);
                 break;
             case 4:
                 //hidromasaje
-                //costo, horarios, lugar, si se inscribe, debe sumar el monto de plata a los cargos.
+                encabezadoMenu("Hidromasaje");
+                confirmacionServicio(scan,usuario,miHotel);
+
+                menuActividades(scan, usuario, miHotel);
                 break;
             case 0:
-                menuServiciosExtras(scan, personas);
+                menuServiciosExtras(scan,usuario,miHotel);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuServHabitacion (Scanner scan,ArrayList<Persona>personas){
+    public static void menuServHabitacion (Scanner scan, String usuario, GestorHotel miHotel) throws JSONException {
 
         imprimirMenuServHabitacion();
         int opc = elegirOpcion(scan);
@@ -412,22 +553,34 @@ public class Menu {
 
             case 1:
                 //Solicitar desayuno en la habitacion
-                //Adicional el costo.
+                encabezadoMenu("Desayuno");
+                confirmacionServicio(scan,usuario, miHotel);
+
+                menuServHabitacion(scan, usuario, miHotel);
                 break;
             case 2:
                 //Solicitar almuerzo o cena en la habitacion.
-                //Adicional el costo del servicio mas el valor de la comida/menu
+                encabezadoMenu("Almuerzo-Cena");
+                confirmacionServicio(scan,usuario, miHotel);
+
+                menuServHabitacion(scan, usuario, miHotel);
                 break;
             case 3:
                 //Servicio de brindis
-                //Adicional el costo mas la bebida que se lleve
+                encabezadoMenu("Servicio de Brindis");
+                confirmacionServicio(scan,usuario, miHotel);
+
+                menuServHabitacion(scan, usuario, miHotel);
                 break;
             case 4:
                 //bebida sin alcohol
-                //adicional el costo de las bebidas y cantidades.
+                encabezadoMenu("Bebidas");
+                confirmacionServicio(scan,usuario, miHotel);
+
+                menuServHabitacion(scan, usuario, miHotel);
                 break;
             case 0:
-                menuServiciosExtras(scan,personas);
+                menuServiciosExtras(scan,usuario, miHotel);
                 break;
             default:
                 centradoOpciones("opcion invalida");
@@ -626,6 +779,30 @@ public class Menu {
         return scan.nextLine();
     }
 
+    public static void confirmacionServicio (Scanner scan,String usuario, GestorHotel miHotel) throws JSONException {
+        Servicio servicio = new Servicio();
+        ArrayList<Servicio>servicios = new ArrayList<>();
 
+        for (int i = 0; i< miHotel.getHabitacion().size(); i++){
+            Habitacion h = miHotel.getHabitacion().get(i);
+
+            servicio = h.getServicios().get(i);
+
+        }
+        int confirmar = 0;
+
+        centradoOpciones("Valor: $ " + servicio + ".-");
+        centradoOpciones("1. Confirmar");
+        centradoOpciones("0. Rechazar");
+        dibujarTerminacion();
+        confirmar = elegirOpcion(scan);
+
+        if(confirmar == 1){
+            servicios.add(servicio);
+        }
+        else {
+            menuActividades(scan,usuario, miHotel);
+        }
+    }
 
 }
