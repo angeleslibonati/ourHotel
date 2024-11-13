@@ -1,5 +1,8 @@
 package Clases;
 import Enum.Tipo_Usuario;
+
+import java.util.ArrayList;
+
 public abstract class Persona {
 
 
@@ -101,5 +104,19 @@ public abstract class Persona {
         Menu.centradoOpciones("Rol: " + this.rol);
         Menu.centradoOpciones("Usuario: " + this.usuario);
         Menu.dibujarTerminacion();
+    }
+
+    public static int buscarPorDni(String dni, ArrayList<Persona> personas) {
+        int index = -1;
+        int cont = 0;
+
+        while (cont < (personas.size()-1) && index == -1) {
+
+            if (dni.equalsIgnoreCase(personas.get(cont).getDni())) {
+                index = cont;
+            }
+            cont ++;
+        }
+        return index;
     }
 }
