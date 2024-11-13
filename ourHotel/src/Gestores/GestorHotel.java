@@ -43,31 +43,33 @@ public class GestorHotel {
     }
 
     //Funcion chek in (llama a gestor reserva y gestor habitacion)
-    public void hacerCheckIn(int idReserva){
-        GestorReserva gR = null;
-        try {
-            gR = new GestorReserva();
-            int numHabitacion = gR.cambiaEstadoPorCheckIn(idReserva);
-            this.gestorHabitacion.cambioEstadoPorCheckIn(numHabitacion);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+    public void hacerCheckIn(int idReserva, GestorReserva misReservas) throws ParseException {
+        //GestorReserva gR = null;
+        //  gR = new GestorReserva();
+        int numHabitacion = misReservas.cambiaEstadoPorCheckIn(idReserva);
+        this.gestorHabitacion.cambioEstadoPorCheckIn(numHabitacion);
 
 
     }
 
 
    // Funcion check out
-    public void hacerCheckOut(int numHabitacion, String dni){
+    public void hacerCheckOut(int numHabitacion, String dni,GestorReserva misReservas){
 
         double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
 
-        double costoHabitacion = GestorHabitacion.costoPorHabitacion(dni);
+        double costoHabitacion = 0;
+        try {
 
-        Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
-        Menu.centradoOpciones("Sercios extras: $ " + consumos);
-        Menu.centradoOpciones("--------------------");
-        Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
+            costoHabitacion = this.gestorHabitacion.costoPorHabitacion(dni,misReservas);
+            Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
+            Menu.centradoOpciones("Sercios extras: $ " + consumos);
+            Menu.centradoOpciones("--------------------");
+            Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -124,6 +126,7 @@ public class GestorHotel {
     public void modificarHabitacion(Scanner scan){
         this.gestorHabitacion.modificacion(scan);
     }
+
 
 
 

@@ -10,6 +10,8 @@ import Enum.Tipo_Usuario;
 import manejoJSON.GestorJson;
 import org.json.JSONException;
 import Enum.Servicio_Habitacion;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -126,8 +128,12 @@ public class Menu {
                 centradoOpciones("Ingrese el numero de reserva");
                 int numReserva = elegirOpcion(scan);
 
-                miHotel.hacerCheckIn(numReserva);
-                menuRecepcionista(scan,usuario,misReservas);
+                try {
+                    miHotel.hacerCheckIn(numReserva,misReservas);
+                    menuRecepcionista(scan,usuario,misReservas);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 4:
                 //hacer check out
@@ -139,10 +145,10 @@ public class Menu {
                 int numHabitacion = scan.nextInt();
                 scan.nextLine();
 
-                //miHotel.hacerCheckOut(numHabitacion,dni);
+                miHotel.hacerCheckOut(numHabitacion,dni,misReservas);
                 menuRecepcionista(scan,usuario,misReservas);
             case 5:
-                menuHabitacion(scan,usuario,misReservas);
+                menuHabitacion(scan,usuario,misReservas,miHotel);
 
                 break;
             case 0:
@@ -182,7 +188,7 @@ public class Menu {
                 centradoOpciones("Opcion invalida");
         }
     }
-    public static void menuHabitacion (Scanner scan,String usuario,GestorReserva misReservas) throws JSONException {
+    public static void menuHabitacion (Scanner scan,String usuario,GestorReserva misReservas, GestorHotel miHotel) throws JSONException {
 
         GestorHotel mH = new GestorHotel();
         imprimirMenuHabitacion();
@@ -198,7 +204,7 @@ public class Menu {
                 scan.nextLine();
 
                 mH.buscarHabitacion(numHabitacion);
-                menuHabitacion(scan,usuario,misReservas);
+                menuHabitacion(scan,usuario,misReservas,miHotel);
                 break;
             case 2:
                 //buscar segun estado libre.
@@ -211,7 +217,7 @@ public class Menu {
                     Habitacion hL = habitacionesLibres.get(i);
                     hL.mostrarHabitacion();
                 }
-                menuHabitacion(scan,usuario,misReservas);
+                menuHabitacion(scan,usuario,misReservas,miHotel);
                 break;
             case 3:
                 //buscar segun estado ocupado.
@@ -223,11 +229,13 @@ public class Menu {
                     Habitacion hO = habitacionesOcupadas.get(i);
                     hO.mostrarHabitacion();
                 }
-                menuHabitacion(scan,usuario,misReservas);
+                menuHabitacion(scan,usuario,misReservas,miHotel);
                 break;
             case 4:
                 //modificar una habitacion.
-                menuHabitacion(scan,usuario,misReservas);
+                miHotel.modificarHabitacion(scan);
+
+                menuHabitacion(scan,usuario,misReservas,miHotel);
                 break;
             case 0:
                 //volver atras
@@ -656,6 +664,7 @@ public class Menu {
         centradoOpciones("3. Modificar Reserva");
         centradoOpciones("4. Ver una Reserva");
         centradoOpciones("5. Ver todas Reservas");
+        centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }
     public static void imprimirMenuHabitacion (){
