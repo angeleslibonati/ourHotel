@@ -138,21 +138,21 @@ public class GestorHabitacion implements I_ABM {
         return habitacion;
     }
 
-    public ArrayList<Habitacion> buscaHabitacionLibre() throws HabitacionNoDisponibleException {
+    public ArrayList<Habitacion> buscaHabitacionLibre()  {
 
         ArrayList<Habitacion>habitacionesLibres = new ArrayList<>();
 
 
         for (Habitacion habitacion : habitaciones) {
-            Habitacion habitacionLibre = new Habitacion();
+
+            Habitacion habitacionLibre = habitacion;
 
             if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)) {
                 habitacionLibre = habitacion;
+
                 habitacionesLibres.add(habitacionLibre);
             }
-            else {
-                throw new HabitacionNoDisponibleException("No contamos con Habitaciones Libres");
-            }
+
         }
 
         return habitacionesLibres;

@@ -1,8 +1,6 @@
 package Gestores;
 
-import Clases.Habitacion;
-import Clases.Hotel;
-import Clases.Menu;
+import Clases.*;
 import manejoJSON.GestorJson;
 import org.json.JSONException;
 
@@ -19,13 +17,28 @@ public class GestorHotel {
     public GestorHotel() throws JSONException {
         this.miHotel = new Hotel();
 
-        miHotel.setEmpleados(gestorEmpleado.empleados);
-        miHotel.setHabitaciones(gestorHabitacion.habitaciones);
-        miHotel.setPasajeros(gestorPasajero.pasajeros);
-
         miHotel = GestorJson.fromJsonHotel();
+
+        gestorEmpleado.setEmpleados(miHotel.getEmpleados());
+        gestorHabitacion.setHabitaciones(miHotel.getHabitaciones());
+        gestorPasajero.setPasajeros(miHotel.getPasajeros());
     }
 
+    public Hotel getMiHotel() {
+        return miHotel;
+    }
+
+    public ArrayList<Pasajero> getPasajeros(){
+        return gestorPasajero.getPasajeros();
+    }
+
+    public ArrayList<Empleado> getEmpleados() {
+        return gestorEmpleado.getEmpleados();
+    }
+
+    public ArrayList<Habitacion> getHabitacion() {
+        return gestorHabitacion.getHabitaciones();
+    }
 
     //Funcion chek in (llama a gestor reserva y gestor habitacion)
     public void hacerCheckIn(int idReserva){
@@ -62,6 +75,12 @@ public class GestorHotel {
 
     public ArrayList<Habitacion> buscarHabitacionesOcupadas() {
         return this.gestorHabitacion.buscarHabitacionesOcupadas();
+    }
+
+    public void actualizarHotel (){
+        this.miHotel.setEmpleados(gestorEmpleado.getEmpleados());
+        this.miHotel.setHabitaciones(gestorHabitacion.getHabitaciones());
+        this.miHotel.setPasajeros(gestorPasajero.getPasajeros());
     }
 
 

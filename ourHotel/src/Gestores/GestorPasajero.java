@@ -15,21 +15,27 @@ public class GestorPasajero implements I_ABM {
         this.pasajeros = new ArrayList<>();
     }
 
+    public ArrayList<Pasajero> getPasajeros() {
+        return pasajeros;
+    }
 
+    public void setPasajeros(ArrayList<Pasajero> pasajeros) {
+        this.pasajeros = pasajeros;
+    }
 
     public static Pasajero buscarPasajero(String usuario, ArrayList<Pasajero>misPasajeros){
 
-        Pasajero pasajero = new Pasajero();
+        Pasajero pasajeroEncontrado = new Pasajero();
 
         for(int i = 0; i< misPasajeros.size(); i++){
 
-            pasajero = misPasajeros.get(i);
+            Pasajero pasajero = misPasajeros.get(i);
 
             if(pasajero.getUsuario().equals(usuario)){
-                pasajero = misPasajeros.get(i);
+                return misPasajeros.get(i);
             }
         }
-        return pasajero;
+        return pasajeroEncontrado;
     }
 
     public static void mostrarPasajero(Pasajero pasajero){

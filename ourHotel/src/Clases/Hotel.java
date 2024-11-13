@@ -7,9 +7,9 @@ public class Hotel {
 
 
 
-    List <Pasajero> pasajeros ;
-    List <Empleado> empleados;
-    List <Habitacion> habitaciones;
+    ArrayList <Pasajero> pasajeros ;
+    ArrayList <Empleado> empleados;
+    ArrayList <Habitacion> habitaciones;
 
     //Constructor
 
@@ -19,35 +19,28 @@ public class Hotel {
         this.habitaciones = new ArrayList<>();
     }
 
-    public List<Pasajero> getPasajeros() {
+    public ArrayList<Pasajero> getPasajeros() {
         return pasajeros;
     }
 
-    public void setPasajeros(List<Pasajero> pasajeros) {
+    public void setPasajeros(ArrayList<Pasajero> pasajeros) {
         this.pasajeros = pasajeros;
     }
 
-    public List<Empleado> getEmpleados() {
+    public ArrayList<Empleado> getEmpleados() {
         return empleados;
     }
 
-    public void setEmpleados(List<Empleado> empleados) {
+    public void setEmpleados(ArrayList<Empleado> empleados) {
         this.empleados = empleados;
     }
 
-    public List<Habitacion> getHabitaciones() {
+    public ArrayList<Habitacion> getHabitaciones() {
         return habitaciones;
     }
 
-    public void setHabitaciones(List<Habitacion> habitaciones) {this.habitaciones = habitaciones;
+    public void setHabitaciones(ArrayList<Habitacion> habitaciones) {this.habitaciones = habitaciones;
     }
 
-    @Override
-    public String toString() {
-        return "Hotel{" +
-                "pasajeros=" + pasajeros +
-                ", empleados=" + empleados +
-                ", habitaciones=" + habitaciones +
-                '}';
-    }
+
 }

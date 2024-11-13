@@ -5,7 +5,6 @@ import Enum.*;
 import Interfaces.I_ABM;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class GestorEmpleado implements I_ABM {
 
@@ -127,5 +126,12 @@ public class GestorEmpleado implements I_ABM {
             opcion = scan.nextLine().toUpperCase().charAt(0);
 
         }
+    }
+    public ArrayList<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(ArrayList<Empleado> empleados) {
+        this.empleados = empleados;
     }
 }
