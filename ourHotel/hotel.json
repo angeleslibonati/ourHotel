@@ -15,7 +15,8 @@
           "nombre": "Juan",
           "dni": "12345678",
           "email": "juanperez@gmail.com",
-          "rol": "Pasajero"
+          "rol": "Pasajero",
+          "activo": false
         },
         {
           "apellido": "Gomez",
@@ -30,7 +31,24 @@
           "nombre": "Ana",
           "dni": "87654321",
           "email": "anagomez@gmail.com",
-          "rol": "Pasajero"
+          "rol": "Pasajero",
+          "activo": false
+        },
+        {
+          "apellido": "libonati",
+          "direccion": {
+            "altura": 123,
+            "ciudad": "mdp",
+            "calle": "utn"
+          },
+          "usuario": "angeles_libonati",
+          "contrasenia": "1234",
+          "telefono": "2235980991",
+          "nombre": "angeles",
+          "dni": "34490473",
+          "email": "angeles@mail.com",
+          "rol": "Pasajero",
+          "activo": true
         }
       ],
       "empleado": [
@@ -43,7 +61,7 @@
           "estadoEmpleado": "ACTIVO",
           "apellido": "Martinez",
           "horasTrabajadas": 21,
-          "usuario": "carlos_martinez",
+          "usuario": "a",
           "contrasenia": "123",
           "telefono": "223567890",
           "nombre": "Carlos",
@@ -240,6 +258,15 @@
         "valorPorNoche": 100000,
         "cantPersonas": 4,
         "tipoHabitacion": "presidencial"
+      },
+      {
+        "servicios": [],
+        "numeronumHabitacion": 444,
+        "tipoCama": "dosplazas",
+        "estadoHabitacion": "libre",
+        "valorPorNoche": 6000,
+        "cantPersonas": 2,
+        "tipoHabitacion": "individual"
       }
     ]
   }

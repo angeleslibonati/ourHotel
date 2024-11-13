@@ -44,7 +44,7 @@ public class Menu {
 
                             if (e.getRol().equals(Tipo_Usuario.RECEPCIONISTA)) {
 
-                                menuRecepcionista(scan,usuario,misReservas);
+                                menuRecepcionista(scan,usuario,misReservas,miHotel);
                             } else {
                                 menuAdmin(scan, miHotel,usuario,misReservas);
                             }
@@ -93,6 +93,7 @@ public class Menu {
             case 0:
                 //Salir
                 //Persistencia de informacion.
+
                 encabezadoMenu("Se estan guardando los cambios");
                 miHotel.actualizarHotel();
                 GestorJson.toJsonHotel(miHotel.getMiHotel());
@@ -106,9 +107,8 @@ public class Menu {
     }
 
     //Sub Menu para recepcionista
-    public static void menuRecepcionista (Scanner scan, String usuario, GestorReserva misReservas) throws JSONException {
+    public static void menuRecepcionista (Scanner scan, String usuario, GestorReserva misReservas, GestorHotel miHotel) throws JSONException {
 
-        GestorHotel miHotel = new GestorHotel();
 
         imprimirMenuRecepcion();
         int opc = elegirOpcion(scan);
@@ -119,7 +119,7 @@ public class Menu {
                 menuAbmPasajero (scan,usuario,misReservas,miHotel);
                 break;
             case  2:
-                MenuAbmReserva(scan,usuario,misReservas);
+                MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
 
             case 3:
@@ -130,7 +130,7 @@ public class Menu {
 
                 try {
                     miHotel.hacerCheckIn(numReserva,misReservas);
-                    menuRecepcionista(scan,usuario,misReservas);
+                    menuRecepcionista(scan,usuario,misReservas,miHotel);
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
@@ -146,7 +146,7 @@ public class Menu {
                 scan.nextLine();
 
                 miHotel.hacerCheckOut(numHabitacion,dni,misReservas);
-                menuRecepcionista(scan,usuario,misReservas);
+                menuRecepcionista(scan,usuario,misReservas,miHotel);
             case 5:
                 menuHabitacion(scan,usuario,misReservas,miHotel);
 
@@ -179,9 +179,16 @@ public class Menu {
 
                 menuAbmPasajero(scan,usuario,misReservas,miHotel);
                 break;
+            case 4:
+                //Ver datos de un pasajero
+                centradoIngreso("Ingrese el Dni del pasajero: ");
+                String dni = scan.nextLine();
+                GestorPasajero.mostrarPasajero(miHotel.buscarPasajeroPorDni(dni));
+                menuAbmPasajero(scan,usuario,misReservas,miHotel);
+                break;
             case 0:
                 //volver atras
-                menuRecepcionista(scan,usuario,misReservas);
+                menuRecepcionista(scan,usuario,misReservas,miHotel);
                 break;
 
             default:
@@ -190,7 +197,7 @@ public class Menu {
     }
     public static void menuHabitacion (Scanner scan,String usuario,GestorReserva misReservas, GestorHotel miHotel) throws JSONException {
 
-        GestorHotel mH = new GestorHotel();
+
         imprimirMenuHabitacion();
         int opc = elegirOpcion(scan);
 
@@ -203,14 +210,14 @@ public class Menu {
                 int numHabitacion = scan.nextInt();
                 scan.nextLine();
 
-                mH.buscarHabitacion(numHabitacion);
+                miHotel.buscarHabitacion(numHabitacion);
                 menuHabitacion(scan,usuario,misReservas,miHotel);
                 break;
             case 2:
                 //buscar segun estado libre.
                 encabezadoMenu("Habitaciones Disponibles");
 
-                ArrayList<Habitacion>habitacionesLibres = mH.buscarHabitacionesLibres();
+                ArrayList<Habitacion>habitacionesLibres = miHotel.buscarHabitacionesLibres();
 
                 for(int i = 0; i<habitacionesLibres.size(); i++){
 
@@ -223,7 +230,7 @@ public class Menu {
                 //buscar segun estado ocupado.
                 encabezadoMenu("Habitaciones Ocupadas");
 
-                ArrayList<Habitacion>habitacionesOcupadas = mH.buscarHabitacionesOcupadas();
+                ArrayList<Habitacion>habitacionesOcupadas = miHotel.buscarHabitacionesOcupadas();
 
                 for (int i = 0; i<habitacionesOcupadas.size(); i++){
                     Habitacion hO = habitacionesOcupadas.get(i);
@@ -239,13 +246,13 @@ public class Menu {
                 break;
             case 0:
                 //volver atras
-                menuRecepcionista(scan,usuario,misReservas);
+                menuRecepcionista(scan,usuario,misReservas,miHotel);
                 break;
             default:
         }       centradoOpciones("Opcion invalida");
 
     }
-    public static void MenuAbmReserva (Scanner scan, String usuario, GestorReserva misReservas) throws JSONException {
+    public static void MenuAbmReserva (Scanner scan, String usuario, GestorReserva misReservas,GestorHotel miHotel) throws JSONException {
 
         imprimirAbmReserva();
         int opc = elegirOpcion(scan);
@@ -255,21 +262,23 @@ public class Menu {
             case 1:
                 //nueva reserva (alta)
                 encabezadoMenu("Nueva Reserva");
-                
+                misReservas.alta(scan);
 
-                MenuAbmReserva(scan,usuario,misReservas);
+                MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
             case 2:
                 //cancelar reserva (baja)
                 encabezadoMenu("Cancelar Reserva");
+                misReservas.baja(scan);
 
-                MenuAbmReserva(scan,usuario,misReservas);
+                MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
             case 3:
                 //modificar una reserva
                 encabezadoMenu("Modificar Reserva");
+                misReservas.modificacion(scan);
 
-                MenuAbmReserva(scan,usuario,misReservas);
+                MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
             case 4:
                 //ver una reserva
@@ -279,7 +288,7 @@ public class Menu {
                 scan.nextLine();
                 Reserva reserva = misReservas.buscarUnaReserva(numReserva);
 
-                MenuAbmReserva(scan,usuario,misReservas);
+                MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
             case 5:
                 //ver todas las reservas disponibles
@@ -288,11 +297,11 @@ public class Menu {
                 ArrayList<Reserva>reservasActivas =  misReservas.buscarReservasActivas();
 
                 misReservas.mostrarReservas(reservasActivas);
-                MenuAbmReserva(scan,usuario,misReservas);
+                MenuAbmReserva(scan,usuario,misReservas,miHotel);
 
                 break;
             case 0:
-                menuRecepcionista(scan,usuario,misReservas);
+                menuRecepcionista(scan,usuario,misReservas,miHotel);
                 break;
             default:
                 centradoOpciones("Opcion invalida");
@@ -317,7 +326,7 @@ public class Menu {
                 menuAbmHabitacion (scan, miHotel,usuario,misReservas);
                 break;
             case 3:
-                menuRecepcionista(scan,usuario,misReservas);
+                menuRecepcionista(scan,usuario,misReservas,miHotel);
                 break;
             case 4:
                 //back up
@@ -362,6 +371,14 @@ public class Menu {
                 miHotel.modificacionEmpleado(scan);
 
                 menuAbmEmpleado(scan, miHotel,usuario,misReservas);
+                break;
+            case 4:
+                //Ver datos de un empleado
+                centradoIngreso("Ingrese Numero de legajo: ");
+                int numId = scan.nextInt();
+                scan.nextLine();
+                miHotel.mostrarEmpleado(miHotel.buscarEmpleadoXLegajo(numId));
+                menuAbmEmpleado(scan, miHotel, usuario, misReservas);
                 break;
             case 0:
                 //volver atras
@@ -417,7 +434,8 @@ public class Menu {
 
             case 1:
                 encabezadoMenu("Datos Personales");
-                GestorPasajero.mostrarPasajero(GestorPasajero.buscarPasajero(usuario,mihotel.getPasajeros()));
+                GestorPasajero.mostrarPasajero(mihotel.buscarPasajero(usuario));
+
                 menuPasajero(scan, usuario, mihotel,dni,misReservas);
                 break;
             case 2:
@@ -447,10 +465,11 @@ public class Menu {
 
             case 1:
                 //hacer reserva
+                encabezadoMenu("Realizar Reserva");
+                misReservas.alta(scan);
                 menuReserva(scan, usuario, miHotel,misReservas);
                 break;
             case 2:
-
                 //cancelar reserva
                 encabezadoMenu("Cancelacion de Reserva");
                 centradoIngreso("Ingrese el numero de reserva ");
@@ -627,9 +646,10 @@ public class Menu {
 
         dibujarTerminacion();
         encabezadoMenu("Administracion de Pasajeros");
-        centradoOpciones("1. Alta");
-        centradoOpciones("2. Baja");
-        centradoOpciones("3. Modificacion");
+        centradoOpciones("1. Alta Pasajero");
+        centradoOpciones("2. Baja Pasajero");
+        centradoOpciones("3. Modificacion datos Pasajero");
+        centradoOpciones("4. Ver datos Pasajero");
         centradoOpciones("0. Volver Atras");
         dibujarTerminacion();
     }

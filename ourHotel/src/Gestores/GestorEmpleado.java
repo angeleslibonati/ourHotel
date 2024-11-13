@@ -154,4 +154,8 @@ public class GestorEmpleado implements I_ABM {
     public void setEmpleados(ArrayList<Empleado> empleados) {
         this.empleados = empleados;
     }
+
+    public void mostrarEmpleado (Empleado empleado){
+        empleado.mostrarEmpleado();
+    }
 }

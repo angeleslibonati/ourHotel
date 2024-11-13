@@ -23,7 +23,7 @@ public class GestorPasajero implements I_ABM {
         this.pasajeros = pasajeros;
     }
 
-    public static Pasajero buscarPasajero(String usuario, ArrayList<Pasajero>misPasajeros){
+    public Pasajero buscarPasajero(String usuario, ArrayList<Pasajero>misPasajeros){
 
         Pasajero pasajeroEncontrado = new Pasajero();
 
@@ -70,23 +70,23 @@ public class GestorPasajero implements I_ABM {
 
         if(pas.getDni().equals("-1")) {
             pas.setDni(dni);
-            Menu.centradoIngreso("Ingrese Nombre:");
+            Menu.centradoIngreso("Ingrese Nombre: ");
             pas.setNombre(scan.nextLine());
-            Menu.centradoIngreso("Ingrese Apellido:");
+            Menu.centradoIngreso("Ingrese Apellido: ");
             pas.setApellido(scan.nextLine());
-            Menu.centradoIngreso("Ingrese Teléfono:");
+            Menu.centradoIngreso("Ingrese Teléfono: ");
             pas.setTelefono(scan.nextLine());
-            Menu.centradoIngreso("Ingrese Correo Electrónico:");
+            Menu.centradoIngreso("Ingrese Correo Electrónico: ");
             pas.setEmail(scan.nextLine());
 
             Direccion dir = new Direccion();
-            Menu.centradoOpciones("Dirección:");
-            Menu.centradoIngreso("Ingrese Calle:");
+            Menu.centradoOpciones("Dirección");
+            Menu.centradoIngreso("Ingrese Calle: ");
             dir.setCalle(scan.nextLine());
-            Menu.centradoIngreso("Ingrese Altura:");
+            Menu.centradoIngreso("Ingrese Altura: ");
             dir.setAltura(scan.nextInt());
             scan.nextLine();
-            Menu.centradoIngreso("Ingrese Ciudad:");
+            Menu.centradoIngreso("Ingrese Ciudad: ");
             dir.setCiudad(scan.nextLine());
             pas.setDireccion(dir);
             pas.setRol(Tipo_Usuario.PASAJERO);
@@ -94,7 +94,7 @@ public class GestorPasajero implements I_ABM {
             pas.setUsuario(pas.getNombre() + "_" + pas.getApellido());
             pas.setContrasenia("1234");
 
-            this.pasajeros.add(pas);
+            pasajeros.add(pas);
 
         } else {
             Menu.centradoOpciones("El pasajero ya existe");
@@ -163,5 +163,16 @@ public class GestorPasajero implements I_ABM {
     }
 
 
+
+    public Pasajero buscarPasajeroPorDni (String dni){
+
+        for(Pasajero pasajero : pasajeros){
+            if(pasajero.getDni().equals(dni)){
+
+                return pasajero;
+            }
+        }
+        return null;
+    }
 
 }

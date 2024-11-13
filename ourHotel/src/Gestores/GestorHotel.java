@@ -44,8 +44,7 @@ public class GestorHotel {
 
     //Funcion chek in (llama a gestor reserva y gestor habitacion)
     public void hacerCheckIn(int idReserva, GestorReserva misReservas) throws ParseException {
-        //GestorReserva gR = null;
-        //  gR = new GestorReserva();
+
         int numHabitacion = misReservas.cambiaEstadoPorCheckIn(idReserva);
         this.gestorHabitacion.cambioEstadoPorCheckIn(numHabitacion);
 
@@ -61,11 +60,12 @@ public class GestorHotel {
         double costoHabitacion = 0;
         try {
 
-            costoHabitacion = this.gestorHabitacion.costoPorHabitacion(dni,misReservas);
+            costoHabitacion = this.gestorHabitacion.costoPorHabitacion(dni,misReservas,numHabitacion);
             Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
             Menu.centradoOpciones("Sercios extras: $ " + consumos);
             Menu.centradoOpciones("--------------------");
             Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
+
 
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -128,6 +128,18 @@ public class GestorHotel {
     }
 
 
+    public Pasajero buscarPasajeroPorDni (String dni){
+        return this.gestorPasajero.buscarPasajeroPorDni(dni);
+    }
+    public Pasajero buscarPasajero (String usuario){
+        return this.gestorPasajero.buscarPasajero(usuario,getPasajeros());
+    }
+    public Empleado buscarEmpleadoXLegajo (int numId){
+        return this.gestorEmpleado.buscarEmpleadoXLegajo(numId);
+    }
+    public void mostrarEmpleado(Empleado empleado){
+        this.gestorEmpleado.mostrarEmpleado(empleado);
+    }
 
 
 

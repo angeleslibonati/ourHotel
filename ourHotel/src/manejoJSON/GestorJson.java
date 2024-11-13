@@ -277,7 +277,7 @@ public class GestorJson {
                 miReserva.setIdReserva(OReserva.getInt("idReserva"));
 
                 //Convertir un String a un valor tipo Date
-
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 LocalDate fechaInicio = LocalDate.parse(OReserva.getString("fechaInicio"));
                 miReserva.setFechaInicio(fechaInicio);
 
