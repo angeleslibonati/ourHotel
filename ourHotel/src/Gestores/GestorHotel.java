@@ -57,19 +57,19 @@ public class GestorHotel {
     }
 
 
-    //Funcion check out
-//    public void hacerCheckOut(int numHabitacion, String dni){
-//
-//        double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
-//
-//        double costoHabitacion = GestorHabitacion.costoPorHabitacion(dni);
-//
-//        Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
-//        Menu.centradoOpciones("Sercios extras: $ " + consumos);
-//        Menu.centradoOpciones("--------------------");
-//        Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
-//
-//    }
+   // Funcion check out
+    public void hacerCheckOut(int numHabitacion, String dni){
+
+        double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
+
+        double costoHabitacion = GestorHabitacion.costoPorHabitacion(dni);
+
+        Menu.centradoOpciones("Costo por habitacion: $ " + costoHabitacion);
+        Menu.centradoOpciones("Sercios extras: $ " + consumos);
+        Menu.centradoOpciones("--------------------");
+        Menu.centradoOpciones("TOTAL : $ " + (costoHabitacion + consumos));
+
+    }
 
     public void buscarHabitacion (int numHabitacion){
 
