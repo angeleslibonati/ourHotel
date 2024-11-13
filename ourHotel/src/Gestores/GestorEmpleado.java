@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class GestorEmpleado implements I_ABM {
 
+    ArrayList<Empleado> empleados ;
     ArrayList<Empleado>empleados ;
 
     public GestorEmpleado() {
