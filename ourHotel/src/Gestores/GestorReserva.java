@@ -167,8 +167,8 @@ public class GestorReserva implements I_ABM {
     }
 
     public boolean reservaSuperpuesta (LocalDate fFin, int nroHab) {
-        Boolean supuerpuesta = false;
-        Reserva r = new Reserva();
+        boolean supuerpuesta = false;
+        Reserva r;
         ArrayList<Reserva> activas = reservasActivas();
         int cont = 0;
 
@@ -185,41 +185,29 @@ public class GestorReserva implements I_ABM {
     }
 
     public boolean reservaDisponible(LocalDate fInic, LocalDate fFin, int nroHab) {
-        Boolean disponible = true;
+        boolean disponible = true;
 
-        Reserva r = new Reserva();
+        Reserva r;
         int cont = 0;
         ArrayList<Reserva> activas = listarReservasActivas();
 
         while (cont < activas.size() && disponible) {
             r = activas.get(cont);
             if (r.getHabitacion().getNumHabitacion() == nroHab) {
-                if (fInic.isAfter(r.getFechaInicio()) && fInic.isBefore(r.getFechaFin())) {
+                if (fechaExisteReserva(fInic, r.getFechaInicio(), r.getFechaFin()) || fechaExisteReserva(fFin, r.getFechaInicio(), r.getFechaFin())) {
                     disponible = false;
                 }
             }
             cont++;
         }
 
-        if(disponible) {
-            cont = 0;
-            while (cont < activas.size() && disponible) {
-                r = activas.get(cont);
-                if (r.getHabitacion().getNumHabitacion() == nroHab && r.getFechaInicio().isAfter(fInic)) {
-                    if (fFin.isAfter(r.getFechaInicio())) {
-                        disponible = false;
-                    }
-                }
-                cont++;
-            }
-        }
         return disponible;
     }
 
     @Override
     public void alta (Scanner scan,GestorHotel miHotel) {
         Reserva reserva = new Reserva();
-        Boolean ocupada;
+        boolean ocupada;
 
         Menu.centradoIngreso("Ingrese Fecha de ingreso (yyyy-mm-dd): ");
         LocalDate fIngreso = LocalDate.parse(scan.nextLine());
@@ -241,53 +229,53 @@ public class GestorReserva implements I_ABM {
             }
         }
 
-        miHotel.mostrarHabitaciones(disponibles);
-        Menu.centradoIngreso("Ingrese numero de Habitación deseada: ");
-        int nroHab = scan.nextInt();
-        scan.nextLine();
+        if (!disponibles.isEmpty()) {
+            miHotel.mostrarHabitaciones(disponibles);
+            Menu.centradoIngreso("Ingrese numero de Habitación deseada: ");
+            int nroHab = scan.nextInt();
+            scan.nextLine();
 
-        Habitacion hab = miHotel.gestorHabitacion.buscaHabitacion(nroHab);
-        ocupada = reservaSuperpuesta(fEgreso, nroHab);
-        Boolean disponible = reservaDisponible(fIngreso, fEgreso, nroHab);
+            Habitacion hab = miHotel.gestorHabitacion.buscaHabitacion(nroHab);
+            ocupada = reservaSuperpuesta(fEgreso, nroHab);
+            boolean disponible = reservaDisponible(fIngreso, fEgreso, nroHab);
 
 
-        if (!LocalDate.now().isAfter(fIngreso) && fEgreso.isAfter(LocalDate.now())) {
-            if(!ocupada || disponible) {
+            if (!ocupada || disponible) {
                 reserva.setHabitacion(hab);
                 reserva.setFechaInicio(fIngreso);
                 reserva.setFechaFin(fEgreso);
 
                 Menu.centradoIngreso("Ingrese DNI pasajero: ");
                 Pasajero pas = miHotel.gestorPasajero.buscarPasajeroPorDni(scan.nextLine());
-                if(!pas.getDni().isEmpty()) {
+                if (!pas.getDni().equals("-1")) {
                     reserva.setPasajero(pas);
+
+
+                    Menu.centradoIngreso("Ingrese legajo del empleado: ");
+                    Empleado empl = miHotel.gestorEmpleado.buscarEmpleadoXLegajo(scan.nextInt());
+                    if (empl.getId() != 0 && empl.getId() < miHotel.gestorEmpleado.getEmpleados().size() ) {
+                        scan.nextLine();
+                        reserva.setEmpleado(empl);
+
+                        if (fIngreso.isAfter(LocalDate.now())) {
+                            reserva.setEstadoReserva(Estado_Reserva.RESERVADO);
+                        } else {
+                            reserva.setEstadoReserva(Estado_Reserva.CONFIRMADO);
+                        }
+                        reservas.add(reserva);
+                    } else {
+                        Menu.centradoOpciones("EL LEGAJO INGRESADO NO EXISTE");
+                    }
                 } else {
                     Menu.centradoOpciones("EL PASAJERO NO EXISTE");
                 }
-
-
-                ArrayList<Empleado> empls = miHotel.getEmpleados();
-                Empleado empl = new Empleado();
-                Menu.centradoIngreso("Ingrese legajo del empleado: ");
-                empl = miHotel.gestorEmpleado.buscarEmpleadoXLegajo(scan.nextInt());
-                scan.nextLine();
-                reserva.setEmpleado(empl);
-
-                if (fIngreso.isAfter(LocalDate.now())) {
-                    reserva.setEstadoReserva(Estado_Reserva.RESERVADO);
-                } else {
-                    reserva.setEstadoReserva(Estado_Reserva.CONFIRMADO);
-                }
-                reservas.add(reserva);
 
             } else {
                 Menu.centradoOpciones("La habitación no se encuentra disponible");
             }
 
         } else {
-
-            Menu.centradoOpciones("LAS FECHAS INGRESADAS NO SON VÁLIDAS");
-
+            Menu.centradoOpciones("NO HAY HABITACIONES DISPONIBLES PARA EL PERIODO SELECCIONADO");
         }
 
     }
@@ -323,19 +311,25 @@ public class GestorReserva implements I_ABM {
                     Menu.centradoOpciones("La habitación no se encuentra disponible");
                 }
 
-            } else if (campo.equalsIgnoreCase("ingreso")) {
+            } else if (campo.equalsIgnoreCase("inicio")) {
                 Menu.centradoIngreso("Ingrese la nueva fecha de ingreso: ");
                 LocalDate fInic = LocalDate.parse(scan.nextLine());
-                if(reservaDisponible(fInic, reserva.getFechaFin(), reserva.getHabitacion().getNumHabitacion())) {
+                if (fInic.isBefore( LocalDate.now())){
+                    throw new FechaInvalidaException("Fecha invalida");
+                }
+                if(disponibilidadModificacion(fInic, reserva)) {
                     reserva.setFechaInicio(fInic);
                 } else {
                     Menu.centradoOpciones("La habitación no se encuentra disponible");
                 }
 
-            } else if (campo.equalsIgnoreCase("egreso")) {
+            } else if (campo.equalsIgnoreCase("fin")) {
                 Menu.centradoIngreso("Ingrese la nueva fecha de egreso: ");
                 LocalDate fFin = LocalDate.parse(scan.nextLine());
-                if (reservaDisponible(reserva.getFechaInicio(), fFin, reserva.getHabitacion().getNumHabitacion())) {
+                if (fFin.isBefore(reserva.getFechaInicio())){
+                    throw new FechaInvalidaException("Fecha invalida");
+                }
+                if (disponibilidadModificacion(fFin, reserva)) {
                     reserva.setFechaFin(fFin);
                 } else {
                     Menu.centradoOpciones("La habitación no se encuentra disponible");
@@ -373,6 +367,29 @@ public class GestorReserva implements I_ABM {
         }
 
         return resAct;
+    }
+
+    public boolean fechaExisteReserva (LocalDate fVerificar, LocalDate fIinicio, LocalDate fFin) {
+        return !fVerificar.isBefore(fIinicio) && !fVerificar.isAfter(fFin);
+    }
+
+    public boolean disponibilidadModificacion (LocalDate fVerificar, Reserva resActual) {
+        boolean disponible = true;
+
+        int cont = 0;
+        ArrayList<Reserva> activas = listarReservasActivas();
+
+        while (cont < activas.size() && disponible) {
+            Reserva r = activas.get(cont);
+            if (r.getHabitacion().getNumHabitacion() == resActual.getHabitacion().getNumHabitacion() && r.getIdReserva() != resActual.getIdReserva()) {
+                if (fechaExisteReserva(fVerificar, r.getFechaInicio(), r.getFechaFin())) {
+                    disponible = false;
+                }
+            }
+            cont++;
+        }
+
+        return disponible;
     }
 
 }
