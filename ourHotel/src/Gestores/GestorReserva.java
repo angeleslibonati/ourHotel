@@ -3,6 +3,7 @@ package Gestores;
 import Clases.*;
 import Enum.*;
 import Excepciones.FechaInvalidaException;
+import Excepciones.HabitacionInvalidaException;
 import Excepciones.ReservaInvalidaException;
 import Interfaces.I_ABM;
 import manejoJSON.GestorJson;
@@ -52,6 +53,7 @@ public class GestorReserva implements I_ABM {
             }
         }
 
+
         throw new ReservaInvalidaException("No se encontró ninguna reserva con el número: " + numeroReserva);
     }
 
@@ -97,7 +99,7 @@ public class GestorReserva implements I_ABM {
         //Busca la reserva
         Reserva miReserva = buscarUnaReserva(idReserva);
 
-        if (miReserva.getEstadoReserva().equals(Estado_Reserva.RESERVADO)) {
+        if (miReserva.getEstadoReserva().equals(Estado_Reserva.RESERVADO) && miReserva.getFechaInicio().isEqual(LocalDate.now())) {
             miReserva.setEstadoReserva(Estado_Reserva.CONFIRMADO);
         } else {
             throw new ReservaInvalidaException("Numero Reserva invalida");
@@ -184,42 +186,26 @@ public class GestorReserva implements I_ABM {
     }
 
     public boolean reservaDisponible(LocalDate fInic, LocalDate fFin, int nroHab) {
-        Boolean disponible = true;
-
-        Reserva r = new Reserva();
-        int cont = 0;
         ArrayList<Reserva> activas = buscarReservasActivas();
+        boolean disponible = true;
 
-        while (cont < activas.size() && disponible) {
-            r = activas.get(cont);
-            if (r.getHabitacion().getNumHabitacion() == nroHab) {
-                if (fInic.isAfter(r.getFechaInicio()) && fInic.isBefore(r.getFechaFin())) {
-                    disponible = false;
-                }
-            }
-            cont++;
-        }
-
-        if(disponible) {
-            cont = 0;
-            while (cont < activas.size() && disponible) {
-                r = activas.get(cont);
-                if (r.getHabitacion().getNumHabitacion() == nroHab && r.getFechaInicio().isAfter(fInic)) {
-                    if (fFin.isAfter(r.getFechaInicio())) {
-                        disponible = false;
-                    }
-                }
-                cont++;
+        for (Reserva r : activas){
+            if(r.getHabitacion().getNumHabitacion() == nroHab &&
+                    fInic.isBefore(r.getFechaFin()) &&
+                    fFin.isAfter(r.getFechaInicio())){
+                disponible = false;
             }
         }
+
         return disponible;
     }
 
     @Override
-    public void alta (Scanner scan,GestorHotel miHotel) {
+    public void alta (Scanner scan,GestorHotel miHotel, boolean esPasajero) {
         Reserva reserva = new Reserva();
         ArrayList<Reserva> resAct = buscarReservasActivas();
         Boolean ocupada;
+
         int cont = 0;
 
         Menu.centradoIngreso("Ingrese Fecha de ingreso (yyyy-mm-dd): ");
@@ -240,82 +226,69 @@ public class GestorReserva implements I_ABM {
             if(reservaDisponible(fIngreso,fEgreso,h.getNumHabitacion()) && h.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE)){
                 disponibles.add(h);
             }
+
         }
-
-        miHotel.mostrarHabitaciones(disponibles);
-        Menu.centradoIngreso("Ingrese numero de Habitación deseada: ");
-        int nroHab = scan.nextInt();
-        scan.nextLine();
-
-        Habitacion hab = new Habitacion();
-        ArrayList <Habitacion> habis = miHotel.getHabitacion();
-        hab.buscarPorNroHabitacion(nroHab, habis);
-        ocupada = reservaSuperpuesta(fEgreso, nroHab);
-
-        if (fIngreso == LocalDate.now()) {
-            if(hab.getEstadoHabitacion().equals(Estado_Habitacion.LIBRE) && ocupada == false) {
-                reserva.setHabitacion(hab);
-                reserva.setFechaInicio(fIngreso);
-                reserva.setFechaFin(fEgreso);
-
-                ArrayList<Pasajero> pasas = miHotel.getPasajeros();
-                ArrayList<Persona> pers = new ArrayList<>();
-                pers.addAll(pasas);
-
-                Menu.centradoIngreso("Ingrese DNI pasajero: ");
-                String dni = scan.nextLine();
-                Pasajero pas = pasas.get(Pasajero.buscarPorDni(dni,pers));
-                reserva.setPasajero(pas);
+        if (disponibles.isEmpty()){
+            Menu.centradoOpciones("No tenemos habitaciones Libres");
+        }
+        else {
+            miHotel.mostrarHabitaciones(disponibles);
+            Menu.centradoIngreso("Ingrese numero de Habitación deseada: ");
+            int nroHab = scan.nextInt();
+            scan.nextLine();
+            Habitacion hab = miHotel.buscarHabitacion(nroHab);
+            if (hab == null) {
+                throw new HabitacionInvalidaException("Habitacion Invalida");
+            }
+            reserva.setHabitacion(hab);
+            reserva.setFechaInicio(fIngreso);
+            reserva.setFechaFin(fEgreso);
 
 
-                ArrayList<Empleado> empls = miHotel.getEmpleados();
-                Empleado empl = new Empleado();
+            ArrayList<Pasajero> pasas = miHotel.getPasajeros();
+            ArrayList<Persona> pers = new ArrayList<>();
+            pers.addAll(pasas);
+
+            Menu.centradoIngreso("Ingrese DNI pasajero: ");
+            String dni = scan.nextLine();
+            Pasajero pas = miHotel.buscarPasajeroPorDni(dni);
+
+            if (pas == null) {
+                Menu.dibujarTerminacion();
+                Menu.encabezadoMenu("Alta Pasajero");
+                miHotel.altaPasajero(scan, miHotel, esPasajero);
+                Menu.centradoOpciones("\nAlta exitosa");
+                Menu.dibujarTerminacion();
+            }
+            pas = miHotel.buscarPasajeroPorDni(dni);
+            reserva.setPasajero(pas);
+
+
+            ArrayList<Empleado> empls = miHotel.getEmpleados();
+            Empleado empl = new Empleado();
+            if (esPasajero) {
+                //asigan autoamaticamente 99 a una reserva hecha por el pasajero (codigo interno del hotel)
+                empl.setId(99);
+            } else {
                 Menu.centradoIngreso("Ingrese Legajo del empleado: ");
                 empl.buscarEmpleadoXLegajo(scan.nextInt(), empls);
                 scan.nextLine();
-                reserva.setEmpleado(empl);
+            }
 
+            reserva.setEmpleado(empl);
+
+            if (fIngreso == LocalDate.now()) {
                 reserva.setEstadoReserva(Estado_Reserva.CONFIRMADO);
-                reservas.add(reserva);
-
             } else {
-                Menu.centradoOpciones("La habitación no se encuentra disponible");
-            }
-
-        } else {
-            Boolean disponible = reservaDisponible(fIngreso, fEgreso, nroHab);
-
-            if (disponible) {
-                reserva.setHabitacion(hab);
-                reserva.setFechaInicio(fIngreso);
-                reserva.setFechaFin(fEgreso);
-
-                ArrayList<Pasajero> pasas = miHotel.getPasajeros();
-                ArrayList<Persona> pers = new ArrayList<>();
-                pers.addAll(pasas);
-
-                Menu.centradoIngreso("Ingrese DNI pasajero: ");
-                Pasajero pas = pasas.get(Persona.buscarPorDni(scan.nextLine(),pers));
-                reserva.setPasajero(pas);
-
-
-                ArrayList<Empleado> empls = miHotel.getEmpleados();
-                Empleado empl = new Empleado();
-                Menu.centradoIngreso("Ingrese Legajo del empleado: ");
-                empl.buscarEmpleadoXLegajo(scan.nextInt(), empls);
-                scan.nextLine();
-                reserva.setEmpleado(empl);
-
                 reserva.setEstadoReserva(Estado_Reserva.RESERVADO);
-                reservas.add(reserva);
-            } else {
-
-                Menu.centradoOpciones("La habitación no se encuentra disponible");
-
             }
 
+            reservas.add(reserva);
+            Menu.dibujarTerminacion();
+            Menu.centradoOpciones("Reserva exitosa");
+            reserva.mostrarUnaReserva();
+            Menu.dibujarTerminacion();
         }
-
     }
 
 
@@ -334,11 +307,17 @@ public class GestorReserva implements I_ABM {
         Habitacion hab = new Habitacion();
         ArrayList <Habitacion> habis = miHotel.getHabitacion();
 
-        reserva.mostrarUnaReserva();
+       // reserva.mostrarUnaReserva();
 
         while (opcion == 'S') {
+            Menu.centradoOpciones("¬Habitacion");
+            Menu.centradoOpciones("¬Ingreso");
+            Menu.centradoOpciones("¬Egreso");
+
             Menu.centradoIngreso("Igrese el campo a modificar: ");
             String campo = scan.nextLine();
+
+
 
             if (campo.equalsIgnoreCase("habitacion") || campo.equalsIgnoreCase("habitación")) {
                 Menu.centradoIngreso("Ingrese nueva habitación: ");

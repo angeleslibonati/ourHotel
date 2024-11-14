@@ -12,7 +12,7 @@
           "usuario": "juan_perez",
           "contrasenia": "123",
           "telefono": "223567452",
-          "nombre": "juan",
+          "nombre": "juancito",
           "dni": "12345678",
           "email": "juanperez@gmail.com",
           "rol": "Pasajero",
@@ -47,6 +47,22 @@
           "nombre": "angeles",
           "dni": "11222333",
           "email": "angeles@mail.com",
+          "rol": "Pasajero",
+          "activo": false
+        },
+        {
+          "apellido": "Benvenuti",
+          "direccion": {
+            "altura": 559,
+            "ciudad": "Santa Clara",
+            "calle": "Capri"
+          },
+          "usuario": "Mariana_Benvenuti",
+          "contrasenia": "1234",
+          "telefono": "2234123123",
+          "nombre": "Mariana",
+          "dni": "37557556",
+          "email": "mari@mail.com",
           "rol": "Pasajero",
           "activo": false
         }
@@ -227,16 +243,29 @@
         "servicios": [],
         "numeronumHabitacion": 301,
         "tipoCama": "california",
-        "estadoHabitacion": "ocupada",
+        "estadoHabitacion": "libre",
         "valorPorNoche": 100000,
         "cantPersonas": 4,
         "tipoHabitacion": "presidencial"
       },
       {
-        "servicios": [],
+        "servicios": [
+          {
+            "costo": 1500,
+            "nombre": "masaje"
+          },
+          {
+            "costo": 1000,
+            "nombre": "hidromasaje"
+          },
+          {
+            "costo": 15000,
+            "nombre": "servicio_brindis"
+          }
+        ],
         "numeronumHabitacion": 444,
         "tipoCama": "dosplazas",
-        "estadoHabitacion": "libre",
+        "estadoHabitacion": "ocupada",
         "valorPorNoche": 6000,
         "cantPersonas": 2,
         "tipoHabitacion": "individual"

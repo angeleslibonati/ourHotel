@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -277,7 +278,6 @@ public class GestorJson {
                 miReserva.setIdReserva(OReserva.getInt("idReserva"));
 
                 //Convertir un String a un valor tipo Date
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 LocalDate fechaInicio = LocalDate.parse(OReserva.getString("fechaInicio"));
                 miReserva.setFechaInicio(fechaInicio);
 
@@ -332,9 +332,9 @@ public class GestorJson {
                 jReserva.put("idReserva", reserva.getIdReserva());
 
                 // Formatear fechas a "yyyy-MM-dd"
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                jReserva.put("fechaInicio", format.format(reserva.getFechaInicio()));
-                jReserva.put("fechaFin", format.format(reserva.getFechaFin()));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                jReserva.put("fechaInicio", reserva.getFechaInicio().format(formatter));
+                jReserva.put("fechaFin", reserva.getFechaFin().format(formatter));
                 jReserva.put("estadoReserva", reserva.getEstadoReserva().toString().toLowerCase());
 
                 // Guardar los datos de la habitación

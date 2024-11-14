@@ -4,12 +4,12 @@
       "pasajero": {
         "dni": "11222333"
       },
-      "fechaInicio": "2023-11-01",
+      "fechaInicio": "2024-11-01",
       "empleado": {
         "id": 1
       },
-      "estadoReserva": "reservado",
-      "fechaFin": "2023-11-05",
+      "estadoReserva": "confirmado",
+      "fechaFin": "2025-01-05",
       "idReserva": 1,
       "habitacion": {
         "numHabitacion": 101
@@ -34,12 +34,12 @@
       "pasajero": {
         "dni": "11222333"
       },
-      "fechaInicio": "2023-12-01",
+      "fechaInicio": "2024-11-10",
       "empleado": {
         "id": 3
       },
       "estadoReserva": "confirmado",
-      "fechaFin": "2023-12-10",
+      "fechaFin": "2024-11-20",
       "idReserva": 3,
       "habitacion": {
         "numHabitacion": 301
@@ -79,15 +79,30 @@
       "pasajero": {
         "dni": "87654321"
       },
-      "fechaInicio": "2023-08-20",
+      "fechaInicio": "2024-11-05",
       "empleado": {
         "id": 3
       },
       "estadoReserva": "confirmado",
-      "fechaFin": "2023-08-25",
+      "fechaFin": "2024-12-01",
       "idReserva": 6,
       "habitacion": {
         "numHabitacion": 102
+      }
+    },
+    {
+      "pasajero": {
+        "dni": "11222333"
+      },
+      "fechaInicio": "2024-11-14",
+      "empleado": {
+        "id": 21
+      },
+      "estadoReserva": "confirmado",
+      "fechaFin": "2024-11-20",
+      "idReserva": 7,
+      "habitacion": {
+        "numHabitacion": 444
       }
     }
   ]

@@ -45,7 +45,7 @@ public class GestorPasajero implements I_ABM {
 
 
     @Override
-    public void alta(Scanner scan, GestorHotel miHotel) {
+    public void alta(Scanner scan, GestorHotel miHotel,boolean esPasajero) {
         Pasajero pas = new Pasajero();
 
         Menu.centradoIngreso("Ingrese DNI: ");
@@ -97,7 +97,7 @@ public class GestorPasajero implements I_ABM {
         ArrayList<Persona> personas = new ArrayList<>();
         personas.addAll(pasajeros);
 
-        Menu.centradoIngreso("Ingrese el número de DNI:");
+        Menu.centradoIngreso("Ingrese el número de DNI: ");
         pas = pasajeros.get(Persona.buscarPorDni(scan.nextLine(), personas));
 
         pas.setActivo(false);
@@ -117,8 +117,15 @@ public class GestorPasajero implements I_ABM {
         pas.mostrarPasajero();
 
         while (opcion == 'S') {
-            Menu.centradoIngreso("Igrese el campo a modificar: ");
+            Menu.centradoOpciones("¬Nombre");
+            Menu.centradoOpciones("¬Apellido");
+            Menu.centradoOpciones("¬Telefono");
+            Menu.centradoOpciones("¬Email");
+            Menu.centradoOpciones("¬Direccion");
+
+            Menu.centradoIngreso("Ingrese el campo a modificar: ");
             String campo = scan.nextLine();
+
 
             if (campo.equalsIgnoreCase("nombre")) {
                 Menu.centradoIngreso("Ingrese el nuevo nombre: ");

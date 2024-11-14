@@ -44,6 +44,7 @@ public class GestorHabitacion implements I_ABM {
         double costoPorConsumos = 0;
         Habitacion habitacion = buscaHabitacion(numHabitacion);
         Habitacion habBuscadaPorDni = buscaHabitacion(miReserva.buscarUnaHabitacionDni(dni));
+
         if (habitacion.getEstadoHabitacion().equals(Estado_Habitacion.OCUPADA) && habitacion.equals(habBuscadaPorDni)){
 
             //cambia el estado de OCUPADA A LIMPIEZA
@@ -130,13 +131,13 @@ public class GestorHabitacion implements I_ABM {
 
     public Habitacion buscaHabitacion(int numHabitacion){
 
-        Habitacion habitacion = new Habitacion();
+        Habitacion habitacion = null;
 
         for (Habitacion h : habitaciones){
 
             if (h.getNumHabitacion() == numHabitacion){
                 habitacion = h;
-                habitacion.mostrarHabitacion();
+
             }
         }
         return habitacion;
@@ -178,7 +179,7 @@ public class GestorHabitacion implements I_ABM {
 
 
     @Override
-    public void alta(Scanner scan, GestorHotel miHotel) {
+    public void alta(Scanner scan, GestorHotel miHotel,boolean esPasajero) {
         Habitacion hab = new Habitacion();
 
         Menu.centradoIngreso("Ingrese Número de habitación: ");
@@ -214,7 +215,7 @@ public class GestorHabitacion implements I_ABM {
     public void baja(Scanner scan) {
         Habitacion hab = new Habitacion();
 
-        Menu.centradoIngreso("Ingrese número de habitación:");
+        Menu.centradoIngreso("Ingrese número de habitación: ");
         hab = habitaciones.get(buscarPorNroHabitacion(scan.nextInt()));
         scan.nextLine();
 
@@ -223,7 +224,7 @@ public class GestorHabitacion implements I_ABM {
         Menu.centradoOpciones("2 - OCUPADA");
         Menu.centradoOpciones("3 - LIMPIEZA");
 
-        Menu.centradoIngreso("Ingrese el motivo de baja:");
+        Menu.centradoIngreso("Ingrese el motivo de baja: ");
         int motivo = scan.nextInt();
         scan.nextLine();
 
@@ -249,36 +250,43 @@ public class GestorHabitacion implements I_ABM {
         Habitacion hab = new Habitacion();
         char opcion = 'S';
 
-        Menu.centradoIngreso("Número de habitación:");
+        Menu.centradoIngreso("Número de habitación: ");
         hab = habitaciones.get(buscarPorNroHabitacion(scan.nextInt()));
 
         hab.mostrarHabitacion();
 
         while (opcion == 'S') {
-            Menu.centradoIngreso("Igrese el campo a modificar:");
+            Menu.centradoOpciones("¬Valor por noche");
+            Menu.centradoOpciones("¬Cantidad de personas");
+            Menu.centradoOpciones("¬Tipo de habitacion");
+            Menu.centradoOpciones("¬Tipo de cama");
+            Menu.centradoOpciones("¬Estado de habitacion");
+
+            Menu.centradoIngreso("Igrese el campo a modificar: ");
             String campo = scan.nextLine();
 
             if (campo.equalsIgnoreCase("valor por noche")) {
-                Menu.centradoIngreso("Ingrese el nuevo valor:");
+                Menu.centradoIngreso("Ingrese el nuevo valor: ");
                 hab.setValorPorNoche(scan.nextDouble());
                 scan.nextLine();
             } else if (campo.equalsIgnoreCase("cantidad de personas")) {
-                Menu.centradoIngreso("Ingrese la nueva cantidad:");
+                Menu.centradoIngreso("Ingrese la nueva cantidad: ");
                 hab.setCantPersonas(scan.nextInt());
                 scan.nextLine();
             } else if (campo.equalsIgnoreCase("tipo de habitacion")) {
-                Menu.centradoIngreso("Ingrese tipo de habitación:");
+                Menu.centradoIngreso("Ingrese tipo de habitación: ");
                 hab.setTipoHabitacion(Tipo_Habitacion.valueOf(scan.nextLine().toUpperCase()));
             } else if (campo.equalsIgnoreCase("tipo de cama")) {
-                Menu.centradoIngreso("Ingrese tipo de cama:");
+                Menu.centradoIngreso("Ingrese tipo de cama: ");
                 hab.setTipoHabitacion(Tipo_Habitacion.valueOf(scan.nextLine().toUpperCase()));
-            } else if (campo.equalsIgnoreCase("estado de habitacion") || campo.equalsIgnoreCase("dirección")) {
+            } else if (campo.equalsIgnoreCase("estado de habitacion")) {
+                Menu.centradoIngreso("Ingrese el estado nuevo: ");
                 hab.setEstadoHabitacion(Estado_Habitacion.valueOf(scan.nextLine().toUpperCase()));
             } else {
                 Menu.centradoOpciones("La opción ingresada es inválida o no se puede modificar");
             }
 
-            Menu.centradoIngreso("Desea modificar otro dato S/N:");
+            Menu.centradoIngreso("Desea modificar otro dato S/N: ");
             opcion = scan.nextLine().toUpperCase().charAt(0);
 
         }

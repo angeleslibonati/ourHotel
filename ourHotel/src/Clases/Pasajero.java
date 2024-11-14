@@ -14,6 +14,7 @@ public class Pasajero extends Persona{
         this.misPasajeros = new ArrayList<>();
     }
 
+
     public boolean isActivo() { return activo; }
 
     public void setActivo(boolean activo) { this.activo = activo; }

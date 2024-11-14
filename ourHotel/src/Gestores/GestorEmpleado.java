@@ -29,7 +29,7 @@ public class GestorEmpleado implements I_ABM {
     }
 
     @Override
-    public void alta(Scanner scan, GestorHotel miHotel) {
+    public void alta(Scanner scan, GestorHotel miHotel,boolean esPasajero) {
         Empleado empleado = new Empleado();
         Menu.centradoIngreso("Ingrese DNI: ");
         String dni = scan.nextLine();
@@ -81,10 +81,11 @@ public class GestorEmpleado implements I_ABM {
 
     @Override
     public void baja(Scanner scan) {
-        Empleado empl = new Empleado();
+        //Empleado empl = new Empleado();
 
         Menu.centradoIngreso("Ingrese el número de Legajo: ");
-        empl = buscarEmpleadoXLegajo(scan.nextInt());
+        Empleado empl = buscarEmpleadoXLegajo(scan.nextInt());
+        scan.nextLine();
 
         empl.setEstadoEmpleado(Estado_Empleado.INACTIVO);
 
@@ -102,8 +103,15 @@ public class GestorEmpleado implements I_ABM {
         empl.mostrarEmpleado();
 
         while (opcion == 'S') {
+            Menu.centradoOpciones("¬Nombre");
+            Menu.centradoOpciones("¬Apellido");
+            Menu.centradoOpciones("¬Telefono");
+            Menu.centradoOpciones("¬Email");
+            Menu.centradoOpciones("¬Direccion");
+
             Menu.centradoIngreso("Ingrese el campo a modificar: ");
             String campo = scan.nextLine();
+
 
             if (campo.equalsIgnoreCase("nombre")) {
                 Menu.centradoIngreso("Ingrese el nuevo nombre: ");
