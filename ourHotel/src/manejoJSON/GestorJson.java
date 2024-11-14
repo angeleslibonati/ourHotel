@@ -278,7 +278,7 @@ public class GestorJson {
 
                 //Convertir un String a un valor tipo Date
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                LocalDate fechaInicio = LocalDate.parse(OReserva.getString("fechaInicio"));
+                LocalDate fechaInicio = LocalDate.parse(OReserva.getString("fechaInic"));
                 miReserva.setFechaInicio(fechaInicio);
 
                 LocalDate fechaFin = LocalDate.parse(OReserva.getString("fechaFin"));
@@ -333,8 +333,8 @@ public class GestorJson {
 
                 // Formatear fechas a "yyyy-MM-dd"
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                jReserva.put("fechaInicio", format.format(reserva.getFechaInicio()));
-                jReserva.put("fechaFin", format.format(reserva.getFechaFin()));
+                jReserva.put("fechaInic", reserva.getFechaInicio().toString());
+                jReserva.put("fechaFin", reserva.getFechaFin().toString());
                 jReserva.put("estadoReserva", reserva.getEstadoReserva().toString().toLowerCase());
 
                 // Guardar los datos de la habitación

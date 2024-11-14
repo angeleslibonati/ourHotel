@@ -51,12 +51,9 @@ public class GestorPasajero implements I_ABM {
         Menu.centradoIngreso("Ingrese DNI: ");
         String dni = scan.nextLine();
 
-        ArrayList<Persona> personas = new ArrayList<>();
-        personas.addAll(pasajeros);
+        pas = buscarPasajeroPorDni(dni);
 
-        int index = Persona.buscarPorDni(dni, personas);
-
-        if(index == -1) {
+        if(pas.getDni().equals("-1")) {
             pas.setDni(dni);
             Menu.centradoIngreso("Ingrese Nombre: ");
             pas.setNombre(scan.nextLine());
@@ -86,33 +83,28 @@ public class GestorPasajero implements I_ABM {
 
         } else {
             Menu.centradoOpciones("El pasajero ya existe");
-            Menu.centradoOpciones(pasajeros.get(index).toString());
+            pas.mostrarPasajero();
         }
     }
 
     @Override
-    public void baja(Scanner scan) {
+    public void baja(Scanner scan, GestorHotel miHotel) {
         Pasajero pas = new Pasajero();
 
-        ArrayList<Persona> personas = new ArrayList<>();
-        personas.addAll(pasajeros);
-
         Menu.centradoIngreso("Ingrese el número de DNI:");
-        pas = pasajeros.get(Persona.buscarPorDni(scan.nextLine(), personas));
+        pas = buscarPasajeroPorDni(scan.nextLine());
 
         pas.setActivo(false);
     }
+
 
     @Override
     public void modificacion(Scanner scan,GestorHotel miHotel) {
         Pasajero pas = new Pasajero();
         char opcion = 'S';
 
-        ArrayList<Persona> personas = new ArrayList<>();
-        personas.addAll(pasajeros);
-
         Menu.centradoIngreso("DNI del Pasajero: ");
-        pas = pasajeros.get(Persona.buscarPorDni(scan.nextLine(), personas));
+        pas = buscarPasajeroPorDni(scan.nextLine());
 
         pas.mostrarPasajero();
 
@@ -151,14 +143,16 @@ public class GestorPasajero implements I_ABM {
     }
 
     public Pasajero buscarPasajeroPorDni (String dni){
+        Pasajero p = new Pasajero();
+        p.setDni("-1");
 
         for(Pasajero pasajero : pasajeros){
             if(pasajero.getDni().equals(dni)){
 
-                return pasajero;
+                p = pasajero;
             }
         }
-        return null;
+        return p;
     }
 
 }

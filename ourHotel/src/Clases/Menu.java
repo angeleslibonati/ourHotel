@@ -170,7 +170,7 @@ public class Menu {
                 break;
             case 2:
                 //baja pasajero
-                miHotel.bajaPasajero(scan);
+                miHotel.bajaPasajero(scan, miHotel);
                 menuAbmPasajero(scan,usuario,misReservas,miHotel);
                 break;
             case 3:
@@ -273,7 +273,7 @@ public class Menu {
             case 2:
                 //cancelar reserva (baja)
                 encabezadoMenu("Cancelar Reserva");
-                misReservas.baja(scan);
+                misReservas.baja(scan, miHotel);
 
                 MenuAbmReserva(scan,usuario,misReservas,miHotel);
                 break;
@@ -298,7 +298,7 @@ public class Menu {
                 //ver todas las reservas disponibles
                 encabezadoMenu("Todas las Reservas");
 
-                ArrayList<Reserva>reservasActivas =  misReservas.buscarReservasActivas();
+                ArrayList<Reserva>reservasActivas =  misReservas.listarReservasActivas();
 
                 misReservas.mostrarReservas(reservasActivas);
                 MenuAbmReserva(scan,usuario,misReservas,miHotel);
@@ -366,7 +366,7 @@ public class Menu {
                 break;
             case 2:
                 //baja de un empleado
-                miHotel.bajaEmpleado(scan);
+                miHotel.bajaEmpleado(scan, miHotel);
 
                 menuAbmEmpleado(scan, miHotel,usuario,misReservas);
                 break;
@@ -408,7 +408,7 @@ public class Menu {
                 break;
             case 2:
                 //baja de habitacion
-                miHotel.bajaHabitacion(scan);
+                miHotel.bajaHabitacion(scan, miHotel);
 
                 menuAbmHabitacion(scan, miHotel,usuario,misReservas);
                 break;

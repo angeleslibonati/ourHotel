@@ -55,7 +55,7 @@ public class GestorHotel {
    // Funcion check out
     public void hacerCheckOut(int numHabitacion, String dni,GestorReserva misReservas){
 
-        double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion);
+        double consumos = this.gestorHabitacion.cambioEstadoPorCheckOut(numHabitacion, dni,misReservas);
 
         double costoHabitacion = 0;
         try {
@@ -103,8 +103,8 @@ public class GestorHotel {
         this.gestorEmpleado.alta(scan, miHotel);
     }
 
-    public void bajaEmpleado (Scanner scan){
-        this.gestorEmpleado.baja(scan);
+    public void bajaEmpleado (Scanner scan, GestorHotel miHotel){
+        this.gestorEmpleado.baja(scan, miHotel);
     }
 
     public void modificacionEmpleado (Scanner scan,GestorHotel miHotel){
@@ -115,8 +115,8 @@ public class GestorHotel {
         this.gestorPasajero.alta(scan, miHotel);
     }
 
-    public void bajaPasajero (Scanner scan){
-        this.gestorPasajero.baja(scan);
+    public void bajaPasajero (Scanner scan, GestorHotel miHotel){
+        this.gestorPasajero.baja(scan, miHotel);
     }
     public void modificarPasajero (Scanner scan,GestorHotel miHotel){
         this.gestorPasajero.modificacion(scan,miHotel);
@@ -126,8 +126,8 @@ public class GestorHotel {
     public void altaHabitacion (Scanner scan, GestorHotel miHotel){
         this.gestorHabitacion.alta(scan, miHotel);
     }
-    public void bajaHabitacion (Scanner scan){
-        this.gestorHabitacion.baja(scan);
+    public void bajaHabitacion (Scanner scan, GestorHotel miHotel){
+        this.gestorHabitacion.baja(scan, miHotel);
     }
     public void modificarHabitacion(Scanner scan, GestorHotel miHotel){
         this.gestorHabitacion.modificacion(scan, miHotel);
